@@ -1,0 +1,39 @@
+.iq-sidebar.sidebar-default
+  #sidebar-scrollbar
+    nav.iq-sidebar-menu
+      ul#iq-sidebar-toggle.iq-menu
+        li.active
+          a(href='/')
+            i.las.la-newspaper
+            span Newsfeed
+        li
+          a(href='/profile')
+            i.las.la-user
+            span Profile
+        li
+          a(href='/group')
+            i.las.la-users
+            span Group
+        li
+          a.collapsed(href='#authentication' data-bs-toggle='collapse' aria-expanded='false')
+            i.ri-pages-line
+            span Authentication
+            i.ri-arrow-right-s-line.iq-arrow-right
+          ul#authentication.iq-submenu.collapse(data-bs-parent='#pages')
+            li
+              a(href='/login')
+                i.ri-login-box-line
+                | Login
+            li
+              a(href='/sign-up')
+                i.ri-login-circle-line
+                | Register
+            li
+              a(href='/forgot-password')
+                i.ri-record-mail-line
+                | Recover Password
+            li
+              a(href='./dashboard/pages-lock-screen.html')
+                i.ri-lock-line
+                | Lock Screen
+

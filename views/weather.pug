@@ -1,0 +1,110 @@
+extend base
+
+block content 
+  .container
+    .row
+      .col-lg-3
+        .card.card-block.card-stretch.card-height
+          .card-body
+            form
+              .form-group
+                label.form-label(for='country-and-timezone') Country and Timezone
+                select#country-and-timezone.form-select
+                  option(selected='' disabled='') Country and Timezone
+                  option United States (UTC-8)
+                  option Chicago (UTC-5)
+                  option New York (UTC-4)
+                  option Anchorage (UTC-8)
+                  option Honolulu (UTC-10)
+              .form-group
+                label.form-label(for='extended-days') Extended Days
+                select#extended-days.form-select
+                  option(selected='' disabled='') Extended Days
+                  option Show Next Day
+                  option Show Next 7 Day
+                  option Show Next 10 Day
+                  option Show Next 20 Day
+                  option Show Next 30 Day
+              .form-group
+                label.form-label(for='temperature-unit') Temperature Unit
+                select#temperature-unit.form-select
+                  option(selected='' disabled='') Temperature Unit
+                  option F&deg; (Farenheit)
+                  option C&deg; (Celsius)
+              .form-group.mb-0
+                button.btn.btn-primary.d-block.w-100(type='submit') Check wether
+      .col-lg-6
+        .card.card-block.card-stretch.card-height
+          .card-body.p-0
+            #chart-map-column-04.custom-chart
+      .col-lg-3
+        .card.card-block.card-stretch.card-height.bg-primary.rounded.text-white
+          .card-body.p-4
+            .text-center
+              .d-flex
+                .flex-shrink-0
+                  i.ri-cloud-line.text-white.h2
+                .flex-grow-1.ms-3.text-start
+                  h6.text-white USA
+                  p.mb-0 Lorem ipsum
+              .main-temp.d-flex.justify-content-center
+                h1.text-white.display-1 53
+                span &deg;
+              ul.d-flex.align-items-center.justify-content-between.list-inline.m-0.p-0.weather-list
+                li
+                  p.mb-0 Yeasterday
+                  i.ri-cloud-windy-line.text-white.h5
+                  h6.text-white
+                    | 21 
+                    span &#x2103;
+                li
+                  p.mb-0 Today
+                  i.ri-showers-line.font-size-18
+                  h6.text-white
+                    | 16 
+                    span &#x2103;
+                li
+                  p.mb-0 Tomorrow
+                  i.ri-sun-cloudy-line.font-size-18
+                  h6.text-white
+                    | 19 
+                    span &#x2103;
+      .col-sm-12
+        .card
+          .card-body.bg-info.rounded.text-white
+            ul.iq-week-data.d-flex.justify-content-between.list-inline.m-0.p-0.flex-wrap
+              li.text-center.p-4
+                p.mb-0 Sunday
+                .weather-icon.mt-3.mb-3.font-size-20
+                  i.ri-snowy-line
+                p.mb-0 13 &deg;  7 &deg;
+              li.text-center.p-4
+                p.mb-0 Monday
+                .weather-icon.mt-3.mb-3.font-size-20
+                  i.ri-snowy-line
+                p.mb-0 11 &deg; 6 &deg;
+              li.text-center.p-4
+                p.mb-0 Tuesday
+                .weather-icon.mt-3.mb-3.font-size-20
+                  i.ri-sun-cloudy-line
+                p.mb-0 12 &deg;  8 &deg;
+              li.text-center.p-4
+                p.mb-0 Wednesday
+                .weather-icon.mt-3.mb-3.font-size-20
+                  i.ri-showers-line
+                p.mb-0 12 &deg;  7 &deg;
+              li.text-center.p-4
+                p.mb-0 Thursday
+                .weather-icon.mt-3.mb-3.font-size-20
+                  i.ri-sun-cloudy-line
+                p.mb-0 11 &deg;  6 &deg;
+              li.text-center.p-4
+                p.mb-0 Fryday
+                .weather-icon.mt-3.mb-3.font-size-20
+                  i.ri-heavy-showers-line
+                p.mb-0 11 &deg;  8 &deg;
+              li.text-center.p-4
+                p.mb-0 Satuarday
+                .weather-icon.mt-3.mb-3.font-size-20
+                  i.ri-sun-line
+                p.mb-0 13 &deg;  5 &deg;

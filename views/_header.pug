@@ -1,0 +1,202 @@
+.iq-top-navbar
+  .iq-navbar-custom
+    nav.navbar.navbar-expand-lg.navbar-light.p-0
+      .iq-navbar-logo.d-flex.justify-content-between
+        a(href='/')
+          img.img-fluid(src='./assets/images/logo.png' alt='')
+          span SocialV
+        .iq-menu-bt.align-self-center
+          .wrapper-menu
+            .main-circle
+              i.ri-menu-line
+      .iq-search-bar.device-search
+        form.searchbox(action='#')
+          a.search-link(href='#')
+            i.ri-search-line
+          input.text.search-input(type='text' placeholder='Search here...')
+      button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-label='Toggle navigation')
+        i.ri-menu-3-line
+      #navbarSupportedContent.collapse.navbar-collapse
+        ul.navbar-nav.ms-auto.navbar-list
+          li
+            a.d-flex.align-items-center(href='/')
+              i.ri-home-line
+          li
+            i.ri-home-line#toastrBtn
+          li.nav-item.dropdown
+            a#group-drop.dropdown-toggle(href='#' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+              i.ri-group-line
+            .sub-drop.sub-drop-large.dropdown-menu(aria-labelledby='group-drop')
+              .card.shadow-none.m-0
+                .card-header.d-flex.justify-content-between.bg-primary
+                  .header-title
+                    h5.mb-0.text-white Friend Request
+                  small.badge.bg-light.text-dark 4
+                .card-body.p-0
+                  .iq-friend-request
+                    .iq-sub-card.iq-sub-card-big.d-flex.align-items-center.justify-content-between
+                      .d-flex.align-items-center
+                        img.avatar-40.rounded(src='./assets/images/user/01.jpg' alt='')
+                        .ms-3
+                          h6.mb-0 Jaques Amole
+                          p.mb-0 40 friends
+                      .d-flex.align-items-center
+                        a.me-3.btn.btn-primary.rounded(href='javascript:void();') Confirm
+                        a.me-3.btn.btn-secondary.rounded(href='javascript:void();') Delete Request
+                  .iq-friend-request
+                    .iq-sub-card.iq-sub-card-big.d-flex.align-items-center.justify-content-between
+                      .d-flex.align-items-center
+                        img.avatar-40.rounded(src='./assets/images/user/02.jpg' alt='')
+                        .ms-3
+                          h6.mb-0 Lucy Tania
+                          p.mb-0 12 friends
+                      .d-flex.align-items-center
+                        a.me-3.btn.btn-primary.rounded(href='javascript:void();') Confirm
+                        a.me-3.btn.btn-secondary.rounded(href='javascript:void();') Delete Request
+                  .iq-friend-request
+                    .iq-sub-card.iq-sub-card-big.d-flex.align-items-center.justify-content-between
+                      .d-flex.align-items-center
+                        img.avatar-40.rounded(src='./assets/images/user/03.jpg' alt='')
+                        .ms-3
+                          h6.mb-0 Manny Petty
+                          p.mb-0 3 friends
+                      .d-flex.align-items-center
+                        a.me-3.btn.btn-primary.rounded(href='javascript:void();') Confirm
+                        a.me-3.btn.btn-secondary.rounded(href='javascript:void();') Delete Request
+                  .iq-friend-request
+                    .iq-sub-card.iq-sub-card-big.d-flex.align-items-center.justify-content-between
+                      .d-flex.align-items-center
+                        img.avatar-40.rounded(src='./assets/images/user/04.jpg' alt='')
+                        .ms-3
+                          h6.mb-0 Marsha Mello
+                          p.mb-0 15 friends
+                      .d-flex.align-items-center
+                        a.me-3.btn.btn-primary.rounded(href='javascript:void();') Confirm
+                        a.me-3.btn.btn-secondary.rounded(href='javascript:void();') Delete Request
+                  .text-center
+                    a.btn.text-primary(href='#') View More Request
+          li.nav-item.dropdown
+            a#notification-drop.search-toggle.dropdown-toggle(href='#' data-bs-toggle='dropdown')
+              i.ri-notification-4-line
+            .sub-drop.dropdown-menu(aria-labelledby='notification-drop')
+              .card.shadow-none.m-0
+                .card-header.d-flex.justify-content-between.bg-primary
+                  .header-title.bg-primary
+                    h5.mb-0.text-white All Notifications
+                  small.badge.bg-light.text-dark 4
+                .card-body.p-0
+                  a.iq-sub-card(href='#')
+                    .d-flex.align-items-center
+                      div
+                        img.avatar-40.rounded(src='./assets/images/user/01.jpg' alt='')
+                      .ms-3.w-100
+                        h6.mb-0 Emma Watson Bni
+                        .d-flex.justify-content-between.align-items-center
+                          p.mb-0 95 MB
+                          small.float-right.font-size-12 Just Now
+                  a.iq-sub-card(href='#')
+                    .d-flex.align-items-center
+                      div
+                        img.avatar-40.rounded(src='./assets/images/user/02.jpg' alt='')
+                      .ms-3.w-100
+                        h6.mb-0 New customer is join
+                        .d-flex.justify-content-between.align-items-center
+                          p.mb-0 Cyst Bni
+                          small.float-right.font-size-12 5 days ago
+                  a.iq-sub-card(href='#')
+                    .d-flex.align-items-center
+                      div
+                        img.avatar-40.rounded(src='./assets/images/user/03.jpg' alt='')
+                      .ms-3.w-100
+                        h6.mb-0 Two customer is left
+                        .d-flex.justify-content-between.align-items-center
+                          p.mb-0 Cyst Bni
+                          small.float-right.font-size-12 2 days ago
+                  a.iq-sub-card(href='#')
+                    .d-flex.align-items-center
+                      div
+                        img.avatar-40.rounded(src='./assets/images/user/04.jpg' alt='')
+                      .w-100.ms-3
+                        h6.mb-0 New Mail from Fenny
+                        .d-flex.justify-content-between.align-items-center
+                          p.mb-0 Cyst Bni
+                          small.float-right.font-size-12 3 days ago
+          li.nav-item.dropdown
+            a#mail-drop.dropdown-toggle(href='#' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+              i.ri-mail-line
+            .sub-drop.dropdown-menu(aria-labelledby='mail-drop')
+              .card.shadow-none.m-0
+                .card-header.d-flex.justify-content-between.bg-primary
+                  .header-title.bg-primary
+                    h5.mb-0.text-white All Message
+                  small.badge.bg-light.text-dark 4
+                .card-body.p-0
+                  a.iq-sub-card(href='#')
+                    .d-flex.align-items-center
+                      div
+                        img.avatar-40.rounded(src='./assets/images/user/01.jpg' alt='')
+                      .w-100.ms-3
+                        h6.mb-0 Bni Emma Watson
+                        small.float-left.font-size-12 13 Jun
+                  a.iq-sub-card(href='#')
+                    .d-flex.align-items-center
+                      div
+                        img.avatar-40.rounded(src='./assets/images/user/02.jpg' alt='')
+                      .ms-3
+                        h6.mb-0 Lorem Ipsum Watson
+                        small.float-left.font-size-12 20 Apr
+                  a.iq-sub-card(href='#')
+                    .d-flex.align-items-center
+                      div
+                        img.avatar-40.rounded(src='./assets/images/user/03.jpg' alt='')
+                      .ms-3
+                        h6.mb-0 Why do we use it?
+                        small.float-left.font-size-12 30 Jun
+                  a.iq-sub-card(href='#')
+                    .d-flex.align-items-center
+                      div
+                        img.avatar-40.rounded(src='./assets/images/user/04.jpg' alt='')
+                      .ms-3
+                        h6.mb-0 Variations Passages
+                        small.float-left.font-size-12 12 Sep
+                  a.iq-sub-card(href='#')
+                    .d-flex.align-items-center
+                      div
+                        img.avatar-40.rounded(src='./assets/images/user/05.jpg' alt='')
+                      .ms-3
+                        h6.mb-0 Lorem Ipsum generators
+                        small.float-left.font-size-12 5 Dec
+          li.nav-item.dropdown
+            a#drop-down-arrow.d-flex.align-items-center.dropdown-toggle(href='#' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+              img.img-fluid.rounded-circle.me-3(src='./assets/images/user/1.jpg' alt='user')
+              .caption
+                if user
+                  h6.mb-0.line-height= user.username
+                else
+                  h6.mb-0.line-height Guest
+            .sub-drop.dropdown-menu.caption-menu(aria-labelledby='drop-down-arrow')
+              .card.shadow-none.m-0
+                .card-header.bg-primary
+                  .header-title
+                    h5.mb-0.text-white Hello Bni Cyst
+                    span.text-white.font-size-12 Available
+                .card-body.p-0
+                  a.iq-sub-card.iq-bg-primary-hover(href='/profile')
+                    .d-flex.align-items-center
+                      .rounded.card-icon.bg-soft-primary
+                        i.ri-file-user-line
+                      .ms-3
+                        h6.mb-0 My Profile
+                        p.mb-0.font-size-12 View personal profile details.
+                  a.iq-sub-card.iq-bg-warning-hover(href='/me')
+                    .d-flex.align-items-center
+                      .rounded.card-icon.bg-soft-warning
+                        i.ri-profile-line
+                      .ms-3
+                        h6.mb-0 Edit Profile
+                        p.mb-0.font-size-12 Modify your personal details.
+                  .d-inline-block.w-100.text-center.p-3
+                    button.btnLogout.btn.btn-primary.iq-sign-btn
+                      | Sign
+                      | out
+                      i.ri-login-box-line.ms-2

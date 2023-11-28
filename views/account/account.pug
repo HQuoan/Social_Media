@@ -1,0 +1,183 @@
+extend ../base 
+
+block content
+  .container
+    .row
+      .col-lg-12
+        .card
+          .card-body.p-0
+            .iq-edit-list
+              ul.iq-edit-profile.row.nav.nav-pills
+                li.col-md-3.p-0
+                  a.nav-link.active(data-bs-toggle='pill' href='#personal-information')
+                    | Personal Information
+                li.col-md-3.p-0
+                  a.nav-link(data-bs-toggle='pill' href='#chang-pwd')
+                    | Change Password
+                li.col-md-3.p-0
+                  a.nav-link(data-bs-toggle='pill' href='#emailandsms')
+                    | Email and SMS
+                li.col-md-3.p-0
+                  a.nav-link(data-bs-toggle='pill' href='#manage-contact')
+                    | Manage Contact
+      .col-lg-12
+        .iq-edit-list-data
+          .tab-content
+            #personal-information.tab-pane.fade.active.show(role='tabpanel')
+              .card
+                .card-header.d-flex.justify-content-between
+                  .header-title
+                    h4.card-title Personal Information
+                .card-body
+                  form
+                    .form-group.row.align-items-center
+                      .col-md-12
+                        .profile-img-edit
+                          img.profile-pic(src='../assets/images/user/11.png' alt='profile-pic')
+                          .p-image
+                            i.ri-pencil-line.upload-button.text-white
+                            input.file-upload(type='file' accept='image/*')
+                    .row.align-items-center
+                      .form-group.col-sm-6
+                        label.form-label(for='fname') First Name:
+                        input#fname.form-control(type='text' placeholder='Bni')
+                      .form-group.col-sm-6
+                        label.form-label(for='lname') Last Name:
+                        input#lname.form-control(type='text' placeholder='Jhon')
+                      .form-group.col-sm-6
+                        label.form-label(for='uname') User Name:
+                        input#uname.form-control(type='text' placeholder='Bni@01')
+                      .form-group.col-sm-6
+                        label.form-label(for='cname') City:
+                        input#cname.form-control(type='text' placeholder='Atlanta')
+                      .form-group.col-sm-6
+                        label.form-label.d-block Gender:
+                        .form-check.form-check-inline
+                          input#inlineRadio10.form-check-input(type='radio' name='inlineRadioOptions' value='option1')
+                          label.form-check-label(for='inlineRadio10')  Male
+                        .form-check.form-check-inline
+                          input#inlineRadio11.form-check-input(type='radio' name='inlineRadioOptions' value='option1')
+                          label.form-check-label(for='inlineRadio11') Female
+                      .form-group.col-sm-6
+                        label.form-label(for='dob') Date Of Birth:
+                        input#dob.form-control(placeholder='1984-01-24')
+                      .form-group.col-sm-6
+                        label.form-label Marital Status:
+                        select.form-select(aria-label='Default select example')
+                          option(selected='') Single
+                          option Married
+                          option Widowed
+                          option Divorced
+                          option Separated 
+                      .form-group.col-sm-6
+                        label.form-label Age:
+                        select.form-select(aria-label='Default select example 2')
+                          option 46-62
+                          option 63 &gt; 
+                      .form-group.col-sm-6
+                        label.form-label Country:
+                        select.form-select(aria-label='Default select example 3')
+                          option Caneda
+                          option Noida
+                          option(selected='') USA
+                          option India
+                          option Africa
+                      .form-group.col-sm-6
+                        label.form-label State:
+                        select.form-select(aria-label='Default select example 4')
+                          option California
+                          option Florida
+                          option(selected='') Georgia
+                          option Connecticut
+                          option Louisiana
+                      .form-group.col-sm-12
+                        label.form-label Address:
+                        textarea.form-control(name='address' rows='5' style='line-height: 22px;')
+                          | 37 Cardinal Lane
+                          | Petersburg, VA 23803
+                          | United States of America
+                          | Zip Code: 85001
+                    button.btn.btn-primary.me-2(type='submit') Submit
+                    button.btn.bg-soft-danger(type='reset') Cancle
+            #chang-pwd.tab-pane.fade(role='tabpanel')
+              .card
+                .card-header.d-flex.justify-content-between
+                  .iq-header-title
+                    h4.card-title Change Password
+                .card-body
+                  form
+                    .form-group
+                      label.form-label(for='cpass') Current Password:
+                      a.float-end(href='#') Forgot Password
+                      input#cpass.form-control(type='Password' value='')
+                    .form-group
+                      label.form-label(for='npass') New Password:
+                      input#npass.form-control(type='Password' value='')
+                    .form-group
+                      label.form-label(for='vpass') Verify Password:
+                      input#vpass.form-control(type='Password' value='')
+                    button.btn.btn-primary.me-2(type='submit') Submit
+                    button.btn.bg-soft-danger(type='reset') Cancle
+            #emailandsms.tab-pane.fade(role='tabpanel')
+              .card
+                .card-header.d-flex.justify-content-between
+                  .header-title
+                    h4.card-title Email and SMS
+                .card-body
+                  form
+                    .form-group.row.align-items-center
+                      label.col-md-3(for='emailnotification') Email Notification:
+                      .col-md-9.form-check.form-switch
+                        input#flexSwitchCheckChecked11.form-check-input(type='checkbox' checked='')
+                        label.form-check-label(for='flexSwitchCheckChecked11') Checked switch checkbox input
+                    .form-group.row.align-items-center
+                      label.col-md-3(for='smsnotification') SMS Notification:
+                      .col-md-9.form-check.form-switch
+                        input#flexSwitchCheckChecked12.form-check-input(type='checkbox' checked='')
+                        label.form-check-label(for='flexSwitchCheckChecked12') Checked switch checkbox input
+                    .form-group.row.align-items-center
+                      label.col-md-3(for='npass') When To Email
+                      .col-md-9
+                        .form-check
+                          input#flexCheckDefault12.form-check-input(type='checkbox' value='')
+                          label.form-check-label(for='flexCheckDefault12')
+                            | You have new notifications.
+                        .form-check.d-block
+                          input#email02.form-check-input(type='checkbox' value='')
+                          label.form-check-label(for='email02') You&apos;re sent a direct message
+                        .form-check.d-block
+                          input#email03.form-check-input(type='checkbox' checked='')
+                          label.form-check-label(for='email03') Someone adds you as a connection
+                    .form-group.row.align-items-center
+                      label.col-md-3(for='npass') When To Escalate Emails
+                      .col-md-9
+                        .form-check
+                          input#email04.form-check-input(type='checkbox' value='')
+                          label.form-check-label(for='email04')
+                            | Upon new order.
+                        .form-check.d-block
+                          input#email05.form-check-input(type='checkbox' value='')
+                          label.form-check-label(for='email05') New membership approval
+                        .form-check.d-block
+                          input#email06.form-check-input(type='checkbox' checked='')
+                          label.form-check-label(for='email06') Member registration
+                    button.btn.btn-primary.me-2(type='submit') Submit
+                    button.btn.bg-soft-danger(type='reset') Cancle
+            #manage-contact.tab-pane.fade(role='tabpanel')
+              .card
+                .card-header.d-flex.justify-content-between
+                  .header-title
+                    h4.card-title Manage Contact
+                .card-body
+                  form
+                    .form-group
+                      label.form-label(for='cno') Contact Number:
+                      input#cno.form-control(type='text' value='001 2536 123 458')
+                    .form-group
+                      label.form-label(for='email') Email:
+                      input#email.form-control(type='text' value='Bnijone@demo.com')
+                    .form-group
+                      label.form-label(for='url') Url:
+                      input#url.form-control(type='text' value='https://getbootstrap.com')
+                    button.btn.btn-primary.me-2(type='submit') Submit
+                    button.btn.bg-soft-danger(type='reset') Cancle
