@@ -4,6 +4,8 @@ const authController = require('../controllers/authController');
 
 const router = express.Router();
 
+// router.use(viewController.alerts);
+
 router.route('/').get(authController.isLoggedIn, viewController.getHomePage);
 router.route('/sign-up').get(viewController.getFormSignUp);
 router
@@ -15,8 +17,10 @@ router.route('/reset-password').get(viewController.getFormResetPassword);
 
 router.route('/group').get(viewController.getGroup);
 
-router.route('/me').get(viewController.getAccount);
-router.route('/profile').get(viewController.getProfile);
+router
+  .route('/profile-edit')
+  .get(authController.protect, viewController.getAccount);
+router.route('/profile').get(authController.protect, viewController.getProfile);
 // .get(authController.protect, viewsController.getProfile);
 
 module.exports = router;

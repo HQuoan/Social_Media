@@ -1,26 +1,5 @@
 /* eslint-disable */
-import axios from 'axios';
-import { showAlert } from './alerts.js';
-
-const template = async function (method, url, to, data, message) {
-  try {
-    const response = await axios({
-      method,
-      url,
-      data,
-    });
-
-    if (response.data.status === 'success') {
-      showAlert('success', message);
-      setTimeout(() => {
-        location.assign(to);
-      }, 1500);
-    }
-  } catch (error) {
-    showAlert('error', error.response.data.message);
-    console.log(error);
-  }
-};
+import template from './templateURL.js';
 
 export const login = async (data) => {
   template('POST', '/api/v1/users/login', '/', data, 'Logged in successfully!');
@@ -31,7 +10,7 @@ export const signup = async (data) => {
 };
 
 export const forgot = async (data) => {
-  template(
+  await template(
     'POST',
     '/api/v1/users/forgotPassword',
     '/reset-password',

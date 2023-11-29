@@ -2,6 +2,17 @@
 const catchAsync = require('../utils/catchAsync');
 // const AppError = require('../utils/appError');
 
+exports.alerts = (req, res, next) => {
+  const { alert } = req.query;
+  if (alert === 'noLogin') {
+    res.locals.alert = 'You are not logged in! Please log in to get access.';
+    return res.status(200).render('./authentication/login', {
+      title: 'Log in',
+    });
+  }
+  next();
+};
+
 exports.getHomePage = catchAsync(async (req, res, next) => {
   // const posts = await Post.find();
 

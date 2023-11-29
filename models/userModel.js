@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const mongoose = require('mongoose');
+const slug = require('mongoose-slug-updater');
 const validator = require('validator');
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
@@ -68,12 +69,18 @@ const userSchema = new mongoose.Schema(
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
+    key: {
+      type: String,
+      slug: ['firstName', 'lastName'],
+      unique: true,
+    },
   },
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
   },
 );
+mongoose.plugin(slug);
 
 userSchema.virtual('username').get(function () {
   return `${this.firstName} ${this.lastName}`;

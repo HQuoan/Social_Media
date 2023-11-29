@@ -21,8 +21,6 @@
           li
             a.d-flex.align-items-center(href='/')
               i.ri-home-line
-          li
-            i.ri-home-line#toastrBtn
           li.nav-item.dropdown
             a#group-drop.dropdown-toggle(href='#' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
               i.ri-group-line
@@ -167,11 +165,11 @@
                         h6.mb-0 Lorem Ipsum generators
                         small.float-left.font-size-12 5 Dec
           li.nav-item.dropdown
-            a#drop-down-arrow.d-flex.align-items-center.dropdown-toggle(href='#' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
-              img.img-fluid.rounded-circle.me-3(src='./assets/images/user/1.jpg' alt='user')
+            a#drop-down-arrow.d-flex.align-items-center.dropdown-toggle(href='#' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' disable)
+              img.img-fluid.rounded-circle.me-3(src=`./img/users/${user.avatar}` alt='user')
               .caption
                 if user
-                  h6.mb-0.line-height= user.username
+                  h6.mb-0.line-height= `Hello, ${user.firstName}!`
                 else
                   h6.mb-0.line-height Guest
             .sub-drop.dropdown-menu.caption-menu(aria-labelledby='drop-down-arrow')
@@ -188,7 +186,7 @@
                       .ms-3
                         h6.mb-0 My Profile
                         p.mb-0.font-size-12 View personal profile details.
-                  a.iq-sub-card.iq-bg-warning-hover(href='/me')
+                  a.iq-sub-card.iq-bg-warning-hover(href='/profile-edit')
                     .d-flex.align-items-center
                       .rounded.card-icon.bg-soft-warning
                         i.ri-profile-line

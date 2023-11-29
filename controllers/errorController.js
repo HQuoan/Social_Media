@@ -35,7 +35,12 @@ const sendErrorDev = (err, req, res) => {
       stack: err.stack,
     });
   }
-
+  if (err.statusCode === 401) {
+    res.locals.alert = 'You are not logged in! Please log in to get access.';
+    return res.status(200).render('./authentication/login', {
+      title: 'Log in',
+    });
+  }
   // B) RENDERED WEBSITE
   console.error('ERROR 💥', err);
   return res.status(err.statusCode).render('error', {
