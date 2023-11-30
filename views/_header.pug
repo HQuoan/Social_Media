@@ -166,12 +166,9 @@
                         small.float-left.font-size-12 5 Dec
           li.nav-item.dropdown
             a#drop-down-arrow.d-flex.align-items-center.dropdown-toggle(href='#' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' disable)
-              img.img-fluid.rounded-circle.me-3(src=`./img/users/${user.avatar}` alt='user')
+              img.img-fluid.rounded-circle.me-3(src=`./img/users/${user && user.avatar !== undefined ? user.avatar : 'default.jpg'}` alt='user')
               .caption
-                if user
-                  h6.mb-0.line-height= `Hello, ${user.firstName}!`
-                else
-                  h6.mb-0.line-height Guest
+                h6.mb-0.line-height= `Hello, ${user && user.firstName !== undefined ? user.firstName : 'Guest'}!`
             .sub-drop.dropdown-menu.caption-menu(aria-labelledby='drop-down-arrow')
               .card.shadow-none.m-0
                 .card-header.bg-primary

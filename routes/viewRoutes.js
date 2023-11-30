@@ -6,21 +6,16 @@ const router = express.Router();
 
 // router.use(viewController.alerts);
 
-router.route('/').get(authController.isLoggedIn, viewController.getHomePage);
-router.route('/sign-up').get(viewController.getFormSignUp);
-router
-  .route('/login')
-  .get(authController.isLoggedIn, viewController.getFormLogin);
-router.route('/forgot-password').get(viewController.getFormForgotPassword);
-router.route('/reset-password').get(viewController.getFormResetPassword);
-// router.route('./logout').get(viewController.logout);
+router.get('/', authController.isLoggedIn, viewController.getHomePage);
+router.get('/sign-up', viewController.getFormSignUp);
+router.get('/login', authController.isLoggedIn, viewController.getFormLogin);
+router.get('/forgot-password', viewController.getFormForgotPassword);
+router.get('/reset-password', viewController.getFormResetPassword);
 
-router.route('/group').get(viewController.getGroup);
+router.get('/group', viewController.getGroup);
 
-router
-  .route('/profile-edit')
-  .get(authController.protect, viewController.getAccount);
-router.route('/profile').get(authController.protect, viewController.getProfile);
+router.get('/profile-edit', authController.protect, viewController.getAccount);
+router.get('/profile', authController.protect, viewController.getProfile);
 // .get(authController.protect, viewsController.getProfile);
 
 module.exports = router;
