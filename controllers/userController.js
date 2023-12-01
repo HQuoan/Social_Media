@@ -24,7 +24,6 @@ const upload = multer({
 exports.uploadUserAvatar = upload.single('avatar');
 
 exports.resizeUserAvatar = catchAsync(async (req, res, next) => {
-  console.log(req.body);
   if (!req.file) return next();
 
   req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
@@ -53,6 +52,8 @@ exports.getMe = (req, res, next) => {
 };
 
 exports.updateMe = catchAsync(async (req, res, next) => {
+  console.log(req.body);
+
   // 1) Create error if user POSTs password data
   if (req.body.password || req.body.passwordConfirm) {
     return next(
@@ -77,7 +78,6 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     'address',
   );
   if (req.file) filterdBody.avatar = req.file.filename;
-  filterdBody.dOb = filterdBody.dOb.split('-').join('/');
   console.log(filterdBody);
 
   // 3) Update user document

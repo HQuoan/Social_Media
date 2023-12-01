@@ -2,6 +2,7 @@
 import '@babel/polyfill';
 import { login, logout, signup, forgot, reset } from './login.js';
 import { updateUser } from './user.js';
+import { createPost } from './post.js';
 import { showAlert } from './alerts.js';
 
 const loginForm = document.querySelector('.login-form');
@@ -11,33 +12,14 @@ const resetForm = document.querySelector('.reset-form');
 const btnLogout = document.querySelector('.btnLogout');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
+const postDataForm = document.querySelector('.form-post');
+
 // sử dụng cho các form CÓ ảnh
 const getFormData2 = function (form) {
-  const btnSubmit = form.querySelector('.btnSubmit');
-  btnSubmit.innerHTML = `<i class="fas fa-sync-alt fa-spin"></i> Waiting`;
+  // const btnSubmit = form.querySelector('.btnSubmit');
+  // btnSubmit.innerHTML = `<i class="fas fa-sync-alt fa-spin"></i> Waiting`;
 
-  const formData = new FormData();
-  const inputs = form.querySelectorAll('input');
-  const textareas = form.querySelectorAll('textarea');
-
-  inputs.forEach((input) => {
-    if (input.type === 'radio') {
-      if (input.checked) {
-        formData.append(input.name, input.value);
-      }
-    } else if (input.type === 'text') {
-      formData.append(input.name, input.value);
-    } else if (input.type === 'file') {
-      formData.append(input.name, input.files[0]);
-    } else if (input.type === 'date') {
-      formData.append(input.name, input.value);
-    }
-  });
-
-  textareas.forEach((el) => {
-    formData.append(el.name, el.value);
-  });
-
+  const formData = new FormData(form);
   return formData;
 };
 
@@ -65,6 +47,13 @@ const getFormData = function (form) {
 
   return formData;
 };
+
+if (postDataForm) {
+  postDataForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    createPost(getFormData2(postDataForm));
+  });
+}
 
 if (userDataForm) {
   userDataForm.addEventListener('submit', async (e) => {
@@ -129,4 +118,44 @@ if (resetForm) {
 
     resetForm.querySelector('.btnSubmit').innerHTML = 'Submit';
   });
+}
+
+const fileInput = document.getElementById('fileInput');
+const imagePreview = document.getElementById('imagePreview');
+const upImg = document.getElementById('upImg');
+
+fileInput.addEventListener('change', function () {
+  previewImages(this.files);
+});
+
+upImg.addEventListener('click', function () {
+  fileInput.click();
+});
+
+function previewImages(files) {
+  for (let i = 0; i < files.length; i++) {
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      const imgContainer = document.createElement('div');
+      imgContainer.classList.add('image-container');
+
+      const imgElement = document.createElement('img');
+      imgElement.src = e.target.result;
+      imgElement.classList.add('preview-image');
+      imgContainer.appendChild(imgElement);
+
+      const deleteIcon = document.createElement('span');
+      deleteIcon.classList.add('delete-icon');
+      deleteIcon.innerHTML = '&#10006;'; // Unicode for 'X' character
+      deleteIcon.addEventListener('click', function () {
+        imgContainer.remove(); // Xóa ảnh khi người dùng nhấp vào biểu tượng xóa
+      });
+
+      imgContainer.appendChild(deleteIcon);
+      imagePreview.appendChild(imgContainer);
+    };
+
+    reader.readAsDataURL(files[i]);
+  }
 }

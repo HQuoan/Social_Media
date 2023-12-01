@@ -2,16 +2,12 @@ const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema(
   {
-    title: {
+    content: {
       type: String,
       trim: true,
-      required: [true, 'A post must have a title'],
+      required: [true, 'A post must have a content'],
     },
-    description: {
-      type: String,
-      trim: true,
-      required: [true, 'A post must have a description'],
-    },
+    images: [String],
     status: {
       type: String,
       enum: ['public', 'friend', 'private'],

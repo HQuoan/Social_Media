@@ -22,3 +22,28 @@
 .alert--error {
   background-color: #eb4d4b;
 }
+
+.preview-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.image-container {
+  position: relative;
+  margin: 5px;
+}
+
+.preview-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.delete-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 18px;
+  color: red;
+  cursor: pointer;
+}

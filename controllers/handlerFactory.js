@@ -23,6 +23,11 @@ exports.getAll = (Model) =>
 
 exports.createOne = (Model) =>
   catchAsync(async (req, res, next) => {
+    if (req.files) {
+      const filenames = req.files.map((item) => item.filename);
+      req.body.images = filenames;
+    }
+    console.log(req.body);
     const doc = await Model.create(req.body);
 
     res.status(201).json({

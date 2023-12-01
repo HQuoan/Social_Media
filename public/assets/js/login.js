@@ -6,7 +6,13 @@ export const login = async (data) => {
 };
 
 export const signup = async (data) => {
-  template('POST', '/api/v1/users/signup', '/', data, 'Sign up successfully!');
+  await template(
+    'POST',
+    '/api/v1/users/signup',
+    '/',
+    data,
+    'Sign up successfully!',
+  );
 };
 
 export const forgot = async (data) => {
