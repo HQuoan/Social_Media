@@ -93,34 +93,13 @@ block content
                                 img.avatar-60.rounded-circle.img-fluid(src='./assets/images/user/1.jpg' alt='userimg')
                               h6 Your Story
                             .card-post-toolbar
-                              .dropdown
-                                span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
-                                  span.btn.btn-primary Friend
-                                .dropdown-menu.m-0.p-0
-                                  a.dropdown-item.p-3(href='#')
-                                    .d-flex.align-items-top
-                                      i.ri-save-line.h4
-                                      .data.ms-2
-                                        h6 Public
-                                        p.mb-0 Anyone on or off Facebook
-                                  a.dropdown-item.p-3(href='#')
-                                    .d-flex.align-items-top
-                                      i.ri-close-circle-line.h4
-                                      .data.ms-2
-                                        h6 Friends
-                                        p.mb-0 Your Friend on facebook
-                                  a.dropdown-item.p-3(href='#')
-                                    .d-flex.align-items-top
-                                      i.ri-user-unfollow-line.h4
-                                      .data.ms-2
-                                        h6 Friends except
-                                        p.mb-0 Don&apos;t show to some friends
-                                  a.dropdown-item.p-3(href='#')
-                                    .d-flex.align-items-top
-                                      i.ri-notification-line.h4
-                                      .data.ms-2
-                                        h6 Only Me
-                                        p.mb-0 Only me
+                              select.form-select.m-0.pl-4.bg-primary.text-white(name='status')
+                                option(value='public')
+                                  | Public
+                                option(value='friends')
+                                  | Friends
+                                option(value='private')
+                                  | Only Me
                         button.btn.btn-primary.d-block.w-100.mt-3(type='submit') Post
           .col-sm-12
             .card.card-block.card-stretch.card-height

@@ -44,10 +44,10 @@ const userSchema = new mongoose.Schema(
       enum: ['admin', 'user'],
       default: 'user',
     },
-    createDate: {
-      type: Date,
-      default: Date.now(),
-    },
+    // createDate: {
+    //   type: Date,
+    //   default: Date.now(),
+    // },
     avatar: {
       type: String,
       default: 'default.jpg',
@@ -76,6 +76,7 @@ const userSchema = new mongoose.Schema(
     },
   },
   {
+    timestamps: true,
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
   },

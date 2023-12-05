@@ -27,7 +27,7 @@ exports.createOne = (Model) =>
       const filenames = req.files.map((item) => item.filename);
       req.body.images = filenames;
     }
-    console.log(req.body);
+
     const doc = await Model.create(req.body);
 
     res.status(201).json({
@@ -57,7 +57,7 @@ exports.getOne = (Model, popOptions) =>
 
 exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    req.body.updateDate = Date.now();
+    // req.body.updateDate = Date.now();
 
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true, // Trả về đối tượng sau khi cập nhật

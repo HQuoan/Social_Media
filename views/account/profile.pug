@@ -70,6 +70,65 @@ block content
           #timeline.tab-pane.fade.show.active(role='tabpanel')
             .card-body.p-0
               .row
+                form.form-post 
+                  #post-modal.modal.fade(tabindex='-1' aria-labelledby='post-modalLabel' aria-hidden='true')
+                    .modal-dialog.modal-lg.modal-fullscreen-sm-down
+                      .modal-content
+                        .modal-header
+                          h5#post-modalLabel.modal-title Create Post
+                          button.btn.btn-secondary(type='button' data-bs-dismiss='modal')
+                            i.ri-close-fill
+                        .modal-body(style='max-height: 75vh; overflow-y: auto;')
+                          .d-flex.align-items-center
+                            .user-img
+                              img.avatar-60.rounded-circle.img-fluid(src='./assets/images/user/1.jpg' alt='userimg')
+                            form.post-text.ms-3.w-100()
+                              textarea.form-control(name='content' rows='5' style='margin-left: 20px;line-height: 22px;' placeholder='Write something here...')
+                          .d-flex.align-items-center
+                            input.form-control(type = 'file' id='fileInput' name='images' multiple hidden)
+                            #imagePreview.preview-container
+                          hr
+                          ul.d-flex.flex-wrap.align-items-center.list-inline.m-0.p-0
+                            li.col-md-6.mb-3
+                              #upImg.bg-soft-primary.rounded.p-2.pointer.me-3
+                                img.img-fluid(src='../assets/images/small/07.png' alt='icon')
+                                |  Photo/Video
+                            li.col-md-6.mb-3
+                              .bg-soft-primary.rounded.p-2.pointer.me-3
+                                a(href='#')
+                                img.img-fluid(src='../assets/images/small/09.png' alt='icon')
+                                |  Feeling/Activity
+                            li.col-md-6.mb-3
+                              .bg-soft-primary.rounded.p-2.pointer.me-3
+                                a(href='#')
+                                img.img-fluid(src='../assets/images/small/08.png' alt='icon')
+                                |  Tag Friend
+                            li.col-md-6.mb-3
+                              .bg-soft-primary.rounded.p-2.pointer.me-3
+                                a(href='#')
+                                img.img-fluid(src='../assets/images/small/13.png' alt='icon')
+                                |  Watch Party
+                            li.col-md-6.mb-3
+                              .bg-soft-primary.rounded.p-2.pointer.me-3
+                                a(href='#')
+                                img.img-fluid(src='../assets/images/small/14.png' alt='icon')
+                                |  Play with Friends
+                          hr
+                          .other-option
+                            .d-flex.align-items-center.justify-content-between
+                              .d-flex.align-items-center
+                                .user-img.me-3
+                                  img.avatar-60.rounded-circle.img-fluid(src='../assets/images/user/1.jpg' alt='userimg')
+                                h6 Your Story
+                              .card-post-toolbar
+                                select.form-select.m-0.pl-4.bg-primary.text-white(name='status')
+                                  option(value='public')
+                                    | Public
+                                  option(value='friends')
+                                    | Friends
+                                  option(value='private')
+                                    | Only Me
+                          button.btn.btn-primary.d-block.w-100.mt-3(type='submit') Post
                 .col-lg-4
                   .card
                     .card-body
@@ -77,35 +136,6 @@ block content
                         span.badge.badge-pill.bg-primary.font-weight-normal.ms-auto.me-1
                           i.ri-star-line
                         |  27 Items for yoou
-                  .card
-                    .card-header.d-flex.justify-content-between
-                      .header-title
-                        h4.card-title Life Event
-                      .card-header-toolbar.d-flex.align-items-center
-                        p.m-0
-                          a(href='javacsript:void();')  Create 
-                    .card-body
-                      .row
-                        .col-sm-12
-                          .event-post.position-relative
-                            a(href='#')
-                              img.img-fluid.rounded(src='../assets/images/page-img/07.jpg' alt='gallary-image')
-                            .job-icon-position
-                              .job-icon.bg-primary.p-2.d-inline-block.rounded-circle
-                                i.ri-briefcase-line.text-white
-                            .card-body.text-center.p-2
-                              h5 Started New Job at Apple
-                              p January 24, 2019
-                        .col-sm-12
-                          .event-post.position-relative
-                            a(href='#')
-                              img.img-fluid.rounded(src='../assets/images/page-img/06.jpg' alt='gallary-image')
-                            .job-icon-position
-                              .job-icon.bg-primary.p-2.d-inline-block.rounded-circle
-                                i.ri-briefcase-line.text-white
-                            .card-body.text-center.p-2
-                              h5 Freelance Photographer
-                              p.mb-0 January 24, 2019
                   .card
                     .card-header.d-flex.justify-content-between
                       .header-title
@@ -187,7 +217,7 @@ block content
                           a(href='#')
                             img.img-fluid(src='../assets/images/user/05.jpg' alt='gallary-image')
                           h6.mt-2.text-center Greta Life
-                .col-lg-8
+                .col-lg-8(style='max-height: 120vh; overflow-y: auto;')
                   #post-modal-data.card
                     .card-header.d-flex.justify-content-between
                       .header-title
@@ -201,14 +231,17 @@ block content
                       hr
                       ul.post-opt-block.d-flex.list-inline.m-0.p-0.flex-wrap
                         li.bg-soft-primary.rounded.p-2.pointer.d-flex.align-items-center.me-3.mb-md-0.mb-2
-                          img.img-fluid.me-2(src='../assets/images/small/07.png' alt='icon')
-                          |  Photo/Video
-                        li.bg-soft-primary.rounded.p-2.pointer.d-flex.align-items-center.me-3.mb-md-0.mb-2
-                          img.img-fluid.me-2(src='../assets/images/small/08.png' alt='icon')
-                          |  Tag Friend
+                          a(href='#' data-bs-toggle='modal' data-bs-target='#post-modal')
+                            img.img-fluid.me-2(src='../assets/images/small/07.png' alt='icon')
+                            |  Photo/Video
                         li.bg-soft-primary.rounded.p-2.pointer.d-flex.align-items-center.me-3
-                          img.img-fluid.me-2(src='../assets/images/small/09.png' alt='icon')
-                          |  Feeling/Activity
+                          a(href='#' data-bs-toggle='modal' data-bs-target='#post-modal')
+                            img.img-fluid.me-2(src='../assets/images/small/09.png' alt='icon')
+                            |  Feeling/Activity
+                        li.bg-soft-primary.rounded.p-2.pointer.d-flex.align-items-center.me-3.mb-md-0.mb-2
+                          a(href='#' data-bs-toggle='modal' data-bs-target='#post-modal')
+                            img.img-fluid.me-2(src='../assets/images/small/08.png' alt='icon')
+                            |  Tag Friend
                         li.bg-soft-primary.rounded.p-2.pointer.text-center
                           .card-header-toolbar.d-flex.align-items-center
                             .dropdown
@@ -220,98 +253,6 @@ block content
                                 a.dropdown-item(href='#' data-bs-toggle='modal' data-bs-target='#post-modal') Gif
                                 a.dropdown-item(href='#' data-bs-toggle='modal' data-bs-target='#post-modal') Watch Party
                                 a.dropdown-item(href='#' data-bs-toggle='modal' data-bs-target='#post-modal') Play with Friend
-                    #post-modal.modal.fade(tabindex='-1' aria-labelledby='post-modalLabel' aria-hidden='true')
-                      .modal-dialog.modal-lg.modal-fullscreen-sm-down
-                        .modal-content
-                          .modal-header
-                            h5#post-modalLabel.modal-title Create Post
-                            button.btn.btn-secondary(type='button' data-bs-dismiss='modal')
-                              i.ri-close-fill
-                          .modal-body
-                            .d-flex.align-items-center
-                              .user-img
-                                img.avatar-60.rounded-circle.img-fluid(src='../assets/images/user/1.jpg' alt='userimg')
-                              form.post-text.ms-3.w-100(action='#')
-                                input.form-control.rounded(type='text' placeholder='Write something here...' style='border:none;')
-                            hr
-                            ul.d-flex.flex-wrap.align-items-center.list-inline.m-0.p-0
-                              li.col-md-6.mb-3
-                                .bg-soft-primary.rounded.p-2.pointer.me-3
-                                  a(href='#')
-                                  img.img-fluid(src='../assets/images/small/07.png' alt='icon')
-                                  |  Photo/Video
-                              li.col-md-6.mb-3
-                                .bg-soft-primary.rounded.p-2.pointer.me-3
-                                  a(href='#')
-                                  img.img-fluid(src='../assets/images/small/08.png' alt='icon')
-                                  |  Tag Friend
-                              li.col-md-6.mb-3
-                                .bg-soft-primary.rounded.p-2.pointer.me-3
-                                  a(href='#')
-                                  img.img-fluid(src='../assets/images/small/09.png' alt='icon')
-                                  |  Feeling/Activity
-                              li.col-md-6.mb-3
-                                .bg-soft-primary.rounded.p-2.pointer.me-3
-                                  a(href='#')
-                                  img.img-fluid(src='../assets/images/small/10.png' alt='icon')
-                                  |  Check in
-                              li.col-md-6.mb-3
-                                .bg-soft-primary.rounded.p-2.pointer.me-3
-                                  a(href='#')
-                                  img.img-fluid(src='../assets/images/small/11.png' alt='icon')
-                                  |  Live Video
-                              li.col-md-6.mb-3
-                                .bg-soft-primary.rounded.p-2.pointer.me-3
-                                  a(href='#')
-                                  img.img-fluid(src='../assets/images/small/12.png' alt='icon')
-                                  |  Gif
-                              li.col-md-6.mb-3
-                                .bg-soft-primary.rounded.p-2.pointer.me-3
-                                  a(href='#')
-                                  img.img-fluid(src='../assets/images/small/13.png' alt='icon')
-                                  |  Watch Party
-                              li.col-md-6.mb-3
-                                .bg-soft-primary.rounded.p-2.pointer.me-3
-                                  a(href='#')
-                                  img.img-fluid(src='../assets/images/small/14.png' alt='icon')
-                                  |  Play with Friends
-                            hr
-                            .other-option
-                              .d-flex.align-items-center.justify-content-between
-                                .d-flex.align-items-center
-                                  .user-img.me-3
-                                    img.avatar-60.rounded-circle.img-fluid(src='../assets/images/user/1.jpg' alt='userimg')
-                                  h6 Your Story
-                                .card-post-toolbar
-                                  .dropdown
-                                    span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
-                                      span.btn.btn-primary Friend
-                                    .dropdown-menu.m-0.p-0
-                                      a.dropdown-item.p-3(href='#')
-                                        .d-flex.align-items-top
-                                          i.ri-save-line.h4
-                                          .data.ms-2
-                                            h6 Public
-                                            p.mb-0 Anyone on or off Facebook
-                                      a.dropdown-item.p-3(href='#')
-                                        .d-flex.align-items-top
-                                          i.ri-close-circle-line.h4
-                                          .data.ms-2
-                                            h6 Friends
-                                            p.mb-0 Your Friend on facebook
-                                      a.dropdown-item.p-3(href='#')
-                                        .d-flex.align-items-top
-                                          i.ri-user-unfollow-line.h4
-                                          .data.ms-2
-                                            h6 Friends except
-                                            p.mb-0 Don&apos;t show to some friends
-                                      a.dropdown-item.p-3(href='#')
-                                        .d-flex.align-items-top
-                                          i.ri-notification-line.h4
-                                          .data.ms-2
-                                            h6 Only Me
-                                            p.mb-0 Only me
-                            button.btn.btn-primary.d-block.w-100.mt-3(type='submit') Post
                   .card
                     .card-body
                       .post-item
