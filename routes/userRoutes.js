@@ -1,8 +1,11 @@
 const express = require('express');
 const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
+const postRouter = require('./postRoutes');
 
 const router = express.Router();
+
+router.use('/:userId/posts', postRouter);
 
 router.post('/signup', authController.signup);
 router.post('/login', userController.uploadUserAvatar, authController.login);

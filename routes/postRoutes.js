@@ -4,7 +4,7 @@ const multer = require('multer');
 const postController = require('../controllers/postController');
 const authController = require('../controllers/authController');
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 // Set up multer middleware with diskStorage
 const storage = multer.diskStorage({
@@ -17,16 +17,6 @@ const storage = multer.diskStorage({
   },
 });
 
-// const multerStorage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, 'public/img/users');
-//   },
-//   filename: (req, file, cb) => {
-//     const ext = file.mimetype.split('/')[1];
-//     cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
-//   }
-// });
-
 const upload = multer({ storage: storage });
 
 router
@@ -35,6 +25,7 @@ router
   .post(
     authController.protect,
     upload.array('images'),
+    postController.setUserIds,
     postController.createPost,
   );
 

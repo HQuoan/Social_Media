@@ -1,9 +1,15 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const moment = require('moment');
 const mongoose = require('mongoose');
+const dayAgo = require('../utils/dayAgo');
 
 const postSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      required: [true, 'Comment must belong to a user.'],
+    },
     content: {
       type: String,
       trim: true,
@@ -15,13 +21,6 @@ const postSchema = new mongoose.Schema(
       enum: ['public', 'friends', 'private'],
       default: 'public',
     },
-    // createDate: {
-    //   type: Date,
-    //   default: Date.now(),
-    // },
-    // updateDate: {
-    //   type: Date,
-    // },
   },
   {
     timestamps: true,
@@ -41,7 +40,9 @@ postSchema.virtual('moment').get(function () {
   const minutes = duration.minutes();
   const seconds = duration.seconds();
 
-  return `${days} dd: ${hours} hh: ${minutes} mm: ${seconds} ss`;
+  const rs = dayAgo(`${days} dd: ${hours} hh: ${minutes} mm: ${seconds} ss`);
+
+  return rs;
 });
 
 postSchema.virtual('comments', {
