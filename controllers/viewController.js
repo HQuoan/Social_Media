@@ -1,6 +1,7 @@
 const Post = require('../models/postModel');
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
+// const APIFeatures = require('./../utils/apiFeatures');
 // const AppError = require('../utils/appError');
 
 exports.alerts = (req, res, next) => {
@@ -61,7 +62,11 @@ exports.getAccount = catchAsync(async (req, res, next) => {
 
 exports.getProfile = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id);
-  const posts = await Post.find({ user: req.user.id });
+  const posts = await Post.find({ user: req.user.id })
+    .limit(2)
+    .sort('-createdAt');
+
+  console.log(posts);
 
   res.status(200).render('./account/profile', {
     title: 'Profile',

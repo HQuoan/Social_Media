@@ -1,7 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const moment = require('moment');
 const mongoose = require('mongoose');
-const dayAgo = require('../utils/dayAgo');
 
 const postSchema = new mongoose.Schema(
   {
@@ -31,16 +30,7 @@ const postSchema = new mongoose.Schema(
 
 postSchema.virtual('moment').get(function () {
   const { createdAt } = this;
-  const currentTime = moment();
-
-  const duration = moment.duration(currentTime.diff(createdAt));
-
-  const days = duration.days();
-  const hours = duration.hours();
-  const minutes = duration.minutes();
-  const seconds = duration.seconds();
-
-  const rs = dayAgo(`${days} dd: ${hours} hh: ${minutes} mm: ${seconds} ss`);
+  const rs = moment(createdAt).fromNow();
 
   return rs;
 });
@@ -49,6 +39,15 @@ postSchema.virtual('comments', {
   ref: 'Comment',
   foreignField: 'post',
   localField: '_id',
+});
+
+postSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'user',
+    select: 'firstName lastName avatar',
+  });
+
+  next();
 });
 
 const Post = mongoose.model('Post', postSchema);

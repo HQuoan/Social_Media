@@ -1,0 +1,775 @@
+extend base
+
+block content
+  #content-page.content-page
+    .container
+      .row
+        .col-lg-12.row.m-0.p-0
+          .col-sm-12
+            #post-modal-data.card.card-block.card-stretch.card-height
+              .card-header.d-flex.justify-content-between
+                .header-title
+                  h4.card-title Create Post
+              .card-body
+                .d-flex.align-items-center
+                  .user-img
+                    img.avatar-60.rounded-circle(src='./assets/images/user/1.jpg' alt='userimg')
+                  form.post-text.ms-3.w-100(data-bs-toggle='modal' data-bs-target='#post-modal' action='javascript:void();')
+                    input.form-control.rounded(type='text' placeholder='Write something here...' style='border:none;')
+                hr
+                ul.post-opt-block.d-flex.list-inline.m-0.p-0.flex-wrap
+                  li.me-3.mb-md-0.mb-2
+                    a.btn.btn-soft-primary(href='#' data-bs-toggle='modal' data-bs-target='#post-modal')
+                      img.img-fluid.me-2(src='./assets/images/small/07.png' alt='icon')
+                      |  Photo/Video
+                  li.me-3
+                    a.btn.btn-soft-primary(href='#' data-bs-toggle='modal' data-bs-target='#post-modal')
+                      img.img-fluid.me-2(src='./assets/images/small/09.png' alt='icon')
+                      |  Feeling/Activity
+                  li.me-3.mb-md-0.mb-2
+                    a.btn.btn-soft-primary(href='#' data-bs-toggle='modal' data-bs-target='#post-modal')
+                      img.img-fluid.me-2(src='./assets/images/small/08.png' alt='icon')
+                      |  Tag Friend
+                  li
+                    button.btn.btn-soft-primary
+                      .card-header-toolbar.d-flex.align-items-center
+                        .dropdown
+                          #post-option.dropdown-toggle(data-bs-toggle='dropdown')
+                            i.ri-more-fill
+                          .dropdown-menu.dropdown-menu-right(aria-labelledby='post-option' style='')
+                            a.dropdown-item(href='#' data-bs-toggle='modal' data-bs-target='#post-modal') Check in
+                            a.dropdown-item(href='#' data-bs-toggle='modal' data-bs-target='#post-modal') Live Video
+                            a.dropdown-item(href='#' data-bs-toggle='modal' data-bs-target='#post-modal') Gif
+                            a.dropdown-item(href='#' data-bs-toggle='modal' data-bs-target='#post-modal') Watch Party
+                            a.dropdown-item(href='#' data-bs-toggle='modal' data-bs-target='#post-modal') Play with Friend
+              form.form-post 
+                #post-modal.modal.fade(tabindex='-1' aria-labelledby='post-modalLabel' aria-hidden='true')
+                  .modal-dialog.modal-fullscreen-sm-down
+                    .modal-content
+                      .modal-header
+                        h5#post-modalLabel.modal-title Create Post
+                        button.btn.btn-secondary(type='button' data-bs-dismiss='modal')
+                          i.ri-close-fill
+                      .modal-body(style='max-height: 75vh; overflow-y: auto;')
+                        .d-flex.align-items-center
+                          .user-img
+                            img.avatar-60.rounded-circle.img-fluid(src='./assets/images/user/1.jpg' alt='userimg')
+                          form.post-text.ms-3.w-100()
+                            textarea.form-control(name='content' rows='5' style='margin-left: 20px;line-height: 22px;' placeholder='Write something here...')
+                        .d-flex.align-items-center
+                          input.form-control(type = 'file' id='fileInput' name='images' multiple hidden)
+                          #imagePreview.preview-container
+                        hr
+                        ul.d-flex.flex-wrap.align-items-center.list-inline.m-0.p-0
+                          li.col-md-6.mb-3
+                            #upImg.bg-soft-primary.rounded.p-2.pointer.me-3
+                              img.img-fluid(src='./assets/images/small/07.png' alt='icon')
+                              |  Photo/Video
+                          li.col-md-6.mb-3
+                            .bg-soft-primary.rounded.p-2.pointer.me-3
+                              a(href='#')
+                              img.img-fluid(src='./assets/images/small/09.png' alt='icon')
+                              |  Feeling/Activity
+                          li.col-md-6.mb-3
+                            .bg-soft-primary.rounded.p-2.pointer.me-3
+                              a(href='#')
+                              img.img-fluid(src='./assets/images/small/08.png' alt='icon')
+                              |  Tag Friend
+                          li.col-md-6.mb-3
+                            .bg-soft-primary.rounded.p-2.pointer.me-3
+                              a(href='#')
+                              img.img-fluid(src='./assets/images/small/13.png' alt='icon')
+                              |  Watch Party
+                          li.col-md-6.mb-3
+                            .bg-soft-primary.rounded.p-2.pointer.me-3
+                              a(href='#')
+                              img.img-fluid(src='./assets/images/small/14.png' alt='icon')
+                              |  Play with Friends
+                        hr
+                        .other-option
+                          .d-flex.align-items-center.justify-content-between
+                            .d-flex.align-items-center
+                              .user-img.me-3
+                                img.avatar-60.rounded-circle.img-fluid(src='./assets/images/user/1.jpg' alt='userimg')
+                              h6 Your Story
+                            .card-post-toolbar
+                              select.form-select.m-0.pl-4.bg-primary.text-white(name='status')
+                                option(value='public')
+                                  | Public
+                                option(value='friends')
+                                  | Friends
+                                option(value='private')
+                                  | Only Me
+                        button.btn.btn-primary.d-block.w-100.mt-3(type='submit') Post
+          .col-sm-12
+            .card.card-block.card-stretch.card-height
+              .card-body
+                .user-post-data
+                  .d-flex.justify-content-between
+                    .me-3
+                      img.rounded-circle.img-fluid(src='./assets/images/user/01.jpg' alt='')
+                    .w-100
+                      .d-flex.justify-content-between
+                        div
+                          h5.mb-0.d-inline-block Anna Sthesia
+                          span.mb-0.d-inline-block Add New Post
+                          p.mb-0.text-primary Just Now
+                        .card-post-toolbar
+                          .dropdown
+                            span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+                              i.ri-more-fill
+                            .dropdown-menu.m-0.p-0
+                              a.dropdown-item.p-3(href='#')
+                                .d-flex.align-items-top
+                                  .h4
+                                    i.ri-save-line
+                                  .data.ms-2
+                                    h6 Save Post
+                                    p.mb-0 Add this to your saved items
+                              a.dropdown-item.p-3(href='#')
+                                .d-flex.align-items-top
+                                  i.ri-close-circle-line.h4
+                                  .data.ms-2
+                                    h6 Hide Post
+                                    p.mb-0 See fewer posts like this.
+                              a.dropdown-item.p-3(href='#')
+                                .d-flex.align-items-top
+                                  i.ri-user-unfollow-line.h4
+                                  .data.ms-2
+                                    h6 Unfollow User
+                                    p.mb-0 Stop seeing posts but stay friends.
+                              a.dropdown-item.p-3(href='#')
+                                .d-flex.align-items-top
+                                  i.ri-notification-line.h4
+                                  .data.ms-2
+                                    h6 Notifications
+                                    p.mb-0 Turn on notifications for this post
+                .mt-3
+                  p
+                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus
+                .user-post
+                  .d-grid.grid-rows-2.grid-flow-col.gap-3
+                    .row-span-2.row-span-md-1
+                      img.img-fluid.rounded.w-100(src='./assets/images/page-img/p2.jpg' alt='post-image')
+                    .row-span-1
+                      img.img-fluid.rounded.w-100(src='./assets/images/page-img/p1.jpg' alt='post-image')
+                    .row-span-1
+                      img.img-fluid.rounded.w-100(src='./assets/images/page-img/p3.jpg' alt='post-image')
+                .comment-area.mt-3
+                  .d-flex.justify-content-between.align-items-center.flex-wrap
+                    .like-block.position-relative.d-flex.align-items-center
+                      .d-flex.align-items-center
+                        .like-data
+                          .dropdown
+                            span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+                              img.img-fluid(src='./assets/images/icon/01.png' alt='')
+                            .dropdown-menu.py-2
+                              a.ms-2.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Like')
+                                img.img-fluid(src='./assets/images/icon/01.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Love')
+                                img.img-fluid(src='./assets/images/icon/02.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Happy')
+                                img.img-fluid(src='./assets/images/icon/03.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='HaHa')
+                                img.img-fluid(src='./assets/images/icon/04.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Think')
+                                img.img-fluid(src='./assets/images/icon/05.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Sade')
+                                img.img-fluid(src='./assets/images/icon/06.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Lovely')
+                                img.img-fluid(src='./assets/images/icon/07.png' alt='')
+                        .total-like-block.ms-2.me-3
+                          .dropdown
+                            span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+                              | 140 Likes
+                            .dropdown-menu
+                              a.dropdown-item(href='#') Max Emum
+                              a.dropdown-item(href='#') Bill Yerds
+                              a.dropdown-item(href='#') Hap E. Birthday
+                              a.dropdown-item(href='#') Tara Misu
+                              a.dropdown-item(href='#') Midge Itz
+                              a.dropdown-item(href='#') Sal Vidge
+                              a.dropdown-item(href='#') Other
+                      .total-comment-block
+                        .dropdown
+                          span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+                            | 20 Comment
+                          .dropdown-menu
+                            a.dropdown-item(href='#') Max Emum
+                            a.dropdown-item(href='#') Bill Yerds
+                            a.dropdown-item(href='#') Hap E. Birthday
+                            a.dropdown-item(href='#') Tara Misu
+                            a.dropdown-item(href='#') Midge Itz
+                            a.dropdown-item(href='#') Sal Vidge
+                            a.dropdown-item(href='#') Other
+                    .share-block.d-flex.align-items-center.feather-icon.mt-2.mt-md-0
+                      a(href='javascript:void();' data-bs-toggle='offcanvas' data-bs-target='#share-btn' aria-controls='share-btn')
+                        i.ri-share-line
+                        span.ms-1 99 Share
+                  hr
+                  ul.post-comments.list-inline.p-0.m-0
+                    li.mb-2
+                      .d-flex
+                        .user-img
+                          img.avatar-35.rounded-circle.img-fluid(src='./assets/images/user/02.jpg' alt='userimg')
+                        .comment-data-block.ms-3
+                          h6 Monty Carlo
+                          p.mb-0 Lorem ipsum dolor sit amet
+                          .d-flex.flex-wrap.align-items-center.comment-activity
+                            a(href='javascript:void();') like
+                            a(href='javascript:void();') reply
+                            a(href='javascript:void();') translate
+                            span  5 min 
+                    li
+                      .d-flex
+                        .user-img
+                          img.avatar-35.rounded-circle.img-fluid(src='./assets/images/user/03.jpg' alt='userimg')
+                        .comment-data-block.ms-3
+                          h6 Paul Molive
+                          p.mb-0 Lorem ipsum dolor sit amet
+                          .d-flex.flex-wrap.align-items-center.comment-activity
+                            a(href='javascript:void();') like
+                            a(href='javascript:void();') reply
+                            a(href='javascript:void();') translate
+                            span  5 min 
+                  form.comment-text.d-flex.align-items-center.mt-3(action='javascript:void(0);')
+                    input.form-control.rounded(type='text' placeholder='Enter Your Comment')
+                    .comment-attagement.d-flex
+                      a(href='javascript:void();')
+                        i.ri-link.me-3
+                      a(href='javascript:void();')
+                        i.ri-user-smile-line.me-3
+                      a(href='javascript:void();')
+                        i.ri-camera-line.me-3
+          .col-sm-12
+            .card.card-block.card-stretch.card-height
+              .card-body
+                .user-post-data
+                  .d-flex.justify-content-between
+                    .me-3
+                      img.rounded-circle.img-fluid(src='./assets/images/user/03.jpg' alt='')
+                    .w-100
+                      .d-flex.justify-content-between
+                        div
+                          h5.mb-0.d-inline-block Barb Ackue
+                          span.mb-0.d-inline-block Added New Image in a Post
+                          p.mb-0.text-primary 1 hour ago
+                        .card-post-toolbar
+                          .dropdown
+                            span#postdata-5.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+                              i.ri-more-fill
+                            .dropdown-menu.m-0.p-0(aria-labelledby='postdata-5')
+                              a.dropdown-item.p-3(href='#')
+                                .d-flex.align-items-top
+                                  i.ri-save-line.h4
+                                  .data.ms-2
+                                    h6 Save Post
+                                    p.mb-0 Add this to your saved items
+                              a.dropdown-item.p-3(href='#')
+                                .d-flex.align-items-top
+                                  i.ri-close-circle-line.h4
+                                  .data.ms-2
+                                    h6 Hide Post
+                                    p.mb-0 See fewer posts like this.
+                              a.dropdown-item.p-3(href='#')
+                                .d-flex.align-items-top
+                                  i.ri-user-unfollow-line.h4
+                                  .data.ms-2
+                                    h6 Unfollow User
+                                    p.mb-0 Stop seeing posts but stay friends.
+                              a.dropdown-item.p-3(href='#')
+                                .d-flex.align-items-top
+                                  i.ri-notification-line.h4
+                                  .data.ms-2
+                                    h6 Notifications
+                                    p.mb-0 Turn on notifications for this post
+                .mt-3
+                  p
+                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus
+                .user-post
+                  a(href='javascript:void();')
+                    img.img-fluid.rounded.w-100(src='./assets/images/page-img/p4.jpg' alt='post-image')
+                .comment-area.mt-3
+                  .d-flex.justify-content-between.align-items-center.flex-wrap
+                    .like-block.position-relative.d-flex.align-items-center
+                      .d-flex.align-items-center
+                        .like-data
+                          .dropdown
+                            span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+                              img.img-fluid(src='./assets/images/icon/01.png' alt='')
+                            .dropdown-menu.py-2
+                              a.ms-2.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Like')
+                                img.img-fluid(src='./assets/images/icon/01.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Love')
+                                img.img-fluid(src='./assets/images/icon/02.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Happy')
+                                img.img-fluid(src='./assets/images/icon/03.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='HaHa')
+                                img.img-fluid(src='./assets/images/icon/04.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Think')
+                                img.img-fluid(src='./assets/images/icon/05.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Sade')
+                                img.img-fluid(src='./assets/images/icon/06.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Lovely')
+                                img.img-fluid(src='./assets/images/icon/07.png' alt='')
+                        .total-like-block.ms-2.me-3
+                          .dropdown
+                            span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+                              | 140 Likes
+                            .dropdown-menu
+                              a.dropdown-item(href='#') Max Emum
+                              a.dropdown-item(href='#') Bill Yerds
+                              a.dropdown-item(href='#') Hap E. Birthday
+                              a.dropdown-item(href='#') Tara Misu
+                              a.dropdown-item(href='#') Midge Itz
+                              a.dropdown-item(href='#') Sal Vidge
+                              a.dropdown-item(href='#') Other
+                      .total-comment-block
+                        .dropdown
+                          span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+                            | 20 Comment
+                          .dropdown-menu
+                            a.dropdown-item(href='#') Max Emum
+                            a.dropdown-item(href='#') Bill Yerds
+                            a.dropdown-item(href='#') Hap E. Birthday
+                            a.dropdown-item(href='#') Tara Misu
+                            a.dropdown-item(href='#') Midge Itz
+                            a.dropdown-item(href='#') Sal Vidge
+                            a.dropdown-item(href='#') Other
+                    .share-block.d-flex.align-items-center.feather-icon.mt-2.mt-md-0
+                      a(href='javascript:void();' data-bs-toggle='offcanvas' data-bs-target='#share-btn' aria-controls='share-btn')
+                        i.ri-share-line
+                        span.ms-1 99 Share
+                  hr
+                  ul.post-comments.list-inline.p-0.m-0
+                    li.mb-2
+                      .d-flex
+                        .user-img
+                          img.avatar-35.rounded-circle.img-fluid(src='./assets/images/user/02.jpg' alt='userimg')
+                        .comment-data-block.ms-3
+                          h6 Monty Carlo
+                          p.mb-0 Lorem ipsum dolor sit amet
+                          .d-flex.flex-wrap.align-items-center.comment-activity
+                            a(href='javascript:void();') like
+                            a(href='javascript:void();') reply
+                            a(href='javascript:void();') translate
+                            span  5 min 
+                    li
+                      .d-flex
+                        .user-img
+                          img.avatar-35.rounded-circle.img-fluid(src='./assets/images/user/03.jpg' alt='userimg')
+                        .comment-data-block.ms-3
+                          h6 Paul Molive
+                          p.mb-0 Lorem ipsum dolor sit amet
+                          .d-flex.flex-wrap.align-items-center.comment-activity
+                            a(href='javascript:void();') like
+                            a(href='javascript:void();') reply
+                            a(href='javascript:void();') translate
+                            span  5 min 
+                  form.comment-text.d-flex.align-items-center.mt-3(action='javascript:void(0);')
+                    input.form-control.rounded(type='text' placeholder='Enter Your Comment')
+                    .comment-attagement.d-flex
+                      a(href='javascript:void();')
+                        i.ri-link.me-3
+                      a(href='javascript:void();')
+                        i.ri-user-smile-line.me-3
+                      a(href='javascript:void();')
+                        i.ri-camera-line.me-3
+          .col-sm-12
+            .card.card-block.card-stretch.card-height
+              .card-body
+                .user-post-data
+                  .d-flex.justify-content-between
+                    .me-3
+                      img.rounded-circle.img-fluid(src='./assets/images/user/04.jpg' alt='')
+                    .w-100
+                      .d-flex.justify-content-between
+                        div
+                          h5.mb-0.d-inline-block Ira Membrit
+                          p.mb-0.d-inline-block Update her Status
+                          p.mb-0.text-primary 6 hour ago
+                        .card-post-toolbar
+                          .dropdown
+                            span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+                              i.ri-more-fill
+                            .dropdown-menu.m-0.p-0
+                              a.dropdown-item.p-3(href='#')
+                                .d-flex.align-items-top
+                                  i.ri-save-line.h4
+                                  .data.ms-2
+                                    h6 Save Post
+                                    p.mb-0 Add this to your saved items
+                              a.dropdown-item.p-3(href='#')
+                                .d-flex.align-items-top
+                                  i.ri-close-circle-line.h4
+                                  .data.ms-2
+                                    h6 Hide Post
+                                    p.mb-0 See fewer posts like this.
+                              a.dropdown-item.p-3(href='#')
+                                .d-flex.align-items-top
+                                  i.ri-user-unfollow-line.h4
+                                  .data.ms-2
+                                    h6 Unfollow User
+                                    p.mb-0 Stop seeing posts but stay friends.
+                              a.dropdown-item.p-3(href='#')
+                                .d-flex.align-items-top
+                                  i.ri-notification-line.h4
+                                  .data.ms-2
+                                    h6 Notifications
+                                    p.mb-0 Turn on notifications for this post
+                .mt-3
+                  p
+                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus
+                .comment-area.mt-3
+                  .d-flex.justify-content-between.align-items-center.flex-wrap
+                    .like-block.position-relative.d-flex.align-items-center
+                      .d-flex.align-items-center
+                        .like-data
+                          .dropdown
+                            span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+                              img.img-fluid(src='./assets/images/icon/01.png' alt='')
+                            .dropdown-menu.py-2
+                              a.ms-2.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Like')
+                                img.img-fluid(src='./assets/images/icon/01.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Love')
+                                img.img-fluid(src='./assets/images/icon/02.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Happy')
+                                img.img-fluid(src='./assets/images/icon/03.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='HaHa')
+                                img.img-fluid(src='./assets/images/icon/04.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Think')
+                                img.img-fluid(src='./assets/images/icon/05.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Sade')
+                                img.img-fluid(src='./assets/images/icon/06.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Lovely')
+                                img.img-fluid(src='./assets/images/icon/07.png' alt='')
+                        .total-like-block.ms-2.me-3
+                          .dropdown
+                            span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+                              | 140 Likes
+                            .dropdown-menu
+                              a.dropdown-item(href='#') Max Emum
+                              a.dropdown-item(href='#') Bill Yerds
+                              a.dropdown-item(href='#') Hap E. Birthday
+                              a.dropdown-item(href='#') Tara Misu
+                              a.dropdown-item(href='#') Midge Itz
+                              a.dropdown-item(href='#') Sal Vidge
+                              a.dropdown-item(href='#') Other
+                      .total-comment-block
+                        .dropdown
+                          span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+                            | 20 Comment
+                          .dropdown-menu
+                            a.dropdown-item(href='#') Max Emum
+                            a.dropdown-item(href='#') Bill Yerds
+                            a.dropdown-item(href='#') Hap E. Birthday
+                            a.dropdown-item(href='#') Tara Misu
+                            a.dropdown-item(href='#') Midge Itz
+                            a.dropdown-item(href='#') Sal Vidge
+                            a.dropdown-item(href='#') Other
+                    .share-block.d-flex.align-items-center.feather-icon.mt-2.mt-md-0
+                      a(href='javascript:void();' data-bs-toggle='offcanvas' data-bs-target='#share-btn' aria-controls='share-btn')
+                        i.ri-share-line
+                        span.ms-1 99 Share
+                  hr
+                  ul.post-comments.list-inline.p-0.m-0
+                    li.mb-2
+                      .d-flex
+                        .user-img
+                          img.avatar-35.rounded-circle.img-fluid(src='./assets/images/user/02.jpg' alt='userimg')
+                        .comment-data-block.ms-3
+                          h6 Monty Carlo
+                          p.mb-0 Lorem ipsum dolor sit amet
+                          .d-flex.flex-wrap.align-items-center.comment-activity
+                            a(href='javascript:void();') like
+                            a(href='javascript:void();') reply
+                            a(href='javascript:void();') translate
+                            span  5 min 
+                    li
+                      .d-flex
+                        .user-img
+                          img.avatar-35.rounded-circle.img-fluid(src='./assets/images/user/03.jpg' alt='userimg')
+                        .comment-data-block.ms-3
+                          h6 Paul Molive
+                          p.mb-0 Lorem ipsum dolor sit amet
+                          .d-flex.flex-wrap.align-items-center.comment-activity
+                            a(href='javascript:void();') like
+                            a(href='javascript:void();') reply
+                            a(href='javascript:void();') translate
+                            span  5 min 
+                  form.comment-text.d-flex.align-items-center.mt-3(action='javascript:void(0);')
+                    input.form-control.rounded(type='text' placeholder='Enter Your Comment')
+                    .comment-attagement.d-flex
+                      a(href='javascript:void();')
+                        i.ri-link.me-3
+                      a(href='javascript:void();')
+                        i.ri-user-smile-line.me-3
+                      a(href='javascript:void();')
+                        i.ri-camera-line.me-3
+          .col-sm-12
+            .card.card-block.card-stretch.card-height
+              .card-body
+                .post-item
+                  .d-flex.justify-content-between
+                    .me-3
+                      img.rounded-circle.img-fluid.avatar-60(src='./assets/images/user/1.jpg' alt='')
+                    .w-100
+                      .d-flex.justify-content-between
+                        div
+                          h5.mb-0.d-inline-block Bni Cyst
+                          p.ms-1.mb-0.d-inline-block Changed Profile Picture
+                          p.mb-0 3 day ago
+                        .card-post-toolbar
+                          .dropdown
+                            span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+                              i.ri-more-fill
+                            .dropdown-menu.m-0.p-0
+                              a.dropdown-item.p-3(href='#')
+                                .d-flex.align-items-top
+                                  i.ri-save-line.h4
+                                  .data.ms-2
+                                    h6 Save Post
+                                    p.mb-0 Add this to your saved items
+                              a.dropdown-item.p-3(href='#')
+                                .d-flex.align-items-top
+                                  i.ri-close-circle-line.h4
+                                  .data.ms-2
+                                    h6 Hide Post
+                                    p.mb-0 See fewer posts like this.
+                              a.dropdown-item.p-3(href='#')
+                                .d-flex.align-items-top
+                                  i.ri-user-unfollow-line.h4
+                                  .data.ms-2
+                                    h6 Unfollow User
+                                    p.mb-0 Stop seeing posts but stay friends.
+                              a.dropdown-item.p-3(href='#')
+                                .d-flex.align-items-top
+                                  i.ri-notification-line.h4
+                                  .data.ms-2
+                                    h6 Notifications
+                                    p.mb-0 Turn on notifications for this post
+                .user-post.text-center
+                  a(href='javascript:void();')
+                    img.img-fluid.rounded.w-100.mt-3(src='./assets/images/page-img/p5.jpg' alt='post-image')
+                .comment-area.mt-3
+                  .d-flex.justify-content-between.align-items-center.flex-wrap
+                    .like-block.position-relative.d-flex.align-items-center
+                      .d-flex.align-items-center
+                        .like-data
+                          .dropdown
+                            span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+                              img.img-fluid(src='./assets/images/icon/01.png' alt='')
+                            .dropdown-menu.py-2
+                              a.ms-2.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Like')
+                                img.img-fluid(src='./assets/images/icon/01.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Love')
+                                img.img-fluid(src='./assets/images/icon/02.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Happy')
+                                img.img-fluid(src='./assets/images/icon/03.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='HaHa')
+                                img.img-fluid(src='./assets/images/icon/04.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Think')
+                                img.img-fluid(src='./assets/images/icon/05.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Sade')
+                                img.img-fluid(src='./assets/images/icon/06.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Lovely')
+                                img.img-fluid(src='./assets/images/icon/07.png' alt='')
+                        .total-like-block.ms-2.me-3
+                          .dropdown
+                            span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+                              | 140 Likes
+                            .dropdown-menu
+                              a.dropdown-item(href='#') Max Emum
+                              a.dropdown-item(href='#') Bill Yerds
+                              a.dropdown-item(href='#') Hap E. Birthday
+                              a.dropdown-item(href='#') Tara Misu
+                              a.dropdown-item(href='#') Midge Itz
+                              a.dropdown-item(href='#') Sal Vidge
+                              a.dropdown-item(href='#') Other
+                      .total-comment-block
+                        .dropdown
+                          span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+                            | 20 Comment
+                          .dropdown-menu
+                            a.dropdown-item(href='#') Max Emum
+                            a.dropdown-item(href='#') Bill Yerds
+                            a.dropdown-item(href='#') Hap E. Birthday
+                            a.dropdown-item(href='#') Tara Misu
+                            a.dropdown-item(href='#') Midge Itz
+                            a.dropdown-item(href='#') Sal Vidge
+                            a.dropdown-item(href='#') Other
+                    .share-block.d-flex.align-items-center.feather-icon.mt-2.mt-md-0
+                      a(href='javascript:void();' data-bs-toggle='offcanvas' data-bs-target='#share-btn' aria-controls='share-btn')
+                        i.ri-share-line
+                        span.ms-1 99 Share
+                  hr
+                  ul.post-comments.list-inline.p-0.m-0
+                    li.mb-2
+                      .d-flex
+                        .user-img
+                          img.avatar-35.rounded-circle.img-fluid(src='./assets/images/user/02.jpg' alt='userimg')
+                        .comment-data-block.ms-3
+                          h6 Monty Carlo
+                          p.mb-0 Lorem ipsum dolor sit amet
+                          .d-flex.flex-wrap.align-items-center.comment-activity
+                            a(href='javascript:void();') like
+                            a(href='javascript:void();') reply
+                            a(href='javascript:void();') translate
+                            span  5 min 
+                    li
+                      .d-flex
+                        .user-img
+                          img.avatar-35.rounded-circle.img-fluid(src='./assets/images/user/03.jpg' alt='userimg')
+                        .comment-data-block.ms-3
+                          h6 Paul Molive
+                          p.mb-0 Lorem ipsum dolor sit amet
+                          .d-flex.flex-wrap.align-items-center.comment-activity
+                            a(href='javascript:void();') like
+                            a(href='javascript:void();') reply
+                            a(href='javascript:void();') translate
+                            span  5 min 
+                  form.comment-text.d-flex.align-items-center.mt-3(action='javascript:void(0);')
+                    input.form-control.rounded(type='text' placeholder='Enter Your Comment')
+                    .comment-attagement.d-flex
+                      a(href='javascript:void();')
+                        i.ri-link.me-3
+                      a(href='javascript:void();')
+                        i.ri-user-smile-line.me-3
+                      a(href='javascript:void();')
+                        i.ri-camera-line.me-3
+          .col-sm-12
+            .card.card-block.card-stretch.card-height
+              .card-body
+                .user-post-data
+                  .d-flex.justify-content-between
+                    .me-3
+                      img.rounded-circle.img-fluid(src='./assets/images/user/02.jpg' alt='')
+                    .w-100
+                      .d-flex.justify-content-between
+                        div
+                          h5.mb-0.d-inline-block Paige Turner
+                          p.mb-0.d-inline-block Added New Video in his Timeline
+                          p.mb-0.text-primary 1 day ago
+                        .card-post-toolbar
+                          .dropdown
+                            span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+                              i.ri-more-fill
+                            .dropdown-menu.m-0.p-0
+                              a.dropdown-item.p-3(href='#')
+                                .d-flex.align-items-top
+                                  i.ri-save-line.h4
+                                  .data.ms-2
+                                    h6 Save Post
+                                    p.mb-0 Add this to your saved items
+                              a.dropdown-item.p-3(href='#')
+                                .d-flex.align-items-top
+                                  i.ri-close-circle-line.h4
+                                  .data.ms-2
+                                    h6 Hide Post
+                                    p.mb-0 See fewer posts like this.
+                              a.dropdown-item.p-3(href='#')
+                                .d-flex.align-items-top
+                                  i.ri-user-unfollow-line.h4
+                                  .data.ms-2
+                                    h6 Unfollow User
+                                    p.mb-0 Stop seeing posts but stay friends.
+                              a.dropdown-item.p-3(href='#')
+                                .d-flex.align-items-top
+                                  i.ri-notification-line.h4
+                                  .data.ms-2
+                                    h6 Notifications
+                                    p.mb-0 Turn on notifications for this post
+                .mt-3
+                  p
+                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus
+                .user-post
+                  .ratio.ratio-16x9
+                    iframe(src='https://www.youtube.com/embed/j_GsIanLxZk?rel=0' allowfullscreen='')
+                .comment-area.mt-3
+                  .d-flex.justify-content-between.align-items-center.flex-wrap
+                    .like-block.position-relative.d-flex.align-items-center
+                      .d-flex.align-items-center
+                        .like-data
+                          .dropdown
+                            span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+                              img.img-fluid(src='./assets/images/icon/01.png' alt='')
+                            .dropdown-menu.py-2
+                              a.ms-2.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Like')
+                                img.img-fluid(src='./assets/images/icon/01.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Love')
+                                img.img-fluid(src='./assets/images/icon/02.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Happy')
+                                img.img-fluid(src='./assets/images/icon/03.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='HaHa')
+                                img.img-fluid(src='./assets/images/icon/04.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Think')
+                                img.img-fluid(src='./assets/images/icon/05.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Sade')
+                                img.img-fluid(src='./assets/images/icon/06.png' alt='')
+                              a.me-2(href='#' data-bs-toggle='tooltip' data-bs-placement='top' title='Lovely')
+                                img.img-fluid(src='./assets/images/icon/07.png' alt='')
+                        .total-like-block.ms-2.me-3
+                          .dropdown
+                            span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+                              | 140 Likes
+                            .dropdown-menu
+                              a.dropdown-item(href='#') Max Emum
+                              a.dropdown-item(href='#') Bill Yerds
+                              a.dropdown-item(href='#') Hap E. Birthday
+                              a.dropdown-item(href='#') Tara Misu
+                              a.dropdown-item(href='#') Midge Itz
+                              a.dropdown-item(href='#') Sal Vidge
+                              a.dropdown-item(href='#') Other
+                      .total-comment-block
+                        .dropdown
+                          span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+                            | 20 Comment
+                          .dropdown-menu
+                            a.dropdown-item(href='#') Max Emum
+                            a.dropdown-item(href='#') Bill Yerds
+                            a.dropdown-item(href='#') Hap E. Birthday
+                            a.dropdown-item(href='#') Tara Misu
+                            a.dropdown-item(href='#') Midge Itz
+                            a.dropdown-item(href='#') Sal Vidge
+                            a.dropdown-item(href='#') Other
+                    .share-block.d-flex.align-items-center.feather-icon.mt-2.mt-md-0
+                      a(href='javascript:void();' data-bs-toggle='offcanvas' data-bs-target='#share-btn' aria-controls='share-btn')
+                        i.ri-share-line
+                        span.ms-1 99 Share
+                  hr
+                  ul.post-comments.list-inline.p-0.m-0
+                    li.mb-2
+                      .d-flex.flex-wrap
+                        .user-img
+                          img.avatar-35.rounded-circle.img-fluid(src='./assets/images/user/02.jpg' alt='userimg')
+                        .comment-data-block.ms-3
+                          h6 Monty Carlo
+                          p.mb-0 Lorem ipsum dolor sit amet
+                          .d-flex.flex-wrap.align-items-center.comment-activity
+                            a(href='javascript:void();') like
+                            a(href='javascript:void();') reply
+                            a(href='javascript:void();') translate
+                            span  5 min 
+                    li
+                      .d-flex.flex-wrap
+                        .user-img
+                          img.avatar-35.rounded-circle.img-fluid(src='./assets/images/user/03.jpg' alt='userimg')
+                        .comment-data-block.ms-3
+                          h6 Paul Molive
+                          p.mb-0 Lorem ipsum dolor sit amet
+                          .d-flex.flex-wrap.align-items-center.comment-activity
+                            a(href='javascript:void();') like
+                            a(href='javascript:void();') reply
+                            a(href='javascript:void();') translate
+                            span  5 min 
+                  form.comment-text.d-flex.align-items-center.mt-3(action='javascript:void(0);')
+                    input.form-control.rounded(type='text' placeholder='Enter Your Comment')
+                    .comment-attagement.d-flex
+                      a(href='javascript:void();')
+                        i.ri-link.me-3
+                      a(href='javascript:void();')
+                        i.ri-user-smile-line.me-3
+                      a(href='javascript:void();')
+                        i.ri-camera-line.me-3
+        .col-sm-12.text-center
+          img(src='./assets/images/page-img/page-load-loader.gif' alt='loader' style='height: 100px;')

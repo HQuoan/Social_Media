@@ -2,8 +2,10 @@
 import '@babel/polyfill';
 import { login, logout, signup, forgot, reset } from './login.js';
 import { updateUser } from './user.js';
-import { createPost } from './post.js';
+import { createPost, loadPost } from './post.js';
+import { postItem } from './postItem.js';
 import { showAlert } from './alerts.js';
+import axios from 'axios';
 
 const loginForm = document.querySelector('.login-form');
 const signUpForm = document.querySelector('.sign-up-form');
@@ -16,8 +18,8 @@ const postDataForm = document.querySelector('.form-post');
 
 // sử dụng cho các form CÓ ảnh
 const getFormData2 = function (form) {
-  // const btnSubmit = form.querySelector('.btnSubmit');
-  // btnSubmit.innerHTML = `<i class="fas fa-sync-alt fa-spin"></i> Waiting`;
+  const btnSubmit = form.querySelector('.btnSubmit');
+  btnSubmit.innerHTML = `<i class="fas fa-sync-alt fa-spin"></i> Waiting`;
 
   const formData = new FormData(form);
   return formData;
@@ -59,7 +61,6 @@ if (userDataForm) {
   userDataForm.addEventListener('submit', async (e) => {
     console.log('hi');
     e.preventDefault();
-    // console.log(getFormData(userDataForm));
     await updateUser(getFormData2(userDataForm), 'data');
 
     userDataForm.querySelector('.btnSubmit').innerHTML = 'Update';
@@ -120,6 +121,8 @@ if (resetForm) {
   });
 }
 
+// Upload and preview image
+
 const fileInput = document.getElementById('fileInput');
 const imagePreview = document.getElementById('imagePreview');
 const upImg = document.getElementById('upImg');
@@ -147,9 +150,9 @@ function previewImages(files) {
 
       const deleteIcon = document.createElement('span');
       deleteIcon.classList.add('delete-icon');
-      deleteIcon.innerHTML = '&#10006;'; // Unicode for 'X' character
+      deleteIcon.innerHTML = '&#10006;';
       deleteIcon.addEventListener('click', function () {
-        imgContainer.remove(); // Xóa ảnh khi người dùng nhấp vào biểu tượng xóa
+        imgContainer.remove();
       });
 
       imgContainer.appendChild(deleteIcon);
@@ -158,4 +161,53 @@ function previewImages(files) {
 
     reader.readAsDataURL(files[i]);
   }
+}
+
+// const getPosts = async (page) => {
+//   try {
+//     const response = await axios({
+//       method: 'GET',
+//       url: '/api/v1/posts?limit=2&page=' + page,
+//     });
+
+//     if (response.data.status === 'success') {
+//       return response.data.data;
+//     }
+//   } catch (error) {
+//     showAlert('error', error.response.data.message);
+//     console.log(error);
+//   }
+// };
+
+// const appendPosts = (div, posts) => {
+//   let html = '';
+//   posts.forEach((post) => {
+//     html += postItem(post);
+//   });
+
+//   div.innerHTML += html;
+// };
+
+// const loadPost =async (div) => {
+//     const posts = await getPosts(page);
+//     page++;
+//     console.log(posts);
+//     appendPosts(div, posts);
+// };
+
+// Load more posts
+const wrapPosts = document.getElementById('wrap-posts');
+const loadPostBtn = document.getElementById('load-more-post');
+
+if (wrapPosts && loadPostBtn) {
+  // let page = 1;
+  // loadPostBtn.addEventListener('click', async () => {
+  //   const posts = await getPosts(page);
+  //   page++;
+  //   console.log(posts);
+  //   appendPosts(wrapPosts, posts);
+  //   console.log(page);
+  // });
+
+  loadPost(wrapPosts, loadPostBtn);
 }
