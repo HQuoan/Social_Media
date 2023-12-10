@@ -16,11 +16,11 @@ exports.alerts = (req, res, next) => {
 };
 
 exports.getHomePage = catchAsync(async (req, res, next) => {
-  // const posts = await Post.find();
+  const posts = await Post.find().limit(2).sort('-createdAt'); //
 
   res.status(200).render('home', {
     title: 'Home',
-    // posts,
+    posts,
   });
 });
 
@@ -65,8 +65,6 @@ exports.getProfile = catchAsync(async (req, res, next) => {
   const posts = await Post.find({ user: req.user.id })
     .limit(2)
     .sort('-createdAt');
-
-  console.log(posts);
 
   res.status(200).render('./account/profile', {
     title: 'Profile',

@@ -2,7 +2,7 @@
 import '@babel/polyfill';
 import { login, logout, signup, forgot, reset } from './login.js';
 import { updateUser } from './user.js';
-import { createPost, loadPost } from './post.js';
+import { createPost, loadPost, loadPostScroll } from './post.js';
 import { postItem } from './postItem.js';
 import { showAlert } from './alerts.js';
 import axios from 'axios';
@@ -163,51 +163,14 @@ function previewImages(files) {
   }
 }
 
-// const getPosts = async (page) => {
-//   try {
-//     const response = await axios({
-//       method: 'GET',
-//       url: '/api/v1/posts?limit=2&page=' + page,
-//     });
-
-//     if (response.data.status === 'success') {
-//       return response.data.data;
-//     }
-//   } catch (error) {
-//     showAlert('error', error.response.data.message);
-//     console.log(error);
-//   }
-// };
-
-// const appendPosts = (div, posts) => {
-//   let html = '';
-//   posts.forEach((post) => {
-//     html += postItem(post);
-//   });
-
-//   div.innerHTML += html;
-// };
-
-// const loadPost =async (div) => {
-//     const posts = await getPosts(page);
-//     page++;
-//     console.log(posts);
-//     appendPosts(div, posts);
-// };
-
 // Load more posts
 const wrapPosts = document.getElementById('wrap-posts');
 const loadPostBtn = document.getElementById('load-more-post');
 
 if (wrapPosts && loadPostBtn) {
-  // let page = 1;
-  // loadPostBtn.addEventListener('click', async () => {
-  //   const posts = await getPosts(page);
-  //   page++;
-  //   console.log(posts);
-  //   appendPosts(wrapPosts, posts);
-  //   console.log(page);
-  // });
-
   loadPost(wrapPosts, loadPostBtn);
+}
+
+if (wrapPosts) {
+  loadPostScroll(wrapPosts);
 }

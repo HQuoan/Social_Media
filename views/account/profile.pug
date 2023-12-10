@@ -128,7 +128,7 @@ block content
                                     | Friends
                                   option(value='private')
                                     | Only Me
-                          button.btn.btn-primary.d-block.w-100.mt-3(type='submit') Post
+                          button.btnSubmit.btn.btn-primary.d-block.w-100.mt-3(type='submit') Post
                 .col-lg-4
                   .card
                     .card-body
@@ -253,12 +253,12 @@ block content
                                 a.dropdown-item(href='#' data-bs-toggle='modal' data-bs-target='#post-modal') Gif
                                 a.dropdown-item(href='#' data-bs-toggle='modal' data-bs-target='#post-modal') Watch Party
                                 a.dropdown-item(href='#' data-bs-toggle='modal' data-bs-target='#post-modal') Play with Friend
-                  .card#wrap-posts
-                    if posts.length > 0
-                      each post in posts
-                        .card-body
+                  .card
+                    .card-body#wrap-posts
+                      if posts.length > 0
+                        each post in posts
                           .post-item
-                            .user-post-data.pb-3
+                            .user-post-data.py-3
                               .d-flex.justify-content-between
                                 .me-3
                                   img.rounded-circle.avatar-60(src=`../img/users/${user.avatar}` alt='')
@@ -276,41 +276,32 @@ block content
                                         .dropdown-menu.m-0.p-0
                                           a.dropdown-item.p-3(href='#')
                                             .d-flex.align-items-top
-                                              i.ri-save-line.h4
-                                              .data.ms-2
-                                                h6 Save Post
-                                                p.mb-0 Add this to your saved items
-                                          a.dropdown-item.p-3(href='#')
-                                            .d-flex.align-items-top
                                               i.ri-pencil-line.h4
                                               .data.ms-2
                                                 h6 Edit Post
                                                 p.mb-0 Update your post and saved items
-                                          a.dropdown-item.p-3(href='#')
-                                            .d-flex.align-items-top
-                                              i.ri-close-circle-line.h4
-                                              .data.ms-2
-                                                h6 Hide From Timeline
-                                                p.mb-0 See fewer posts like this.
-                                          a.dropdown-item.p-3(href='#')
+                                          a.dropdown-item.p-3(href=`/api/v1/posts/${post._id}`)
                                             .d-flex.align-items-top
                                               i.ri-delete-bin-7-line.h4
                                               .data.ms-2
                                                 h6 Delete
-                                                p.mb-0 Remove thids Post on Timeline
+                                                p.mb-0 Remove this Post on Timeline
                                           a.dropdown-item.p-3(href='#')
                                             .d-flex.align-items-top
-                                              i.ri-notification-line.h4
+                                              i.ri-save-line.h4
                                               .data.ms-2
-                                                h6 Notifications
-                                                p.mb-0 Turn on notifications for this post
+                                                h6 Save Post
+                                                p.mb-0 Add this to your saved items
                             .user-post
                               p
                               |#{post.content}
-                              br
-                              br
-                              a(href='#')
-                                img.img-fluid.w-100(src=`../img/posts/${post.images[0]}` alt='post-image')
+                              .card-body
+                                ul.my-profile-img-gallary.p-0.m-0.list-unstyled
+                                  each image in post.images
+                                    li
+                                      a(href='#')
+                                        img.img-fluid.rounded(src=`../img/posts/${image}` alt='gallary-image')
+                              
                             .comment-area.mt-3
                               .d-flex.justify-content-between.align-items-center.flex-wrap
                                 .like-block.position-relative.d-flex.align-items-center
@@ -385,10 +376,11 @@ block content
                                     i.ri-user-smile-line.me-3
                                   a(href='#')
                                     i.ri-camera-line.me-3
-                    else 
-                      p.text-center No posts yet.
-                  .card-body.text-center
-                    button#load-more-post.btn.btn-info.rounded-pill.mb-1   Load More    
+                      else 
+                        p.text-center No posts yet.
+                    if posts.length > 0
+                      .card-body.text-center
+                        button#load-more-post.btn.btn-info.rounded-pill.mb-1(data-userid = `${user._id}`)   Load More    
           include _profile-about                    
           include _profile-friends
           include _profile-photos

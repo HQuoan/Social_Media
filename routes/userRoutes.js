@@ -5,8 +5,6 @@ const postRouter = require('./postRoutes');
 
 const router = express.Router();
 
-router.use('/:userId/posts', postRouter);
-
 router.post('/signup', authController.signup);
 router.post('/login', userController.uploadUserAvatar, authController.login);
 router.get('/logout', authController.logout);
@@ -27,6 +25,8 @@ router.patch(
 router.delete('/deleteMe', userController.deleteMe);
 
 router.use(authController.restrictTo('admin'));
+
+router.use('/:userId/posts', postRouter);
 
 router
   .route('/')

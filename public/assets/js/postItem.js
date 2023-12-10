@@ -2,15 +2,19 @@
 export const postItem = (post) => {
   return `
 <div class="post-item">
-  <div class="user-post-data pb-3">
+  <div class="user-post-data py-3">
      <div class="d-flex justify-content-between">
         <div class="me-3">
-           <img class="rounded-circle  avatar-60" src="../img/users/${post.user.avatar}" alt="">
+           <img class="rounded-circle  avatar-60" src="../img/users/${
+             post.user.avatar
+           }" alt="">
         </div>
         <div class="w-100">
            <div class="d-flex justify-content-between flex-wrap">
               <div class="">
-                 <h5 class="mb-0 d-inline-block"><a href="#" class="">${post.user.username}</a></h5>
+                 <h5 class="mb-0 d-inline-block"><a href="#" class="">${
+                   post.user.username
+                 }</a></h5>
                  <p class="ms-1 mb-0 d-inline-block">Add New Post</p>
                  <p class="mb-0">${post.moment}</p>
               </div>
@@ -74,8 +78,16 @@ export const postItem = (post) => {
   </div>
   <div class="user-post">
     <p>${post.content}</p>
-    <br><br>
-    <a href="#"><img src="../img/posts/${post.images[0]}" alt="post-image" class="img-fluid w-100" /></a>
+    <div class="card-body">
+      <ul class="profile-img-gallary p-0 m-0 list-unstyled">
+         ${post.images
+           .map(
+             (image) => `
+            <li><a href="#"><img src="../img/posts/${image}" alt="gallery-image" class="img-fluid" /></a></li>
+         `,
+           )
+           .join('')}
+    </div>
   </div>
   <div class="comment-area mt-3">
      <div class="d-flex justify-content-between align-items-center flex-wrap">

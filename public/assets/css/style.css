@@ -1,4 +1,3 @@
-
 .alert {
   position: fixed;
   top: 0;
@@ -46,4 +45,15 @@
   font-size: 18px;
   color: red;
   cursor: pointer;
+}
+
+.my-profile-img-gallary {
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+.my-home-img-gallary {
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
