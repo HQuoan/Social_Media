@@ -13,7 +13,7 @@ block content
               .card-body
                 .d-flex.align-items-center
                   .user-img
-                    img.avatar-60.rounded-circle(src=`./img/users/${user.avatar}` alt='userimg')
+                    img.avatar-60.rounded-circle(src=`./img/users/${user && user.avatar !== undefined ? user.avatar : 'default.jpg'}` alt='userimg')
                   form.post-text.ms-3.w-100(data-bs-toggle='modal' data-bs-target='#post-modal' action='javascript:void();')
                     input.form-control.rounded(type='text' placeholder='Write something here...' style='border:none;')
                 hr
@@ -53,7 +53,7 @@ block content
                       .modal-body(style='max-height: 75vh; overflow-y: auto;')
                         .d-flex.align-items-center
                           .user-img
-                            img.avatar-60.rounded-circle.img-fluid(src=`./img/users/${user.avatar}` alt='userimg')
+                            img.avatar-60.rounded-circle.img-fluid(src=`./img/users/${user && user.avatar !== undefined ? user.avatar : 'default.jpg'}` alt='userimg')
                           form.post-text.ms-3.w-100()
                             textarea.form-control(name='content' rows='5' style='margin-left: 20px;line-height: 22px;' placeholder='Write something here...')
                         .d-flex.align-items-center
@@ -90,7 +90,7 @@ block content
                           .d-flex.align-items-center.justify-content-between
                             .d-flex.align-items-center
                               .user-img.me-3
-                                img.avatar-60.rounded-circle.img-fluid(src=`./img/users/${user.avatar}` alt='userimg')
+                                img.avatar-60.rounded-circle.img-fluid(src=`./img/users/${user && user.avatar !== undefined ? user.avatar : 'default.jpg'}` alt='userimg')
                               h6 Your Story
                             .card-post-toolbar
                               select.form-select.m-0.pl-4.bg-primary.text-white(name='status')
@@ -114,7 +114,7 @@ block content
                           .d-flex.justify-content-between
                             div
                               h5.mb-0.d-inline-block= post.user.username
-                              span.mb-0.d-inline-block Add New Post
+                              span.ms-1.mb-0.d-inline-block Add New Post
                               p.mb-0.text-primary post.moment
                             .card-post-toolbar
                               .dropdown

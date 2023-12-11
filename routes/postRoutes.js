@@ -1,5 +1,4 @@
 const express = require('express');
-// const multer = require('multer');
 
 const postController = require('../controllers/postController');
 const authController = require('../controllers/authController');
@@ -7,24 +6,31 @@ const handlerImage = require('../utils/handlerImage');
 
 const router = express.Router({ mergeParams: true });
 
-// // Set up multer middleware with diskStorage
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, 'public/img/posts');
-//   },
-//   filename: function (req, file, cb) {
-//     const ext = file.mimetype.split('/')[1];
-//     cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
-//   },
-// });
+router.route('/').get(postController.getAllPosts);
 
-// const upload = multer({ storage: storage });
+router.use(authController.protect);
+
+router
+  .route('/me')
+  .get(postController.getMyPosts)
+  .post(
+    handlerImage.upload.array('images'),
+    authController.setCurrentId,
+    postController.createPost,
+  );
+
+router
+  .route('/me/:id')
+  .get(postController.isYour, postController.getPost)
+  .patch(postController.isYour, postController.updatePost)
+  .delete(postController.isYour, postController.deletePost);
+
+router.use(authController.restrictTo('admin'));
 
 router
   .route('/')
-  .get(postController.getAllPosts)
+  // .get(postController.getAllPosts)
   .post(
-    authController.protect,
     handlerImage.upload.array('images'),
     postController.setUserIds,
     postController.createPost,

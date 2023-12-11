@@ -254,7 +254,7 @@ block content
                                 a.dropdown-item(href='#' data-bs-toggle='modal' data-bs-target='#post-modal') Watch Party
                                 a.dropdown-item(href='#' data-bs-toggle='modal' data-bs-target='#post-modal') Play with Friend
                   .card
-                    .card-body#wrap-posts
+                    .card-body#wrap-profile-posts
                       if posts.length > 0
                         each post in posts
                           .post-item
@@ -280,7 +280,7 @@ block content
                                               .data.ms-2
                                                 h6 Edit Post
                                                 p.mb-0 Update your post and saved items
-                                          a.dropdown-item.p-3(href=`/api/v1/posts/${post._id}`)
+                                          a.dropdown-item.p-3(href='#' data-postID = `${post._id}`).btnDelPost
                                             .d-flex.align-items-top
                                               i.ri-delete-bin-7-line.h4
                                               .data.ms-2
@@ -380,7 +380,7 @@ block content
                         p.text-center No posts yet.
                     if posts.length > 0
                       .card-body.text-center
-                        button#load-more-post.btn.btn-info.rounded-pill.mb-1(data-userid = `${user._id}`)   Load More    
+                        button#load-more-post.btn.btn-info.rounded-pill.mb-1  Load More    
           include _profile-about                    
           include _profile-friends
           include _profile-photos

@@ -5,14 +5,32 @@ import { showAlert } from './alerts.js';
 import { postItem } from './postItem.js';
 
 export const createPost = (data) => {
-  template('POST', '/api/v1/posts', '/profile', data, 'Successfully!');
+  template('POST', '/api/v1/posts/me', '/profile', data, 'Successfully!');
+};
+
+export const deletePost = async (id) => {
+  try {
+    const response = await axios({
+      method: 'DELETE',
+      url: `/api/v1/posts/me/${id}`,
+    });
+
+    console.log(response);
+
+    if (response.status === 204) {
+      showAlert('success', 'Delete success');
+    }
+  } catch (error) {
+    showAlert('error', error.response.data.message);
+    console.log(error);
+  }
 };
 
 const getAllPosts = async (page) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: `/api/v1/posts?limit=2&page=${page}`,
+      url: `/api/v1/posts/?limit=2&page=${page}`,
     });
 
     if (response.data.status === 'success') {
@@ -24,11 +42,11 @@ const getAllPosts = async (page) => {
   }
 };
 
-const getPosts = async (userId, page) => {
+const getPosts = async (page) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: `/api/v1/users/${userId}/posts?limit=2&page=${page}`,
+      url: `/api/v1/posts/me?limit=2&page=${page}`,
     });
 
     if (response.data.status === 'success') {
@@ -51,9 +69,8 @@ const appendPosts = (div, posts) => {
 
 export const loadPost = (div, btn) => {
   let page = 2;
-  const userId = btn.dataset.userid;
   btn.addEventListener('click', async () => {
-    const posts = await getPosts(userId, page);
+    const posts = await getPosts(page);
     page++;
     if (posts.length > 0) {
       appendPosts(div, posts);

@@ -2,7 +2,7 @@
 import '@babel/polyfill';
 import { login, logout, signup, forgot, reset } from './login.js';
 import { updateUser } from './user.js';
-import { createPost, loadPost, loadPostScroll } from './post.js';
+import { createPost, deletePost, loadPost, loadPostScroll } from './post.js';
 import { postItem } from './postItem.js';
 import { showAlert } from './alerts.js';
 import axios from 'axios';
@@ -15,7 +15,7 @@ const btnLogout = document.querySelector('.btnLogout');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
 const postDataForm = document.querySelector('.form-post');
-
+const btnDelPost = document.querySelector('.btnDelPost');
 // sử dụng cho các form CÓ ảnh
 const getFormData2 = function (form) {
   const btnSubmit = form.querySelector('.btnSubmit');
@@ -164,13 +164,25 @@ function previewImages(files) {
 }
 
 // Load more posts
+const wrapProfilePosts = document.getElementById('wrap-profile-posts');
 const wrapPosts = document.getElementById('wrap-posts');
 const loadPostBtn = document.getElementById('load-more-post');
 
-if (wrapPosts && loadPostBtn) {
-  loadPost(wrapPosts, loadPostBtn);
+if (wrapProfilePosts && loadPostBtn) {
+  loadPost(wrapProfilePosts, loadPostBtn);
 }
 
 if (wrapPosts) {
   loadPostScroll(wrapPosts);
+}
+
+const btnDelPosts = document.querySelectorAll('.btnDelPost');
+
+if (btnDelPosts.length > 0) {
+  btnDelPosts.forEach((btnDelPost) => {
+    btnDelPost.addEventListener('click', () => {
+      const postId = btnDelPost.dataset.postid;
+      deletePost(postId);
+    });
+  });
 }
