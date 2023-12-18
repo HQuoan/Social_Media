@@ -1,5 +1,4 @@
 const express = require('express');
-
 const postController = require('../controllers/postController');
 const authController = require('../controllers/authController');
 const handlerImage = require('../utils/handlerImage');

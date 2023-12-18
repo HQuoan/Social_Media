@@ -19,6 +19,9 @@ export const deletePost = async (id) => {
 
     if (response.status === 204) {
       showAlert('success', 'Delete success');
+      setTimeout(() => {
+        location.assign('/profile');
+      }, 1000);
     }
   } catch (error) {
     showAlert('error', error.response.data.message);

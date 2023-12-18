@@ -45,6 +45,10 @@ postSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'user',
     select: 'firstName lastName avatar',
+  }).populate({
+    path: 'comments',
+    perDocumentLimit: 0,
+    options: { limit: 2 },
   });
 
   next();

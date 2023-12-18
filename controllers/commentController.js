@@ -8,6 +8,10 @@ exports.setPostUserIds = (req, res, next) => {
   next();
 };
 
+exports.isYour = factory.isYour(Comment);
+exports.getMyComments = factory.getMy(Comment);
+
+//admin
 exports.getAllComments = factory.getAll(Comment);
 exports.getComment = factory.getOne(Comment);
 exports.createComment = factory.createOne(Comment);

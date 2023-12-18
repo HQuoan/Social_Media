@@ -12194,6 +12194,9 @@ var deletePost = exports.deletePost = /*#__PURE__*/function () {
           console.log(response);
           if (response.status === 204) {
             (0, _alerts.showAlert)('success', 'Delete success');
+            setTimeout(function () {
+              location.assign('/profile');
+            }, 1000);
           }
           _context.next = 12;
           break;
@@ -12774,7 +12777,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63416" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55540" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

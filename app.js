@@ -70,6 +70,7 @@ app.use(compression());
 // app.get('/profile', (req, res) => {
 //   res.status(200).render('profile');
 // });
+
 app.use('/', viewRouter);
 app.use('/api/v1/posts', postRouter);
 app.use('/api/v1/users', userRouter);

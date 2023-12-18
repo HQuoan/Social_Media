@@ -6,7 +6,7 @@ exports.isYour = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.findById(req.params.id);
 
-    if (!doc.user === req.user.id) {
+    if (doc && doc.user.id !== req.user.id) {
       return next(
         new AppError('You do not have permission to perform this action', 403),
       );
@@ -35,7 +35,7 @@ exports.getMy = (Model) =>
     });
   });
 
-exports.getAll = (Model) =>
+exports.getAll = (Model, popOptions) =>
   catchAsync(async (req, res, next) => {
     // To allow for nested GET posts on user (hack)
     let filter = {};
@@ -47,6 +47,7 @@ exports.getAll = (Model) =>
       .limitFields()
       .paginate();
 
+    if (popOptions) features.query = features.query.populate(popOptions);
     const doc = await features.query;
 
     res.status(200).json({
@@ -62,7 +63,7 @@ exports.createOne = (Model) =>
       const filenames = req.files.map((item) => item.filename);
       req.body.images = filenames;
     }
-
+    console.log(req.body);
     const doc = await Model.create(req.body);
 
     res.status(201).json({

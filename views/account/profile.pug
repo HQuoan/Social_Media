@@ -1,5 +1,19 @@
 extend ../base
 
+mixin commentItem(comment, ms)
+  ul.post-comments.p-0(class=`ms-${ms}`)
+    li.mb-2
+      .d-flex.flex-wrap
+        .user-img
+          img.avatar-35.rounded-circle.img-fluid(src='../assets/images/user/02.jpg' alt='userimg')
+        .comment-data-block.ms-3
+          h6= comment.user.username
+          p.mb-0= comment.comment
+          .d-flex.flex-wrap.align-items-center.comment-activity
+            a(href='#') like
+            a(href='#') reply
+            span= comment.moment
+
 block content
   .container
     .row
@@ -354,19 +368,15 @@ block content
                                     i.ri-share-line
                                     span.ms-1 99 Share
                               hr
-                              ul.post-comments.p-0.m-0
-                                li.mb-2
-                                  .d-flex.flex-wrap
-                                    .user-img
-                                      img.avatar-35.rounded-circle.img-fluid(src='../assets/images/user/02.jpg' alt='userimg')
-                                    .comment-data-block.ms-3
-                                      h6 Monty Carlo
-                                      p.mb-0 Lorem ipsum dolor sit amet
-                                      .d-flex.flex-wrap.align-items-center.comment-activity
-                                        a(href='#') like
-                                        a(href='#') reply
-                                        a(href='#') translate
-                                        span  5 min 
+                              if post.comments.length > 0
+                                each comment in post.comments 
+                                  +commentItem(comment, 0)
+                                  if comment.childComments.length > 0
+                                    each c1 in comment.childComments 
+                                      +commentItem(c1, 5) 
+                                      if c1.childComments.length > 0
+                                        each c2 in c1.childComments 
+                                          +commentItem(c2, 10)     
                               form.comment-text.d-flex.align-items-center.mt-3(action='javascript:void(0);')
                                 input.form-control.rounded(type='text' placeholder='Enter Your Comment')
                                 .comment-attagement.d-flex

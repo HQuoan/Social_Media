@@ -8,13 +8,27 @@ const router = express.Router({ mergeParams: true });
 router.use(authController.protect);
 
 router
-  .route('/')
-  .get(commentController.getAllComments)
+  .route('/me')
+  .get(commentController.getMyComments)
   .post(
     authController.restrictTo('user'),
     commentController.setPostUserIds,
+    authController.setCurrentId,
     commentController.createComment,
   );
+
+router
+  .route('/me/:id')
+  .get(commentController.isYour, commentController.getComment)
+  .patch(commentController.isYour, commentController.updateComment)
+  .delete(commentController.isYour, commentController.deleteComment);
+
+router.use(authController.restrictTo('admin'));
+
+router
+  .route('/')
+  .get(commentController.getAllComments)
+  .post(commentController.setPostUserIds, commentController.createComment);
 
 router
   .route('/:id')
