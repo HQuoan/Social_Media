@@ -11,7 +11,7 @@ module.exports = async function (method, url, to, data, message) {
     });
     // console.log(response);
     if (response.data.status === 'success') {
-      showAlert('success', message);
+      if (message !== '') showAlert('success', message);
       if (to !== '') {
         setTimeout(() => {
           location.assign(to);

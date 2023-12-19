@@ -3,7 +3,7 @@ import '@babel/polyfill';
 import { login, logout, signup, forgot, reset } from './login.js';
 import { updateUser } from './user.js';
 import { createPost, deletePost, loadPost, loadPostScroll } from './post.js';
-import { createComment } from './comment.js';
+import { createComment, getReplyComments } from './comment.js';
 
 const loginForm = document.querySelector('.login-form');
 const signUpForm = document.querySelector('.sign-up-form');
@@ -201,10 +201,24 @@ if (commentForms.length > 0) {
   commentForms.forEach((commentForm) => {
     commentForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      console.log('ok');
-      console.log(getFormData(commentForm));
       await createComment(commentForm, getFormData(commentForm));
       commentForm.querySelector('.comment-txt').value = '';
+    });
+  });
+}
+
+// get reply comment
+const btnReplies = document.querySelectorAll('.btn-reply');
+
+if (btnReplies.length > 0) {
+  btnReplies.forEach((btnReply) => {
+    let isFirstClick = true;
+
+    btnReply.addEventListener('click', () => {
+      if (isFirstClick) {
+        getReplyComments(btnReply);
+        isFirstClick = false;
+      }
     });
   });
 }

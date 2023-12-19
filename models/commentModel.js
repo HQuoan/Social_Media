@@ -51,6 +51,7 @@ commentSchema.virtual('moment').get(function () {
 //   }
 // });
 
+// nó sẽ cập nhập cả cha của cha
 commentSchema.pre('save', async function (next) {
   if (!this.parentComment) return next();
 

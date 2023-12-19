@@ -17,9 +17,11 @@ mixin commentItem(comment, ms)
             span= comment.moment
           if comment.reply
             .feather-icon
-              a(href='#')
+              a.btn-reply.collapsed(href=`#_${comment.id}` data-bs-toggle='collapse' aria-expanded='false' data-comment-id=`${comment.id}`)
                 i.fas.fa-reply.fa-rotate-180
                 span.ms-1 #{comment.reply} Replies
+              br
+              ul.reply-comment.iq-menu.p-0.collapse(data-bs-parent='#pages', id=`_${comment.id}` style='list-style-type: none;')
 block content
   .container
     .row
