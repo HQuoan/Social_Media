@@ -1,3 +1,4 @@
+const catchAsync = require('./../utils/catchAsync');
 const Comment = require('../models/commentModel');
 const factory = require('./handlerFactory');
 
@@ -7,6 +8,16 @@ exports.setPostUserIds = (req, res, next) => {
   if (!req.body.user) req.body.user = req.user.id;
   next();
 };
+
+exports.getCommentReply = catchAsync(async (req, res, next) => {
+  const commentsReply = await Comment.find({ parentComment: req.params.id });
+
+  res.status(200).json({
+    status: 'success',
+    results: commentsReply.length,
+    data: commentsReply,
+  });
+});
 
 exports.isYour = factory.isYour(Comment);
 exports.getMyComments = factory.getMy(Comment);

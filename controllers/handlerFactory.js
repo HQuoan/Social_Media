@@ -40,6 +40,7 @@ exports.getAll = (Model, popOptions) =>
     // To allow for nested GET posts on user (hack)
     let filter = {};
     if (req.params.userId) filter = { user: req.params.userId };
+    if (req.params.postId) filter = { post: req.params.postId };
 
     const features = new APIFeatures(Model.find(filter), req.query)
       .filter()
@@ -63,7 +64,6 @@ exports.createOne = (Model) =>
       const filenames = req.files.map((item) => item.filename);
       req.body.images = filenames;
     }
-    console.log(req.body);
     const doc = await Model.create(req.body);
 
     res.status(201).json({

@@ -9,13 +9,15 @@ module.exports = async function (method, url, to, data, message) {
       url,
       data,
     });
-    console.log(response);
+    // console.log(response);
     if (response.data.status === 'success') {
       showAlert('success', message);
       if (to !== '') {
         setTimeout(() => {
           location.assign(to);
         }, 1000);
+      } else {
+        return response.data.data;
       }
     }
   } catch (error) {

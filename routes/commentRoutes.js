@@ -11,7 +11,6 @@ router
   .route('/me')
   .get(commentController.getMyComments)
   .post(
-    authController.restrictTo('user'),
     commentController.setPostUserIds,
     authController.setCurrentId,
     commentController.createComment,
@@ -19,21 +18,24 @@ router
 
 router
   .route('/me/:id')
-  .get(commentController.isYour, commentController.getComment)
   .patch(commentController.isYour, commentController.updateComment)
   .delete(commentController.isYour, commentController.deleteComment);
-
-router.use(authController.restrictTo('admin'));
 
 router
   .route('/')
   .get(commentController.getAllComments)
-  .post(commentController.setPostUserIds, commentController.createComment);
+  .post(
+    authController.restrictTo('admin'),
+    commentController.setPostUserIds,
+    commentController.createComment,
+  );
 
 router
   .route('/:id')
   .get(commentController.getComment)
-  .patch(commentController.updateComment)
-  .delete(commentController.deleteComment);
+  .patch(authController.restrictTo('admin'), commentController.updateComment)
+  .delete(authController.restrictTo('admin'), commentController.deleteComment);
+
+router.route('/:id/reply').get(commentController.getCommentReply);
 
 module.exports = router;

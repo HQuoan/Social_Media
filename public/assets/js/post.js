@@ -45,7 +45,7 @@ const getAllPosts = async (page) => {
   }
 };
 
-const getPosts = async (page) => {
+const getMyPosts = async (page) => {
   try {
     const response = await axios({
       method: 'GET',
@@ -73,7 +73,7 @@ const appendPosts = (div, posts) => {
 export const loadPost = (div, btn) => {
   let page = 2;
   btn.addEventListener('click', async () => {
-    const posts = await getPosts(page);
+    const posts = await getMyPosts(page);
     page++;
     if (posts.length > 0) {
       appendPosts(div, posts);

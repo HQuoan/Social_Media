@@ -1,12 +1,14 @@
 const express = require('express');
 const postController = require('../controllers/postController');
 const authController = require('../controllers/authController');
+const commentRouter = require('../routes/commentRoutes');
 const handlerImage = require('../utils/handlerImage');
 
 const router = express.Router({ mergeParams: true });
 
-router.route('/').get(postController.getAllPosts);
+router.use('/:postId/comments', commentRouter);
 
+router.route('/').get(postController.getAllPosts);
 router.use(authController.protect);
 
 router
@@ -20,16 +22,15 @@ router
 
 router
   .route('/me/:id')
-  .get(postController.isYour, postController.getPost)
+  // .get(postController.isYour, postController.getPost)
   .patch(postController.isYour, postController.updatePost)
   .delete(postController.isYour, postController.deletePost);
-
-router.use(authController.restrictTo('admin'));
 
 router
   .route('/')
   // .get(postController.getAllPosts)
   .post(
+    authController.restrictTo('admin'),
     handlerImage.upload.array('images'),
     postController.setUserIds,
     postController.createPost,
@@ -38,7 +39,7 @@ router
 router
   .route('/:id')
   .get(postController.getPost)
-  .patch(postController.updatePost)
-  .delete(postController.deletePost);
+  .patch(authController.restrictTo('admin'), postController.updatePost)
+  .delete(authController.restrictTo('admin'), postController.deletePost);
 
 module.exports = router;

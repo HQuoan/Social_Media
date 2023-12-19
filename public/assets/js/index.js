@@ -3,9 +3,7 @@ import '@babel/polyfill';
 import { login, logout, signup, forgot, reset } from './login.js';
 import { updateUser } from './user.js';
 import { createPost, deletePost, loadPost, loadPostScroll } from './post.js';
-import { postItem } from './postItem.js';
-import { showAlert } from './alerts.js';
-import axios from 'axios';
+import { createComment } from './comment.js';
 
 const loginForm = document.querySelector('.login-form');
 const signUpForm = document.querySelector('.sign-up-form');
@@ -15,20 +13,20 @@ const btnLogout = document.querySelector('.btnLogout');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
 const postDataForm = document.querySelector('.form-post');
-const btnDelPost = document.querySelector('.btnDelPost');
 // sử dụng cho các form CÓ ảnh
-const getFormData2 = function (form) {
-  const btnSubmit = form.querySelector('.btnSubmit');
-  btnSubmit.innerHTML = `<i class="fas fa-sync-alt fa-spin"></i> Waiting`;
+// const getFormData2 = function (form) {
+//   const btnSubmit = form.querySelector('.btnSubmit');
+//   btnSubmit.innerHTML = `<i class="fas fa-sync-alt fa-spin"></i> Waiting`;
 
-  const formData = new FormData(form);
-  return formData;
-};
+//   const formData = new FormData(form);
+//   return formData;
+// };
 
 // sử dụng cho các form KHÔNG có ảnh
 const getFormData = function (form) {
   const btnSubmit = form.querySelector('.btnSubmit');
-  btnSubmit.innerHTML = `<i class="fas fa-sync-alt fa-spin"></i> Waiting`;
+  if (btnSubmit)
+    btnSubmit.innerHTML = `<i class="fas fa-sync-alt fa-spin"></i> Waiting`;
   const formData = {};
   const inputs = form.querySelectorAll('input, select, textarea');
 
@@ -53,15 +51,24 @@ const getFormData = function (form) {
 if (postDataForm) {
   postDataForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    createPost(getFormData2(postDataForm));
+
+    const btnSubmit = postDataForm.querySelector('.btnSubmit');
+    btnSubmit.innerHTML = `<i class="fas fa-sync-alt fa-spin"></i> Waiting`;
+
+    const formData = new FormData(postDataForm);
+    createPost(formData);
   });
 }
 
 if (userDataForm) {
   userDataForm.addEventListener('submit', async (e) => {
-    console.log('hi');
     e.preventDefault();
-    await updateUser(getFormData2(userDataForm), 'data');
+
+    const btnSubmit = userDataForm.querySelector('.btnSubmit');
+    btnSubmit.innerHTML = `<i class="fas fa-sync-alt fa-spin"></i> Waiting`;
+
+    const formData = new FormData(userDataForm);
+    await updateUser(formData, 'data');
 
     userDataForm.querySelector('.btnSubmit').innerHTML = 'Update';
   });
@@ -183,6 +190,21 @@ if (btnDelPosts.length > 0) {
     btnDelPost.addEventListener('click', () => {
       const postId = btnDelPost.dataset.postid;
       deletePost(postId);
+    });
+  });
+}
+
+// create comment
+const commentForms = document.querySelectorAll('.comment-form');
+
+if (commentForms.length > 0) {
+  commentForms.forEach((commentForm) => {
+    commentForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      console.log('ok');
+      console.log(getFormData(commentForm));
+      await createComment(commentForm, getFormData(commentForm));
+      commentForm.querySelector('.comment-txt').value = '';
     });
   });
 }

@@ -41,15 +41,29 @@ postSchema.virtual('comments', {
   localField: '_id',
 });
 
+postSchema.virtual('countComment', {
+  ref: 'Comment',
+  foreignField: 'post',
+  localField: '_id',
+  count: true,
+});
+
 postSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'user',
     select: 'firstName lastName avatar',
-  }).populate({
-    path: 'comments',
-    perDocumentLimit: 0,
-    options: { limit: 2 },
-  });
+  })
+    .populate({
+      path: 'countComment',
+    })
+    .populate({
+      path: 'comments',
+      match: { parentComment: null },
+      options: {
+        limit: 2,
+        sort: { createdAt: -1 },
+      },
+    });
 
   next();
 });

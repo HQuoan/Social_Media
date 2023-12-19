@@ -1,13 +1,11 @@
 extend ../base
-mixin dropdownItem(comment)
-  a.dropdown-item(href='#')= comment.user.username
 
 mixin commentItem(comment, ms)
   ul.post-comments.p-0(class=`ms-${ms}`)
     li.mb-2
       .d-flex.flex-wrap
         .user-img
-          img.avatar-35.rounded-circle.img-fluid(src=`../img/users/${comment.user.avatar}` alt='userimg')
+          img.avatar-35.rounded-circle.img-fluid(src='../assets/images/user/02.jpg' alt='userimg')
         .comment-data-block.ms-3
           h6= comment.user.username
           p.mb-0= comment.comment
@@ -15,11 +13,7 @@ mixin commentItem(comment, ms)
             a(href='#') like
             a(href='#') reply
             span= comment.moment
-          if comment.reply
-            .feather-icon
-              a(href='#')
-                i.fas.fa-reply.fa-rotate-180
-                span.ms-1 #{comment.reply} Replies
+
 block content
   .container
     .row
@@ -155,7 +149,7 @@ block content
                       a(href='#')
                         span.badge.badge-pill.bg-primary.font-weight-normal.ms-auto.me-1
                           i.ri-star-line
-                        |  27 Items for you
+                        |  27 Items for yoou
                   .card
                     .card-header.d-flex.justify-content-between
                       .header-title
@@ -315,13 +309,13 @@ block content
                             .user-post
                               p
                               |#{post.content}
-                              if post.images.length > 0
-                                .card-body
-                                  ul.my-profile-img-gallary.p-0.m-0.list-unstyled
-                                    each image in post.images
-                                      li
-                                        a(href='#')
-                                          img.img-fluid.rounded(src=`../img/posts/${image}` alt='gallary-image')
+                              .card-body
+                                ul.my-profile-img-gallary.p-0.m-0.list-unstyled
+                                  each image in post.images
+                                    li
+                                      a(href='#')
+                                        img.img-fluid.rounded(src=`../img/posts/${image}` alt='gallary-image')
+                              
                             .comment-area.mt-3
                               .d-flex.justify-content-between.align-items-center.flex-wrap
                                 .like-block.position-relative.d-flex.align-items-center
@@ -360,29 +354,39 @@ block content
                                   .total-comment-block
                                     .dropdown
                                       span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
-                                        | #{post.countComment} Comment
+                                        | 20 Comment
                                       .dropdown-menu
-                                        if post.comments.length > 0
-                                          each comment in post.comments 
-                                            +dropdownItem(comment)                                    
+                                        a.dropdown-item(href='#') Max Emum
+                                        a.dropdown-item(href='#') Bill Yerds
+                                        a.dropdown-item(href='#') Hap E. Birthday
+                                        a.dropdown-item(href='#') Tara Misu
+                                        a.dropdown-item(href='#') Midge Itz
+                                        a.dropdown-item(href='#') Sal Vidge
                                         a.dropdown-item(href='#') Other
                                 .share-block.d-flex.align-items-center.feather-icon.mt-2.mt-md-0
                                   a(href='#' data-bs-toggle='offcanvas' data-bs-target='#share-btn' aria-controls='share-btn')
                                     i.ri-share-line
                                     span.ms-1 99 Share
                               hr
-                              .wrap-comment
-                                .comment-box
-                                  if post.comments.length > 0
-                                    each comment in post.comments 
-                                      +commentItem(comment, 0)
-                                form.comment-form.comment-text.d-flex.align-items-center.mt-3
-                                  textarea.comment-txt.form-control.rounded(name='comment' rows='1' placeholder='Enter Your Comment...')
-                                  input(name='post' value=`${post.id}` type='hidden')
-                                  .comment-attagement.d-flex
-                                    button.btn(type='submit')
-                                      i.fa.fa-paper-plane
-                      else
+                              if post.comments.length > 0
+                                each comment in post.comments 
+                                  +commentItem(comment, 0)
+                                  if comment.childComments.length > 0
+                                    each c1 in comment.childComments 
+                                      +commentItem(c1, 5) 
+                                      if c1.childComments.length > 0
+                                        each c2 in c1.childComments 
+                                          +commentItem(c2, 10)     
+                              form.comment-text.d-flex.align-items-center.mt-3(action='javascript:void(0);')
+                                input.form-control.rounded(type='text' placeholder='Enter Your Comment')
+                                .comment-attagement.d-flex
+                                  a(href='#')
+                                    i.ri-link.me-3
+                                  a(href='#')
+                                    i.ri-user-smile-line.me-3
+                                  a(href='#')
+                                    i.ri-camera-line.me-3
+                      else 
                         p.text-center No posts yet.
                     if posts.length > 0
                       .card-body.text-center
