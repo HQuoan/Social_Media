@@ -207,18 +207,18 @@ if (commentForms.length > 0) {
   });
 }
 
-// get reply comment
-const btnReplies = document.querySelectorAll('.btn-reply');
+const parentContainer = document.querySelector('.container');
+const isFirstClickMap = new Map();
 
-if (btnReplies.length > 0) {
-  btnReplies.forEach((btnReply) => {
-    let isFirstClick = true;
+parentContainer.addEventListener('click', (event) => {
+  const target = event.target;
+  const parent = target.parentElement;
 
-    btnReply.addEventListener('click', () => {
-      if (isFirstClick) {
-        getReplyComments(btnReply);
-        isFirstClick = false;
-      }
-    });
-  });
-}
+  if (parent.classList.contains('btn-reply')) {
+    if (!isFirstClickMap.has(parent)) {
+      // Nếu chưa được click trước đó, thực hiện hàm và đánh dấu là đã click
+      getReplyComments(parent);
+      isFirstClickMap.set(parent, true);
+    }
+  }
+});

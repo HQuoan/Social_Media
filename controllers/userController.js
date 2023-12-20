@@ -52,7 +52,7 @@ exports.getMe = (req, res, next) => {
 };
 
 exports.updateMe = catchAsync(async (req, res, next) => {
-  console.log(req.body);
+  // console.log(req.body);
 
   // 1) Create error if user POSTs password data
   if (req.body.password || req.body.passwordConfirm) {
@@ -78,7 +78,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     'address',
   );
   if (req.file) filterdBody.avatar = req.file.filename;
-  console.log(filterdBody);
+  // console.log(filterdBody);
 
   // 3) Update user document
   const updateUser = await User.findByIdAndUpdate(req.user.id, filterdBody, {

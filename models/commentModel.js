@@ -52,8 +52,10 @@ commentSchema.virtual('moment').get(function () {
 // });
 
 // nó sẽ cập nhập cả cha của cha
+//  CHÚ Ý!!!!
+// khi cập nhật comment thì phải dùng findByIdAndUpdate để nó không đi qua middleware này
 commentSchema.pre('save', async function (next) {
-  if (!this.parentComment) return next();
+  if (!this.parentComment || !this.isNew) return next();
 
   const parentComment = await this.constructor.findById(this.parentComment);
 
