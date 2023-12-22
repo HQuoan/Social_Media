@@ -4,24 +4,40 @@ mixin dropdownItem(comment)
 
 mixin commentItem(comment, ms)
   ul.post-comments.p-0(class=`ms-${ms}`)
-    li.mb-2
+    li.mb-2.d-flex.justify-content-between
       .d-flex.flex-wrap
         .user-img
           img.avatar-35.rounded-circle.img-fluid(src=`../img/users/${comment.user.avatar}` alt='userimg')
-        .comment-data-block.ms-3
+        .comment-data-block.ms-3.wrap-comment
           h6= comment.user.username
-          p.mb-0= comment.comment
-          .d-flex.flex-wrap.align-items-center.comment-activity
-            a(href='#') like
-            a(href='#') reply
-            span= comment.moment
-          if comment.reply
-            .feather-icon
+          p.comment-content.mb-0= comment.comment
+          .block-add-form-create-comment
+            .d-flex.flex-wrap.align-items-center.comment-activity
+              a(href='#') like
+              a.btn-add-form-reply(href='#' data-parent-comment-id=`${comment.id}` data-post-id=`${comment.post}`) reply
+              span= comment.moment
+          .feather-icon.comment-box
+            if comment.reply
               a.btn-reply.collapsed(href=`#_${comment.id}` data-bs-toggle='collapse' aria-expanded='false'  aria-controls=`${comment.id}` data-comment-id=`${comment.id}`)
                 i.fas.fa-reply.fa-rotate-180
                 span.ms-1 #{comment.reply} Replies
               br
               ul.reply-comment.iq-menu.p-0.collapse(id=`_${comment.id}` style='list-style-type: none;')
+      .card-post-toolbar
+        .dropdown
+          span.dropdown-toggle(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='button')
+            i.ri-more-fill.vertical-icon
+          .dropdown-menu.m-0.p-0
+            a.btnUpdateComment.dropdown-item.p-3(href='#' data-comment-id=`${comment.id}`)
+              .d-flex.align-items-top
+                i.ri-pencil-line.h4
+                .data.ms-2
+                  p Edit Comment
+            a.btnDelComment.dropdown-item.p-3(href='#' data-comment-id=`${comment.id}`)
+              .d-flex.align-items-top
+                i.ri-delete-bin-7-line.h4
+                .data.ms-2
+                  p Delete
 block content
   .container
     .row
@@ -302,7 +318,7 @@ block content
                                               .data.ms-2
                                                 h6 Edit Post
                                                 p.mb-0 Update your post and saved items
-                                          a.dropdown-item.p-3(href='#' data-postID = `${post._id}`).btnDelPost
+                                          a.dropdown-item.p-3(href='#' data-post-id = `${post._id}`).btnDelPost
                                             .d-flex.align-items-top
                                               i.ri-delete-bin-7-line.h4
                                               .data.ms-2
@@ -378,8 +394,11 @@ block content
                                   if post.comments.length > 0
                                     each comment in post.comments 
                                       +commentItem(comment, 0)
+                                    button.load-more-comments.btn.rounded-pill(data-post-id = `${post.id}`)
+                                      i.fas.fa-reply.fa-rotate-180
+                                      span.ms-1 See more
                                 form.comment-form.comment-text.d-flex.align-items-center.mt-3
-                                  textarea.comment-txt.form-control.rounded(name='comment' rows='1' placeholder='Enter Your Comment...')
+                                  textarea.comment-txt.form-control.rounded-pill(name='comment' rows='1' placeholder='Enter Your Comment...')
                                   input(name='post' value=`${post.id}` type='hidden')
                                   .comment-attagement.d-flex
                                     button.btn(type='submit')

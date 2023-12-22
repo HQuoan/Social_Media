@@ -66,7 +66,7 @@ exports.getProfile = catchAsync(async (req, res, next) => {
     .limit(2)
     .sort('-createdAt');
 
-  console.log(posts);
+  // console.log(posts);
   res.status(200).render('./account/profile', {
     title: 'Profile',
     user,

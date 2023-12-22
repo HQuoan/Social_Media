@@ -57,3 +57,8 @@
   grid-gap: 5px;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
+
+.vertical-icon {
+  display: block;
+  transform: rotate(90deg);
+}

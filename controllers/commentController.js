@@ -1,6 +1,7 @@
 const catchAsync = require('./../utils/catchAsync');
 const Comment = require('../models/commentModel');
 const factory = require('./handlerFactory');
+const APIFeatures = require('./../utils/apiFeatures');
 
 exports.setPostUserIds = (req, res, next) => {
   // Allow nested routes
@@ -8,6 +9,24 @@ exports.setPostUserIds = (req, res, next) => {
   if (!req.body.user) req.body.user = req.user.id;
   next();
 };
+exports.getParentComments = catchAsync(async (req, res, next) => {
+  const features = new APIFeatures(
+    Comment.find({ parentComment: null }),
+    req.query,
+  )
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const doc = await features.query;
+
+  res.status(200).json({
+    status: 'success',
+    results: doc.length,
+    data: doc,
+  });
+});
 
 exports.getCommentReply = catchAsync(async (req, res, next) => {
   const commentsReply = await Comment.find({ parentComment: req.params.id });

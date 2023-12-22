@@ -3,8 +3,15 @@ import '@babel/polyfill';
 import { login, logout, signup, forgot, reset } from './login.js';
 import { updateUser } from './user.js';
 import { createPost, deletePost, loadPost, loadPostScroll } from './post.js';
-import { createComment, getReplyComments } from './comment.js';
+import {
+  createComment,
+  getReplyComments,
+  updateComment,
+  deleteComment,
+  loadComments,
+} from './comment.js';
 
+const divContainer = document.querySelector('.container');
 const loginForm = document.querySelector('.login-form');
 const signUpForm = document.querySelector('.sign-up-form');
 const forgotForm = document.querySelector('.forgot-form');
@@ -183,17 +190,6 @@ if (wrapPosts) {
   loadPostScroll(wrapPosts);
 }
 
-const btnDelPosts = document.querySelectorAll('.btnDelPost');
-
-if (btnDelPosts.length > 0) {
-  btnDelPosts.forEach((btnDelPost) => {
-    btnDelPost.addEventListener('click', () => {
-      const postId = btnDelPost.dataset.postid;
-      deletePost(postId);
-    });
-  });
-}
-
 // create comment
 const commentForms = document.querySelectorAll('.comment-form');
 
@@ -207,13 +203,19 @@ if (commentForms.length > 0) {
   });
 }
 
-const parentContainer = document.querySelector('.container');
 const isFirstClickMap = new Map();
 
-parentContainer.addEventListener('click', (event) => {
+divContainer.addEventListener('click', (event) => {
   const target = event.target;
   const parent = target.parentElement;
+  // console.log(target);
 
+  // const btnLoadMoreComments = document.querySelectorAll('.load-more-comments');
+  // btnLoadMoreComments.forEach((el) => {
+  //   loadComments(el);
+  // });
+
+  // get list reply comments
   if (parent.classList.contains('btn-reply')) {
     if (!isFirstClickMap.has(parent)) {
       // Nếu chưa được click trước đó, thực hiện hàm và đánh dấu là đã click
@@ -221,4 +223,116 @@ parentContainer.addEventListener('click', (event) => {
       isFirstClickMap.set(parent, true);
     }
   }
+
+  // create reply comment
+  if (target.classList.contains('btn-add-form-reply')) {
+    event.preventDefault();
+    // console.log(target);
+    // console.log(target.dataset.parentCommentId);
+
+    const block = target.closest('.block-add-form-create-comment');
+
+    const postId = target.dataset.postId;
+    const parentCommentId = target.dataset.parentCommentId;
+    addFormCreateComment(block, postId, parentCommentId);
+  }
+  // btnUpdateComment
+  const btnUpdateComment = target.closest('.btnUpdateComment');
+  if (btnUpdateComment) {
+    event.preventDefault();
+    const divComment = btnUpdateComment.closest('.post-comments');
+    const commentId = btnUpdateComment.dataset.commentId;
+    addFormUpdateComment(divComment, commentId);
+  }
+
+  // btnDelComment
+  const btnDelComment = target.closest('.btnDelComment');
+  if (btnDelComment) {
+    event.preventDefault();
+    const divComment = btnDelComment.closest('.post-comments');
+    const commentId = btnDelComment.dataset.commentId;
+    deleteCommentFunc(divComment, commentId);
+  }
+
+  // delete post
+  const btnDelPosts = document.querySelectorAll('.btnDelPost');
+
+  if (btnDelPosts.length > 0) {
+    btnDelPosts.forEach((btnDelPost) => {
+      btnDelPost.addEventListener('click', () => {
+        const postId = btnDelPost.dataset.postId;
+        deletePost(postId);
+      });
+    });
+  }
 });
+
+const addFormCreateComment = (block, postId, parentCommentId) => {
+  var formHTML = `
+      <form class="reply-comment-form comment-text d-flex align-items-center mt-3">
+          <textarea class="comment-txt form-control rounded-pill" name="comment" rows="1" placeholder=""></textarea>
+          <input type="hidden" name="post" value="${postId}">
+          <input type="hidden" name="parentComment" value="${parentCommentId}">
+          <div class="comment-attachment d-flex">
+              <button type="submit" class="btn"><i class="fa fa-paper-plane"></i></button>
+          </div>
+      </form>
+  `;
+
+  // Chuyển chuỗi HTML thành các phần tử DOM và thêm vào #block
+  block.insertAdjacentHTML('beforeend', formHTML);
+
+  // Nếu bạn muốn xử lý sự kiện submit, bạn có thể thêm sự kiện ở đây
+  var lastForm = block.lastElementChild;
+  lastForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    var commentValue = lastForm.querySelector('textarea[name="comment"]').value;
+    await createComment(lastForm, getFormData(lastForm));
+    alert('Submitted: ' + commentValue);
+
+    // Xóa form sau khi xử lý submit
+    block.removeChild(lastForm);
+  });
+};
+
+const addFormUpdateComment = (divComment, commentId) => {
+  const comment = divComment.querySelector('.comment-content');
+  const text = comment.innerText;
+  console.log(comment);
+  const block = divComment.querySelector('.block-add-form-create-comment');
+
+  const formHTML = `
+      <form class="reply-comment-form comment-text d-flex align-items-center mt-3">
+          <textarea class="comment-txt form-control rounded-pill" name="comment" rows="1" placeholder="">${text}</textarea>
+          <div class="comment-attachment d-flex">
+              <button type="submit" class="btn"><i class="fa fa-paper-plane"></i></button>
+          </div>
+      </form>
+  `;
+
+  block.insertAdjacentHTML('beforeend', formHTML);
+
+  const lastForm = block.lastElementChild;
+  lastForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const formData = {};
+    const commentValue = lastForm.querySelector(
+      'textarea[name="comment"]',
+    ).value;
+    formData['comment'] = commentValue;
+
+    const res = await updateComment(formData, commentId);
+    if (res === 'success') {
+      comment.innerText = commentValue;
+    }
+    block.removeChild(lastForm);
+  });
+};
+
+const deleteCommentFunc = async (divComment, commentId) => {
+  const res = await deleteComment(commentId);
+  if (res.status === 204) {
+    divComment.remove();
+  }
+};
