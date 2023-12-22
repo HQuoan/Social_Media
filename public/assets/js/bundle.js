@@ -12404,11 +12404,19 @@ function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyri
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; } /* eslint-disable */
 var appendComments = function appendComments(div, comments) {
+  var position = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'top';
   var html = '';
   comments.forEach(function (comment) {
     html += (0, _commentItem.commentItem)(comment);
   });
-  div.innerHTML = html + div.innerHTML;
+  console.log('div: ' + div);
+  if (position === 'top') {
+    div.innerHTML = html + div.innerHTML;
+  } else if (position === 'bottom') {
+    div.innerHTML += html;
+  } else {
+    div.innerHTML = html;
+  }
 };
 var appendReplyComments = function appendReplyComments(div, comments) {
   var html = '<li class="mt-2">';
@@ -12418,7 +12426,7 @@ var appendReplyComments = function appendReplyComments(div, comments) {
   div.innerHTML = html + '</li>' + div.innerHTML;
 };
 var getCommentsOnPost = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(page, postId) {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(postId) {
     var response;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
@@ -12427,7 +12435,7 @@ var getCommentsOnPost = /*#__PURE__*/function () {
           _context.next = 3;
           return (0, _axios.default)({
             method: 'GET',
-            url: "api/v1/posts/".concat(postId, "/comments/parent?&limit=2&page=").concat(page)
+            url: "api/v1/posts/".concat(postId, "/comments/parent")
           });
         case 3:
           response = _context.sent;
@@ -12450,36 +12458,41 @@ var getCommentsOnPost = /*#__PURE__*/function () {
       }
     }, _callee, null, [[0, 8]]);
   }));
-  return function getCommentsOnPost(_x, _x2) {
+  return function getCommentsOnPost(_x) {
     return _ref.apply(this, arguments);
   };
 }();
 var loadComments = exports.loadComments = function loadComments(btn) {
   var postId = btn.dataset.postId;
-  console.log(btn, postId);
-  var div = btn.closest('.comment-box');
-  var page = 2;
-  btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-    var comments;
-    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-      while (1) switch (_context2.prev = _context2.next) {
-        case 0:
-          _context2.next = 2;
-          return getCommentsOnPost(page, postId);
-        case 2:
-          comments = _context2.sent;
-          page++;
-          if (comments.length > 0) {
-            appendComments(div, comments);
-          } else {
-            btn.style.display = 'none';
-          }
-        case 5:
-        case "end":
-          return _context2.stop();
-      }
-    }, _callee2);
-  })));
+  // console.log(btn, postId);
+
+  var wrap = btn.closest('.wrap-comment');
+  var div = wrap.querySelector('.comment-box');
+  var loadMoreHandler = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+      var comments;
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.next = 2;
+            return getCommentsOnPost(postId);
+          case 2:
+            comments = _context2.sent;
+            if (comments.length > 0) {
+              appendComments(div, comments, 'all');
+              btn.style.display = 'none';
+            }
+          case 4:
+          case "end":
+            return _context2.stop();
+        }
+      }, _callee2);
+    }));
+    return function loadMoreHandler() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+  btn.addEventListener('click', loadMoreHandler);
 };
 var createComment = exports.createComment = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(_form, data) {
@@ -12510,7 +12523,7 @@ var createComment = exports.createComment = /*#__PURE__*/function () {
       }
     }, _callee3);
   }));
-  return function createComment(_x3, _x4) {
+  return function createComment(_x2, _x3) {
     return _ref3.apply(this, arguments);
   };
 }();
@@ -12546,7 +12559,7 @@ var getReplyComments = exports.getReplyComments = /*#__PURE__*/function () {
       }
     }, _callee4, null, [[2, 11]]);
   }));
-  return function getReplyComments(_x5) {
+  return function getReplyComments(_x4) {
     return _ref4.apply(this, arguments);
   };
 }();
@@ -12581,7 +12594,7 @@ var updateComment = exports.updateComment = /*#__PURE__*/function () {
       }
     }, _callee5, null, [[1, 9]]);
   }));
-  return function updateComment(_x6, _x7) {
+  return function updateComment(_x5, _x6) {
     return _ref5.apply(this, arguments);
   };
 }();
@@ -12615,7 +12628,7 @@ var deleteComment = exports.deleteComment = /*#__PURE__*/function () {
       }
     }, _callee6, null, [[1, 9]]);
   }));
-  return function deleteComment(_x8) {
+  return function deleteComment(_x7) {
     return _ref6.apply(this, arguments);
   };
 }();
@@ -13033,10 +13046,10 @@ divContainer.addEventListener('click', function (event) {
   var parent = target.parentElement;
   // console.log(target);
 
-  // const btnLoadMoreComments = document.querySelectorAll('.load-more-comments');
-  // btnLoadMoreComments.forEach((el) => {
-  //   loadComments(el);
-  // });
+  var btnLoadMoreComments = document.querySelectorAll('.load-more-comments');
+  btnLoadMoreComments.forEach(function (el) {
+    (0, _comment.loadComments)(el);
+  });
 
   // get list reply comments
   if (parent.classList.contains('btn-reply')) {
@@ -13097,20 +13110,16 @@ var addFormCreateComment = function addFormCreateComment(block, postId, parentCo
   var lastForm = block.lastElementChild;
   lastForm.addEventListener('submit', /*#__PURE__*/function () {
     var _ref8 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(event) {
-      var commentValue;
       return _regeneratorRuntime().wrap(function _callee8$(_context8) {
         while (1) switch (_context8.prev = _context8.next) {
           case 0:
             event.preventDefault();
-            commentValue = lastForm.querySelector('textarea[name="comment"]').value;
-            _context8.next = 4;
+            _context8.next = 3;
             return (0, _comment.createComment)(lastForm, getFormData(lastForm));
-          case 4:
-            alert('Submitted: ' + commentValue);
-
+          case 3:
             // Xóa form sau khi xử lý submit
             block.removeChild(lastForm);
-          case 6:
+          case 4:
           case "end":
             return _context8.stop();
         }
@@ -13206,7 +13215,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62934" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49154" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

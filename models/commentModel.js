@@ -1,3 +1,4 @@
+/* eslint-disable */
 const moment = require('moment');
 const mongoose = require('mongoose');
 // const AppError = require('../utils/appError');
@@ -55,7 +56,7 @@ commentSchema.virtual('moment').get(function () {
 //  CHÚ Ý!!!!
 // khi cập nhật comment thì phải dùng findByIdAndUpdate để nó không đi qua middleware này
 commentSchema.pre('save', async function (next) {
-  if (!this.parentComment || !this.isNew) return next();
+  if (!this.parentComment) return next();
 
   const parentComment = await this.constructor.findById(this.parentComment);
 

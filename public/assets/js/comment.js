@@ -4,13 +4,19 @@ import { showAlert } from './alerts.js';
 import template from './templateURL.js';
 import { commentItem } from './commentItem.js';
 
-const appendComments = (div, comments) => {
+const appendComments = (div, comments, position = 'top') => {
   let html = '';
   comments.forEach((comment) => {
     html += commentItem(comment);
   });
-
-  div.innerHTML = html + div.innerHTML;
+  console.log('div: ' + div);
+  if (position === 'top') {
+    div.innerHTML = html + div.innerHTML;
+  } else if (position === 'bottom') {
+    div.innerHTML += html;
+  } else {
+    div.innerHTML = html;
+  }
 };
 
 const appendReplyComments = (div, comments) => {
@@ -22,11 +28,11 @@ const appendReplyComments = (div, comments) => {
   div.innerHTML = html + '</li>' + div.innerHTML;
 };
 
-const getCommentsOnPost = async (page, postId) => {
+const getCommentsOnPost = async (postId) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: `api/v1/posts/${postId}/comments/parent?&limit=2&page=${page}`,
+      url: `api/v1/posts/${postId}/comments/parent`,
     });
 
     if (response.data.status === 'success') {
@@ -40,19 +46,21 @@ const getCommentsOnPost = async (page, postId) => {
 
 export const loadComments = (btn) => {
   const postId = btn.dataset.postId;
-  console.log(btn, postId);
-  const div = btn.closest('.comment-box');
+  // console.log(btn, postId);
 
-  let page = 2;
-  btn.addEventListener('click', async () => {
-    const comments = await getCommentsOnPost(page, postId);
-    page++;
+  const wrap = btn.closest('.wrap-comment');
+  const div = wrap.querySelector('.comment-box');
+
+  const loadMoreHandler = async () => {
+    const comments = await getCommentsOnPost(postId);
+
     if (comments.length > 0) {
-      appendComments(div, comments);
-    } else {
+      appendComments(div, comments, 'all');
       btn.style.display = 'none';
     }
-  });
+  };
+
+  btn.addEventListener('click', loadMoreHandler);
 };
 
 export const createComment = async (_form, data) => {

@@ -210,10 +210,10 @@ divContainer.addEventListener('click', (event) => {
   const parent = target.parentElement;
   // console.log(target);
 
-  // const btnLoadMoreComments = document.querySelectorAll('.load-more-comments');
-  // btnLoadMoreComments.forEach((el) => {
-  //   loadComments(el);
-  // });
+  const btnLoadMoreComments = document.querySelectorAll('.load-more-comments');
+  btnLoadMoreComments.forEach((el) => {
+    loadComments(el);
+  });
 
   // get list reply comments
   if (parent.classList.contains('btn-reply')) {
@@ -286,9 +286,7 @@ const addFormCreateComment = (block, postId, parentCommentId) => {
   var lastForm = block.lastElementChild;
   lastForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-    var commentValue = lastForm.querySelector('textarea[name="comment"]').value;
     await createComment(lastForm, getFormData(lastForm));
-    alert('Submitted: ' + commentValue);
 
     // Xóa form sau khi xử lý submit
     block.removeChild(lastForm);

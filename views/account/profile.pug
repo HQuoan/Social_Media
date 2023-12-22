@@ -394,9 +394,10 @@ block content
                                   if post.comments.length > 0
                                     each comment in post.comments 
                                       +commentItem(comment, 0)
-                                    button.load-more-comments.btn.rounded-pill(data-post-id = `${post.id}`)
-                                      i.fas.fa-reply.fa-rotate-180
-                                      span.ms-1 See more
+                                if post.comments.length > 0      
+                                  button.load-more-comments.btn.rounded-pill(data-post-id = `${post.id}`)
+                                    i.fas.fa-reply.fa-rotate-180
+                                    span.ms-1 See more
                                 form.comment-form.comment-text.d-flex.align-items-center.mt-3
                                   textarea.comment-txt.form-control.rounded-pill(name='comment' rows='1' placeholder='Enter Your Comment...')
                                   input(name='post' value=`${post.id}` type='hidden')

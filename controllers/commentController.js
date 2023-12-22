@@ -1,7 +1,10 @@
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-syntax */
 const catchAsync = require('./../utils/catchAsync');
 const Comment = require('../models/commentModel');
 const factory = require('./handlerFactory');
 const APIFeatures = require('./../utils/apiFeatures');
+// const AppError = require('./../utils/appError');
 
 exports.setPostUserIds = (req, res, next) => {
   // Allow nested routes
@@ -46,4 +49,53 @@ exports.getAllComments = factory.getAll(Comment);
 exports.getComment = factory.getOne(Comment);
 exports.createComment = factory.createOne(Comment);
 exports.updateComment = factory.updateOne(Comment);
-exports.deleteComment = factory.deleteOne(Comment);
+
+const decrementReplyCount = async (parentCommentId, decrementBy) => {
+  if (parentCommentId) {
+    do {
+      const doc = await Comment.findByIdAndUpdate(parentCommentId, {
+        $inc: { reply: -decrementBy },
+      });
+
+      parentCommentId = doc.parentComment;
+    } while (parentCommentId);
+  }
+
+  // await Comment.findByIdAndUpdate(parentCommentId, {
+  //   $inc: { reply: -decrementBy },
+  // });
+};
+const deleteCommentAndDescendants = async (commentId) => {
+  const comment = await Comment.findById(commentId);
+  if (!comment) {
+    return 0; // Comment not found, nothing to delete, return 0 deleted comments
+  }
+  // Keep track of deleted comments count
+  let deletedCount = 1;
+  // Recursively delete child comments
+  const listChildComments = await Comment.find({ parentComment: comment._id });
+  for (const childComment of listChildComments) {
+    deletedCount += await deleteCommentAndDescendants(
+      childComment._id,
+      commentId,
+    );
+  }
+  // Delete the current comment
+  await Comment.findByIdAndDelete(commentId);
+  // Return the count of deleted comments
+  return deletedCount;
+};
+exports.deleteComment = catchAsync(async (req, res, next) => {
+  const commentId = req.params.id;
+  const comment = await Comment.findById(commentId);
+  const parentCommentId = comment ? comment.parentComment : null;
+  const deletedCount = await deleteCommentAndDescendants(commentId);
+  // Update parent comment's reply count if a parent exists
+  if (parentCommentId) {
+    await decrementReplyCount(parentCommentId, deletedCount);
+  }
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});
