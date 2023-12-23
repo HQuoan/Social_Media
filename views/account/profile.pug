@@ -8,7 +8,7 @@ mixin commentItem(comment, ms)
       .d-flex.flex-wrap
         .user-img
           img.avatar-35.rounded-circle.img-fluid(src=`../img/users/${comment.user.avatar}` alt='userimg')
-        .comment-data-block.ms-3.wrap-comment
+        .wrap-comment.comment-data-block.ms-3
           h6= comment.user.username
           p.comment-content.mb-0= comment.comment
           .block-add-form-create-comment
@@ -16,7 +16,7 @@ mixin commentItem(comment, ms)
               a(href='#') like
               a.btn-add-form-reply(href='#' data-parent-comment-id=`${comment.id}` data-post-id=`${comment.post}`) reply
               span= comment.moment
-          .feather-icon.comment-box
+          .comment-box.feather-icon
             if comment.reply
               a.btn-reply.collapsed(href=`#_${comment.id}` data-bs-toggle='collapse' aria-expanded='false'  aria-controls=`${comment.id}` data-comment-id=`${comment.id}`)
                 i.fas.fa-reply.fa-rotate-180
@@ -402,7 +402,7 @@ block content
                                   textarea.comment-txt.form-control.rounded-pill(name='comment' rows='1' placeholder='Enter Your Comment...')
                                   input(name='post' value=`${post.id}` type='hidden')
                                   .comment-attagement.d-flex
-                                    button.btn(type='submit')
+                                    button.btn.btnSubmitComment.hover-blue(type='submit')
                                       i.fa.fa-paper-plane
                       else
                         p.text-center No posts yet.

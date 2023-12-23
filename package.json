@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "debug": "ndb server.js",
-    "watch:js": "parcel watch ./public/assets/js/index.js --out-dir ./public/assets/js --out-file bundle.js --public-url /assets/js/"
+    "watch": "parcel watch ./public/assets/js/index.js --out-dir ./public/assets/js --out-file bundle.js --public-url /assets/js/"
   },
   "author": "Vo Minh Huy",
   "license": "ISC",

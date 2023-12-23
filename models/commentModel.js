@@ -80,10 +80,12 @@ commentSchema.virtual('childComments', {
 //   next();
 // });
 commentSchema.pre('save', function (next) {
-  this.populate({
-    path: 'user',
-    select: 'firstName lastName  avatar',
-  });
+  if (this.isNew) {
+    this.populate({
+      path: 'user',
+      select: 'firstName lastName  avatar',
+    });
+  }
 
   next();
 });

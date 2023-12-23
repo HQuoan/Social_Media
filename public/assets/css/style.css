@@ -62,3 +62,11 @@
   display: block;
   transform: rotate(90deg);
 }
+
+.hover-red :hover {
+  color: red;
+}
+
+.hover-blue :hover {
+  color: #50b5ff;
+}

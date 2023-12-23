@@ -190,26 +190,28 @@ if (wrapPosts) {
   loadPostScroll(wrapPosts);
 }
 
-// create comment
-const commentForms = document.querySelectorAll('.comment-form');
-
-if (commentForms.length > 0) {
-  commentForms.forEach((commentForm) => {
-    commentForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      await createComment(commentForm, getFormData(commentForm));
-      commentForm.querySelector('.comment-txt').value = '';
-    });
-  });
-}
-
 const isFirstClickMap = new Map();
 
 divContainer.addEventListener('click', (event) => {
   const target = event.target;
   const parent = target.parentElement;
-  // console.log(target);
 
+  // create comment
+  const btnSubmitComment = target.closest('.btnSubmitComment');
+  if (btnSubmitComment) {
+    event.preventDefault();
+    const form = target.closest('.comment-form');
+    createComment(form, getFormData(form));
+  }
+  // const commentForms = document.querySelectorAll('.comment-form');
+
+  // if (commentForms.length > 0) {
+  //   commentForms.forEach((commentForm) => {
+
+  //   });
+  // }
+
+  // load more comments
   const btnLoadMoreComments = document.querySelectorAll('.load-more-comments');
   btnLoadMoreComments.forEach((el) => {
     loadComments(el);
@@ -231,6 +233,7 @@ divContainer.addEventListener('click', (event) => {
     // console.log(target.dataset.parentCommentId);
 
     const block = target.closest('.block-add-form-create-comment');
+    console.log('1: ' + block);
 
     const postId = target.dataset.postId;
     const parentCommentId = target.dataset.parentCommentId;
@@ -274,7 +277,8 @@ const addFormCreateComment = (block, postId, parentCommentId) => {
           <input type="hidden" name="post" value="${postId}">
           <input type="hidden" name="parentComment" value="${parentCommentId}">
           <div class="comment-attachment d-flex">
-              <button type="submit" class="btn"><i class="fa fa-paper-plane"></i></button>
+              <button type="submit" class="btn hover-blue"><i class="fa fa-paper-plane"></i></button>
+              <button class="btn btnCancel hover-red"><i class="fas fa-times">Cancel</i></button>
           </div>
       </form>
   `;
@@ -284,6 +288,13 @@ const addFormCreateComment = (block, postId, parentCommentId) => {
 
   // Nếu bạn muốn xử lý sự kiện submit, bạn có thể thêm sự kiện ở đây
   var lastForm = block.lastElementChild;
+  const btnCancel = lastForm.querySelector('.btnCancel');
+  if (btnCancel) {
+    btnCancel.addEventListener('click', () => {
+      block.removeChild(lastForm);
+    });
+  }
+
   lastForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     await createComment(lastForm, getFormData(lastForm));
@@ -304,6 +315,7 @@ const addFormUpdateComment = (divComment, commentId) => {
           <textarea class="comment-txt form-control rounded-pill" name="comment" rows="1" placeholder="">${text}</textarea>
           <div class="comment-attachment d-flex">
               <button type="submit" class="btn"><i class="fa fa-paper-plane"></i></button>
+              <button class="btn btnCancel"><i class="fa fa-paper-plane">Cancel</i></button>
           </div>
       </form>
   `;
@@ -311,6 +323,13 @@ const addFormUpdateComment = (divComment, commentId) => {
   block.insertAdjacentHTML('beforeend', formHTML);
 
   const lastForm = block.lastElementChild;
+
+  const btnCancel = lastForm.querySelector('.btnCancel');
+  if (btnCancel) {
+    btnCancel.addEventListener('click', () => {
+      block.removeChild(lastForm);
+    });
+  }
   lastForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 

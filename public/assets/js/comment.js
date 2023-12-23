@@ -9,7 +9,6 @@ const appendComments = (div, comments, position = 'top') => {
   comments.forEach((comment) => {
     html += commentItem(comment);
   });
-  console.log('div: ' + div);
   if (position === 'top') {
     div.innerHTML = html + div.innerHTML;
   } else if (position === 'bottom') {
@@ -66,7 +65,6 @@ export const loadComments = (btn) => {
 export const createComment = async (_form, data) => {
   const url = `/api/v1/comments/me`;
   const comment = await template('POST', url, '', data, 'Created Comment');
-  console.log(comment);
 
   if (!comment) return;
 
@@ -76,6 +74,7 @@ export const createComment = async (_form, data) => {
   const wrap = _form.closest('.wrap-comment');
   const commentBox = wrap.querySelector('.comment-box');
   appendComments(commentBox, comments);
+  _form.querySelector('.comment-txt').value = '';
 };
 
 export const getReplyComments = async (btnReply) => {

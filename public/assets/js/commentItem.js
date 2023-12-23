@@ -2,14 +2,12 @@
 export const commentItem = (comment, ms = 0) => {
   const replySection = comment.reply
     ? `
-    <div class="feather-icon comment-box">
       <a class="btn-reply collapsed" href="#_${comment.id}" data-bs-toggle="collapse" aria-expanded="false" aria-controls="${comment.id}" data-comment-id="${comment.id}">
         <i class="fas fa-reply fa-rotate-180"></i>
         <span class="ms-1">${comment.reply} Replies</span>
       </a>
       <br>
       <ul class="reply-comment iq-menu p-0 collapse" id="_${comment.id}" style="list-style-type: none;"></ul>
-    </div>
     `
     : '';
 
@@ -29,7 +27,9 @@ export const commentItem = (comment, ms = 0) => {
             <a class="btn-add-form-reply" href="#" data-parent-comment-id="${comment.id}" data-post-id="${comment.post}">reply</a>
             <span>${comment.moment}</span>
           </div>
-          ${replySection}
+          <div class="feather-icon comment-box">
+            ${replySection}
+          </div>
         </div>
       </div>
     </div>
