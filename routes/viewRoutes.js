@@ -15,7 +15,9 @@ router.get('/reset-password', viewController.getFormResetPassword);
 router.get('/group', viewController.getGroup);
 
 router.get('/profile-edit', authController.protect, viewController.getAccount);
-router.get('/profile', authController.protect, viewController.getProfile);
+router.get('/profile', authController.protect, viewController.getMyProfile);
+router.get('/:userId', viewController.getProfile);
+router.get('/profile/:userId', viewController.getProfile);
 // .get(authController.protect, viewsController.getProfile);
 
 module.exports = router;

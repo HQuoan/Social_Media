@@ -31,7 +31,7 @@ exports.createEmoji = catchAsync(async (req, res, next) => {
     user: req.body.user,
     post: req.body.post,
   });
-  console.log(emoji);
+
   if (emoji) {
     return next(new AppError("User's emoji for post already exists"));
   }

@@ -12,7 +12,7 @@ router
 
 router
   .route('/')
-  .get(emojiController.getAllEmojis)
+  .get(emojiController.getEmoji)
   .post(
     authController.restrictTo('admin'),
     emojiController.setPostUserIds,

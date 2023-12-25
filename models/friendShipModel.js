@@ -1,28 +1,38 @@
 const mongoose = require('mongoose');
 
-const friendShipSchema = new mongoose.Schema({
-  // sender
-  userA: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User',
-    require: [true, 'Require use A'],
+const friendShipSchema = new mongoose.Schema(
+  {
+    sender: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      require: [true, 'Require sender'],
+    },
+    receiver: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      require: [true, 'Require receiver'],
+    },
+    status: {
+      type: String,
+      enum: ['pending', 'accepted', 'rejected'],
+      default: 'pending',
+    },
   },
-  // receiver
-  userB: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User',
-    require: [true, 'Require use B'],
+  {
+    timestamps: true,
   },
-  status: {
-    type: String,
-    enum: ['pending', 'accepted', 'rejected'],
-    default: 'pending',
-  },
-  requestDate: {
-    type: Date,
-    default: Date.now,
-  },
-  acceptDate: Date,
+);
+
+friendShipSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'sender',
+    select: 'firstName lastName  avatar',
+  }).populate({
+    path: 'receiver',
+    select: 'firstName lastName  avatar',
+  });
+
+  next();
 });
 
 const FriendShip = mongoose.model('FriendShip', friendShipSchema);

@@ -19,6 +19,7 @@ const userRouter = require('./routes/userRoutes');
 const commentRouter = require('./routes/commentRoutes');
 const viewRouter = require('./routes/viewRoutes');
 const emojiRouter = require('./routes/emojiRoutes');
+const friendShipRouter = require('./routes/friendShipRoutes');
 
 const app = express();
 
@@ -77,6 +78,7 @@ app.use('/api/v1/posts', postRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/comments', commentRouter);
 app.use('/api/v1/emojis', emojiRouter);
+app.use('/api/v1/friendships', friendShipRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find '${req.originalUrl}' on this server`), 404);
