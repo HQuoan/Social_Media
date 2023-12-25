@@ -10,11 +10,7 @@ router.route('/parent').get(commentController.getParentComments);
 router
   .route('/me')
   .get(commentController.getMyComments)
-  .post(
-    commentController.setPostUserIds,
-    authController.setCurrentId,
-    commentController.createComment,
-  );
+  .post(authController.setCurrentId, commentController.createComment);
 
 router
   .route('/me/:id')

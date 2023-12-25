@@ -40,13 +40,25 @@ postSchema.virtual('comments', {
   foreignField: 'post',
   localField: '_id',
 });
-
-postSchema.virtual('countComment', {
+postSchema.virtual('countComments', {
   ref: 'Comment',
   foreignField: 'post',
   localField: '_id',
   count: true,
 });
+
+// postSchema.virtual('emojis', {
+//   ref: 'Emoji',
+//   foreignField: 'post',
+//   localField: '_id',
+// });
+
+// postSchema.virtual('countEmojis', {
+//   ref: 'Emoji',
+//   foreignField: 'post',
+//   localField: '_id',
+//   count: true,
+// });
 
 postSchema.pre(/^find/, function (next) {
   this.populate({
@@ -54,7 +66,7 @@ postSchema.pre(/^find/, function (next) {
     select: 'firstName lastName avatar',
   })
     .populate({
-      path: 'countComment',
+      path: 'countComments',
     })
     .populate({
       path: 'comments',
@@ -64,6 +76,12 @@ postSchema.pre(/^find/, function (next) {
         sort: { createdAt: -1 },
       },
     });
+  // .populate({
+  //   path: 'countEmojis',
+  // })
+  // .populate({
+  //   path: 'emojis',
+  // });
 
   next();
 });

@@ -70,3 +70,6 @@
 .hover-blue :hover {
   color: #50b5ff;
 }
+.f-right {
+  float: right;
+}
