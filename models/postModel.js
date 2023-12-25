@@ -47,18 +47,18 @@ postSchema.virtual('countComments', {
   count: true,
 });
 
-// postSchema.virtual('emojis', {
-//   ref: 'Emoji',
-//   foreignField: 'post',
-//   localField: '_id',
-// });
+postSchema.virtual('emojis', {
+  ref: 'Emoji',
+  foreignField: 'post',
+  localField: '_id',
+});
 
-// postSchema.virtual('countEmojis', {
-//   ref: 'Emoji',
-//   foreignField: 'post',
-//   localField: '_id',
-//   count: true,
-// });
+postSchema.virtual('countEmojis', {
+  ref: 'Emoji',
+  foreignField: 'post',
+  localField: '_id',
+  count: true,
+});
 
 postSchema.pre(/^find/, function (next) {
   this.populate({
@@ -75,13 +75,13 @@ postSchema.pre(/^find/, function (next) {
         limit: 2,
         sort: { createdAt: -1 },
       },
+    })
+    .populate({
+      path: 'countEmojis',
+    })
+    .populate({
+      path: 'emojis',
     });
-  // .populate({
-  //   path: 'countEmojis',
-  // })
-  // .populate({
-  //   path: 'emojis',
-  // });
 
   next();
 });

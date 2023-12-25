@@ -14,7 +14,7 @@ exports.setPostUserIds = (req, res, next) => {
 };
 exports.getParentComments = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(
-    Comment.find({ parentComment: null }),
+    Comment.find({ post: req.params.postId, parentComment: null }),
     req.query,
   )
     .filter()
