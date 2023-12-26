@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const moment = require('moment');
 const mongoose = require('mongoose');
+const AppError = require('../utils/appError');
 
 const postSchema = new mongoose.Schema(
   {
@@ -12,7 +13,7 @@ const postSchema = new mongoose.Schema(
     content: {
       type: String,
       trim: true,
-      required: [true, 'A post must have a content'],
+      // required: [true, 'A post must have a content'],
     },
     images: [String],
     status: {
@@ -27,6 +28,14 @@ const postSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   },
 );
+
+postSchema.pre('validate', function (next) {
+  if (!this.content && !(this.images.length > 0)) {
+    next(new AppError('Either content or images must be provided.'));
+  } else {
+    next();
+  }
+});
 
 postSchema.virtual('moment').get(function () {
   const { createdAt } = this;

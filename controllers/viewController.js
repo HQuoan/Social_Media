@@ -55,6 +55,43 @@ exports.getGroup = (req, res) => {
   });
 };
 
+exports.getFriendRequest = catchAsync(async (req, res) => {
+  const friendRequest = await FriendShip.find({
+    receiver: req.user.id,
+    status: 'pending',
+  });
+
+  const friends = await FriendShip.find({
+    $or: [{ sender: req.user.id }, { receiver: req.user.id }],
+    status: 'accepted',
+  });
+
+  const friendRequestIds = friendRequest.map((request) => request.sender);
+  const friendIds = friends.reduce((ids, friend) => {
+    ids.push(friend.sender, friend.receiver);
+    return ids;
+  }, []);
+
+  const nonFriend = await User.find({
+    _id: {
+      $nin: [...friendRequestIds, ...friendIds, req.user.id],
+    },
+  });
+
+  // console.log('friendRequest : ', friendRequest);
+  // console.log('friends : ', friends);
+  // console.log('friendRequestIds : ', friendRequestIds);
+  // console.log('friendIds : ', friendIds);
+  // console.log('nonFriend : ', nonFriend);
+
+  res.status(200).render('friend-request', {
+    title: 'Friend Request',
+    friends,
+    friendRequest,
+    nonFriend,
+  });
+});
+
 exports.getAccount = catchAsync(async (req, res, next) => {
   res.status(200).render('./account/account', {
     title: 'My account',
@@ -62,9 +99,6 @@ exports.getAccount = catchAsync(async (req, res, next) => {
 });
 
 exports.getMyProfile = catchAsync(async (req, res, next) => {
-  req.params.userId = '6575c85850e34c58ce6dd3e9';
-
-  const user = await User.findById(req.user.id);
   const posts = await Post.find({ user: req.user.id })
     .limit(2)
     .sort('-createdAt');
@@ -77,14 +111,13 @@ exports.getMyProfile = catchAsync(async (req, res, next) => {
   // console.log(posts);
   res.status(200).render('./account/profile', {
     title: 'Profile',
-    user,
     posts,
     friends,
   });
 });
 
 exports.getProfile = catchAsync(async (req, res, next) => {
-  const user = await User.findById(req.params.userId);
+  const your = await User.findById(req.params.userId);
   const posts = await Post.find({ user: req.params.userId })
     .limit(2)
     .sort('-createdAt');
@@ -95,9 +128,9 @@ exports.getProfile = catchAsync(async (req, res, next) => {
   });
 
   // console.log(posts);
-  res.status(200).render('./account/profile', {
-    title: `${user.firstName}'s profile`,
-    user,
+  res.status(200).render('./account/friend-profile', {
+    title: `${your.firstName}'s profile`,
+    your,
     posts,
     friends,
   });

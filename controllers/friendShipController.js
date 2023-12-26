@@ -25,6 +25,18 @@ exports.isYour = catchAsync(async (req, res, next) => {
   next();
 });
 
+exports.isReceiver = catchAsync(async (req, res, next) => {
+  const friendShip = await FriendShip.findById(req.params.id);
+
+  if (friendShip && friendShip.receiver.id !== req.user.id) {
+    return next(
+      new AppError('You do not have permission to perform this action', 403),
+    );
+  }
+
+  next();
+});
+
 exports.getMyFriendShips = catchAsync(async (req, res, next) => {
   const friendShip = FriendShip.find({
     $or: [{ sender: req.user.id }, { receiver: req.user.id }],

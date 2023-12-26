@@ -16,7 +16,7 @@ router
 
 router
   .route('/me/:id')
-  .patch(friendShipController.isYour, friendShipController.updateFriendShip)
+  .patch(friendShipController.isReceiver, friendShipController.updateFriendShip)
   .delete(friendShipController.isYour, friendShipController.deleteFriendShip);
 
 // admin

@@ -3,6 +3,8 @@ import '@babel/polyfill';
 import { login, logout, signup, forgot, reset } from './login.js';
 import { updateUser } from './user.js';
 import { createPost, deletePost, loadPost, loadPostScroll } from './post.js';
+import { updateFriendShip } from './friendShip.js';
+
 import {
   createComment,
   getReplyComments,
@@ -141,13 +143,15 @@ const fileInput = document.getElementById('fileInput');
 const imagePreview = document.getElementById('imagePreview');
 const upImg = document.getElementById('upImg');
 
-fileInput.addEventListener('change', function () {
-  previewImages(this.files);
-});
+if (fileInput && imagePreview && upImg) {
+  fileInput.addEventListener('change', function () {
+    previewImages(this.files);
+  });
 
-upImg.addEventListener('click', function () {
-  fileInput.click();
-});
+  upImg.addEventListener('click', function () {
+    fileInput.click();
+  });
+}
 
 function previewImages(files) {
   for (let i = 0; i < files.length; i++) {
@@ -188,6 +192,21 @@ if (wrapProfilePosts && loadPostBtn) {
 
 if (wrapPosts) {
   loadPostScroll(wrapPosts);
+}
+
+/// Friend
+
+const btnAcceptFriends = document.querySelectorAll('.accept-friend');
+
+if (btnAcceptFriends) {
+  btnAcceptFriends.forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const reqId = el.dataset.requestId;
+      console.log(reqId);
+      updateFriendShip(reqId, 'accepted');
+    });
+  });
 }
 
 const isFirstClickMap = new Map();
