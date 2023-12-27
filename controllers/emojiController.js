@@ -11,14 +11,19 @@ exports.setPostUserIds = (req, res, next) => {
 };
 
 exports.createEmojiClient = catchAsync(async (req, res, next) => {
-  let emoji = Emoji.findOne({ user: req.body.user, post: req.body.post });
+  let emoji = await Emoji.findOne({ user: req.body.user, post: req.body.post });
 
   if (!emoji) {
     emoji = await Emoji.create(req.body);
   }
 
-  emoji.type = req.body.type;
-  emoji.save();
+  if (req.body.type === 'null') {
+    await Emoji.findByIdAndDelete(emoji._id);
+    emoji = null;
+  } else {
+    emoji.type = req.body.type;
+    await emoji.save();
+  }
 
   res.status(200).json({
     status: 'success',

@@ -4,6 +4,7 @@ import { login, logout, signup, forgot, reset } from './login.js';
 import { updateUser } from './user.js';
 import { createPost, deletePost, loadPost, loadPostScroll } from './post.js';
 import { updateFriendShip } from './friendShip.js';
+import { createEmoji } from './emoji.js';
 
 import {
   createComment,
@@ -215,6 +216,27 @@ divContainer.addEventListener('click', (event) => {
   const target = event.target;
   const parent = target.parentElement;
 
+  // emoji
+  if (target.classList.contains('emoji-item')) {
+    event.preventDefault();
+
+    const likeData = target.closest('.like-data');
+    if (likeData) {
+      const emojiActive = likeData.querySelector('.emoji-active-item');
+      emojiActive.src = target.src;
+
+      const post = emojiActive.dataset.postId;
+      const type = target.dataset.emoji;
+
+      const data = {
+        post,
+        type,
+      };
+
+      createEmoji(data);
+    }
+  }
+
   // create comment
   const btnSubmitComment = target.closest('.btnSubmitComment');
   if (btnSubmitComment) {
@@ -222,13 +244,6 @@ divContainer.addEventListener('click', (event) => {
     const form = target.closest('.comment-form');
     createComment(form, getFormData(form));
   }
-  // const commentForms = document.querySelectorAll('.comment-form');
-
-  // if (commentForms.length > 0) {
-  //   commentForms.forEach((commentForm) => {
-
-  //   });
-  // }
 
   // load more comments
   const btnLoadMoreComments = document.querySelectorAll('.load-more-comments');

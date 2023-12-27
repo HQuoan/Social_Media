@@ -20,7 +20,7 @@ router.get(
 router.get('/group', viewController.getGroup);
 
 router.get('/profile-edit', authController.protect, viewController.getAccount);
-router.get('/profile', authController.isLoggedIn, viewController.getMyProfile);
+router.get('/profile', authController.protect, viewController.getMyProfile);
 router.get('/:userId', authController.isLoggedIn, viewController.getProfile);
 // router.get('/profile/:userId', viewController.getProfile);
 // .get(authController.protect, viewsController.getProfile);
