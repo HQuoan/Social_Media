@@ -169,7 +169,7 @@ block content
                                     | Friends
                                   option(value='private')
                                     | Only Me
-                          button.btnSubmit.btn.btn-primary.d-block.w-100.mt-3(type='submit') Post
+                          button.btnSubmit.btn.btn-primary.d-block.w-100.mt-3f(type='submit') Post
                 .col-lg-4
                   .card
                     .card-body
@@ -386,7 +386,7 @@ block content
                                         if post.comments.length > 0
                                           each comment in post.comments 
                                             +dropdownItem(comment)                                    
-                                        a.dropdown-item(href='#') Other
+                                          a.dropdown-item(href='#') Other
                                 .share-block.d-flex.align-items-center.feather-icon.mt-2.mt-md-0
                                   a(href='#' data-bs-toggle='offcanvas' data-bs-target='#share-btn' aria-controls='share-btn')
                                     i.ri-share-line

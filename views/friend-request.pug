@@ -33,14 +33,14 @@ block content
               .user-tabing
                 ul.nav.nav-pills.d-flex.align-items-center.justify-content-center.profile-feed-items.p-0.m-0
                   li.nav-item.col-12.col-sm-3.p-0
-                    a.nav-link.active(href='#pills-friend-tab' data-bs-toggle='pill' data-bs-target='#friend' role='button') Friend
+                    a.nav-link.active(href='#pills-other-tab' data-bs-toggle='pill' data-bs-target='#other' role='button') People You May Know
+                  li.nav-item.col-12.col-sm-3.p-0
+                    a.nav-link(href='#pills-friend-tab' data-bs-toggle='pill' data-bs-target='#friend' role='button') Friend
                   li.nav-item.col-12.col-sm-3.p-0
                     a.nav-link(href='#pills-friend-request-tab' data-bs-toggle='pill' data-bs-target='#friend-request' role='button') Friend Request
-                  li.nav-item.col-12.col-sm-3.p-0
-                    a.nav-link(href='#pills-other-tab' data-bs-toggle='pill' data-bs-target='#other' role='button') People You May Know
         .col-sm-12
           .tab-content
-            #friend.tab-pane.fade.show.active(role='tabpanel')
+            #friend.tab-pane.fade(role='tabpanel')
               .card-body.p-0
                   .row
                     if(friends.length > 0)
@@ -65,7 +65,8 @@ block content
                                     a.dropdown-item(href='#') Unfriend
                                     a.dropdown-item(href='#') Block
                     else 
-                      p Not yet friends                
+                      .text-center
+                        p Not yet friends                
             #friend-request.tab-pane.fade(role='tabpanel')
               .card
                 .card-header.d-flex.justify-content-between
@@ -87,7 +88,7 @@ block content
                           a.me-3.btn.btn-primary.rounded.confirm-btn(href='#') Confirm
                           a.me-3.btn.btn-primary.rounded.request-btn(href='../app/profile.html' style='display: none;') View All
                         a.btn.btn-secondary.rounded(href='#' data-extra-toggle='delete' data-closest-elem='.item') Delete Request
-            #other.tab-pane.fade(role='tabpanel')
+            #other.tab-pane.fade.show.active(role='tabpanel')
               .card
                 .card-header.d-flex.justify-content-between
                   .header-title
