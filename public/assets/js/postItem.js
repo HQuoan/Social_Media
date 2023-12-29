@@ -69,12 +69,16 @@ export const postItem = (post) => {
            <li class="mb-2 d-flex justify-content-between">
              <div class="d-flex flex-wrap">
                <div class="user-img">
-                 <img class="avatar-35 rounded-circle img-fluid" src="../img/users/${
-                   comment.user.avatar
-                 }" alt="userimg">
+               <a href="/${comment.user.key}">
+               <img class="avatar-35 rounded-circle img-fluid" src="../img/users/${
+                 comment.user.avatar
+               }" alt="userimg">
+               </a>
                </div>
                <div class="wrap-comment comment-data-block ms-3">
-                 <h6>${comment.user.username}</h6>
+                 <a href="/${comment.user.key}">
+                    <h6>${comment.user.username}</h6>
+                 </a>
                  <p class="comment-content mb-0">${comment.comment}</p>
                  <div class="block-add-form-create-comment">
                    <div class="d-flex flex-wrap align-items-center comment-activity">
@@ -148,13 +152,15 @@ export const postItem = (post) => {
     <div class="card-body">
       <div class="user-post-data">
         <div class="d-flex justify-content-between">
-          <div class="me-3">
+          <a href="/${post.user.key}" class="me-3">
             <img class="rounded-circle img-fluid avatar-60" src="./img/users/${post.user.avatar}" alt="">
-          </div>
+          </a>
           <div class="w-100">
             <div class="d-flex justify-content-between">
               <div>
-                <h5 class="mb-0 d-inline-block">${post.user.username}</h5>
+                <a href="/${post.user.key}">
+                  <h5 class="mb-0 d-inline-block">${post.user.username}</h5>
+                </a>
                 <span class="ms-1 mb-0 d-inline-block">Add New Post</span>
                 <p class="mb-0 text-primary">${post.moment}</p>
               </div>
@@ -220,23 +226,23 @@ export const postItem = (post) => {
                     <a class="ms-2 me-2" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Like">
                       <img class="emoji-item img-fluid" src="../assets/images/icon/like.png" alt="" data-emoji="like">
                     </a>
-                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Love">
+                    <a class="me-2" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Love">
                       <img class="emoji-item img-fluid" src="../assets/images/icon/love.png" alt="" data-emoji="love">
                     </a>
-                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="HaHa">
+                    <a class="me-2" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="HaHa">
                       <img class="emoji-item img-fluid" src="../assets/images/icon/haha.png" alt="" data-emoji="haha">
                     </a>
-                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Think">
+                    <a class="me-2" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Think">
                       <img class="emoji-item img-fluid" src="../assets/images/icon/think.png" alt="" data-emoji="think">
                     </a>
-                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Sade">
+                    <a class="me-2" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Sade">
                       <img class="emoji-item img-fluid" src="../assets/images/icon/sade.png" alt="" data-emoji="sade">
                     </a>
-                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Lovely">
+                    <a class="me-2" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Lovely">
                       <img class="emoji-item img-fluid" src="../assets/images/icon/lovely.png" alt=""
                         data-emoji="lovely">
                     </a>
-                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel">
+                    <a class="me-2" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel">
                       <img class="emoji-item img-fluid" src="../assets/images/icon/null.jpg" alt="" data-emoji="null">
                     </a>
                   </div>

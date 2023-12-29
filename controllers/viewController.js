@@ -3,7 +3,7 @@ const Post = require('../models/postModel');
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 // const APIFeatures = require('./../utils/apiFeatures');
-// const AppError = require('../utils/appError');
+const AppError = require('../utils/appError');
 
 exports.alerts = (req, res, next) => {
   const { alert } = req.query;
@@ -61,12 +61,18 @@ exports.getFriendRequest = catchAsync(async (req, res) => {
     status: 'pending',
   });
 
+  const requested = await FriendShip.find({
+    sender: req.user.id,
+    status: 'pending',
+  });
+
   const friends = await FriendShip.find({
     $or: [{ sender: req.user.id }, { receiver: req.user.id }],
     status: 'accepted',
   });
 
   const friendRequestIds = friendRequest.map((request) => request.sender);
+  const requestedIds = requested.map((request) => request.receiver);
   const friendIds = friends.reduce((ids, friend) => {
     ids.push(friend.sender, friend.receiver);
     return ids;
@@ -74,7 +80,7 @@ exports.getFriendRequest = catchAsync(async (req, res) => {
 
   const nonFriend = await User.find({
     _id: {
-      $nin: [...friendRequestIds, ...friendIds, req.user.id],
+      $nin: [...friendRequestIds, ...requestedIds, ...friendIds, req.user.id],
     },
   });
 
@@ -88,6 +94,7 @@ exports.getFriendRequest = catchAsync(async (req, res) => {
     title: 'Friend Request',
     friends,
     friendRequest,
+    requested,
     nonFriend,
   });
 });
@@ -117,13 +124,16 @@ exports.getMyProfile = catchAsync(async (req, res, next) => {
 });
 
 exports.getProfile = catchAsync(async (req, res, next) => {
-  const your = await User.findById(req.params.userId);
-  const posts = await Post.find({ user: req.params.userId })
-    .limit(2)
-    .sort('-createdAt');
+  const your = await User.findOne({ key: req.params.key });
+
+  if (!your) {
+    next(new AppError('Key not found!!!', 404));
+  }
+
+  const posts = await Post.find({ user: your.id }).limit(2).sort('-createdAt');
 
   const friends = await FriendShip.find({
-    $or: [{ sender: req.params.userId }, { receiver: req.params.userId }],
+    $or: [{ sender: your.id }, { receiver: your.id }],
     status: 'accepted',
   });
 
@@ -133,5 +143,11 @@ exports.getProfile = catchAsync(async (req, res, next) => {
     your,
     posts,
     friends,
+  });
+});
+
+exports.messenger = catchAsync(async (req, res, next) => {
+  res.status(200).render('chat', {
+    title: 'Messenger',
   });
 });

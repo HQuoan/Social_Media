@@ -17,7 +17,11 @@ router
 router
   .route('/me/:id')
   .patch(friendShipController.isReceiver, friendShipController.updateFriendShip)
-  .delete(friendShipController.isYour, friendShipController.deleteFriendShip);
+  .delete(
+    friendShipController.isYour,
+    friendShipController.unfriend,
+    friendShipController.deleteFriendShip,
+  );
 
 // admin
 router.use(authController.restrictTo('admin'));

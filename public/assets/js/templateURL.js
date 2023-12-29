@@ -9,8 +9,7 @@ module.exports = async function (method, url, to, data, message) {
       url,
       data,
     });
-    // console.log(response);
-    if (response.data.status === 'success') {
+    if (response.data.status === 'success' || response.status === 204) {
       if (message !== '') showAlert('success', message);
       if (to !== '') {
         setTimeout(() => {

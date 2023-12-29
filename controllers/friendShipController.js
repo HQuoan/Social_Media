@@ -37,6 +37,30 @@ exports.isReceiver = catchAsync(async (req, res, next) => {
   next();
 });
 
+exports.unfriend = catchAsync(async (req, res, next) => {
+  const { sender, receiver } = req.body;
+
+  if (!sender && !receiver) next();
+
+  const friendShip = await FriendShip.findOne({
+    $or: [
+      { sender: sender, receiver: receiver },
+      {
+        sender: receiver,
+        receiver: sender,
+      },
+    ],
+  });
+
+  if (!friendShip) {
+    return next(new AppError('Friendship not found!'));
+  }
+
+  req.params.id = friendShip.id;
+
+  next();
+});
+
 exports.getMyFriendShips = catchAsync(async (req, res, next) => {
   const friendShip = FriendShip.find({
     $or: [{ sender: req.user.id }, { receiver: req.user.id }],

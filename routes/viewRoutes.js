@@ -18,10 +18,11 @@ router.get(
   viewController.getFriendRequest,
 );
 router.get('/group', viewController.getGroup);
+router.get('/messenger', authController.protect, viewController.messenger);
 
 router.get('/profile-edit', authController.protect, viewController.getAccount);
 router.get('/profile', authController.protect, viewController.getMyProfile);
-router.get('/:userId', authController.isLoggedIn, viewController.getProfile);
+router.get('/:key', authController.isLoggedIn, viewController.getProfile);
 // router.get('/profile/:userId', viewController.getProfile);
 // .get(authController.protect, viewsController.getProfile);
 

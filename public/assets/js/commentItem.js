@@ -16,10 +16,14 @@ export const commentItem = (comment, ms = 0) => {
   <li class="mb-2 d-flex justify-content-between">
     <div class="d-flex flex-wrap">
       <div class="user-img">
-        <img class="avatar-35 rounded-circle img-fluid" src="../img/users/${comment.user.avatar}" alt="userimg">
+        <a href="/${comment.user.key}">
+          <img class="avatar-35 rounded-circle img-fluid" src="../img/users/${comment.user.avatar}" alt="userimg">
+        </a>
       </div>
       <div class="comment-data-block ms-3 wrap-comment">
-        <h6>${comment.user.username}</h6>
+        <a href="/${comment.user.key}">
+           <h6>${comment.user.username}</h6>
+        </a>
         <p class="comment-content mb-0">${comment.comment}</p>
         <div class="block-add-form-create-comment">
           <div class="d-flex flex-wrap align-items-center comment-activity">

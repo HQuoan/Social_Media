@@ -1,22 +1,26 @@
 /* eslint-disable */
 import axios from 'axios';
 import { showAlert } from './alerts.js';
+import template from './templateURL.js';
 
-export const updateFriendShip = async (id, data) => {
-  try {
-    const response = await axios({
-      method: 'PATCH',
-      url: `api/v1/friendships/me/${id}`,
-      data: {
-        status: data,
-      },
-    });
+export const createRequest = async (receiver) => {
+  const data = {
+    receiver,
+  };
 
-    if (response.data.status === 'success') {
-      showAlert('success', 'Accepted');
-    }
-  } catch (error) {
-    showAlert('error', error.response.data.message);
-    console.log(error);
-  }
+  template('POST', '/api/v1/friendships/me', '', data, 'Successfully!');
+};
+
+export const updateFriendShip = async (id, status) => {
+  const url = `api/v1/friendships/me/${id}`;
+
+  const data = {
+    status,
+  };
+
+  template('PATCH', url, '', data, 'Accepted!');
+};
+export const deleteRequest = async (id, data = {}) => {
+  const url = `api/v1/friendships/me/${id}`;
+  template('DELETE', url, '', data, 'Deleted!');
 };

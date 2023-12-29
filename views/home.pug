@@ -11,9 +11,11 @@ mixin commentItem(comment, ms)
     li.mb-2.d-flex.justify-content-between
       .d-flex.flex-wrap
         .user-img
-          img.avatar-35.rounded-circle.img-fluid(src=`../img/users/${comment.user.avatar}` alt='userimg')
+          a(href=`/${comment.user.key}`)
+            img.avatar-35.rounded-circle.img-fluid(src=`../img/users/${comment.user.avatar}` alt='userimg')
         .wrap-comment.comment-data-block.ms-3
-          h6= comment.user.username
+          a(href=`/${comment.user.key}`)
+            h6= comment.user.username
           p.comment-content.mb-0= comment.comment
           .block-add-form-create-comment
             .d-flex.flex-wrap.align-items-center.comment-activity
@@ -153,12 +155,13 @@ block content
                   .card-body
                     .user-post-data
                       .d-flex.justify-content-between
-                        .me-3
+                        a(href=`/${post.user.key}`).me-3
                           img.rounded-circle.img-fluid.avatar-60(src=`./img/users/${post.user.avatar}` alt='')
                         .w-100
                           .d-flex.justify-content-between
                             div
-                              h5.mb-0.d-inline-block= post.user.username
+                              a(href=`/${post.user.key}`)
+                                h5.mb-0.d-inline-block= post.user.username
                               span.ms-1.mb-0.d-inline-block Add New Post
                               p.mb-0.text-primary= post.moment
                             .card-post-toolbar

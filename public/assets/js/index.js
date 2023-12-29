@@ -3,7 +3,11 @@ import '@babel/polyfill';
 import { login, logout, signup, forgot, reset } from './login.js';
 import { updateUser } from './user.js';
 import { createPost, deletePost, loadPost, loadPostScroll } from './post.js';
-import { updateFriendShip } from './friendShip.js';
+import {
+  createRequest,
+  updateFriendShip,
+  deleteRequest,
+} from './friendShip.js';
 import { createEmoji } from './emoji.js';
 
 import {
@@ -196,6 +200,18 @@ if (wrapPosts) {
 }
 
 /// Friend
+const btnAddFriends = document.querySelectorAll('.btnAddFriend');
+if (btnAddFriends) {
+  btnAddFriends.forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const receiver = el.dataset.receiverId;
+      createRequest(receiver);
+
+      el.innerText = 'Requested';
+    });
+  });
+}
 
 const btnAcceptFriends = document.querySelectorAll('.accept-friend');
 
@@ -206,6 +222,38 @@ if (btnAcceptFriends) {
       const reqId = el.dataset.requestId;
       console.log(reqId);
       updateFriendShip(reqId, 'accepted');
+      el.innerText = 'Accepted';
+    });
+  });
+}
+
+const btnDeleteRequests = document.querySelectorAll('.delete-request');
+
+if (btnDeleteRequests) {
+  btnDeleteRequests.forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const reqId = el.dataset.requestId;
+      console.log(reqId);
+      deleteRequest(reqId);
+      el.innerText = 'Deleted';
+    });
+  });
+}
+
+const btnUnfriends = document.querySelectorAll('.unfriend');
+
+if (btnUnfriends) {
+  btnUnfriends.forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const sender = el.dataset.sender;
+      const data = {
+        sender: el.dataset.sender,
+        receiver: el.dataset.receiver,
+      };
+      deleteRequest(sender, data);
+      el.innerText = 'Unfriended';
     });
   });
 }

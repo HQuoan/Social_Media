@@ -9,7 +9,16 @@ mixin request(req)
     .d-flex.align-items-center.mt-2.mt-md-0
       .confirm-click-btn
         a.me-3.btn.btn-primary.rounded.confirm-btn.accept-friend(href='#' data-request-id=`${req.id}`) Confirm
-      a.btn.btn-secondary.rounded(href='#' data-extra-toggle='delete' data-closest-elem='.item') Delete Request
+      a.btn.btn-secondary.rounded.delete-request(href='#' data-closest-elem='.item' data-request-id=`${req.id}`) Delete Request
+
+mixin requested(req)      
+    li.d-flex.align-items-center.justify-content-between.flex-wrap
+      .user-img.img-fluid.flex-shrink-0
+        img.rounded-circle.avatar-40(src=`../img/users/${req.receiver.avatar}` alt='story-img')
+      .flex-grow-1.ms-3
+        h6= req.receiver.username
+      .d-flex.align-items-center.mt-2.mt-md-0
+        a.btn.btn-secondary.rounded.delete-request(href='#' data-closest-elem='.item' data-request-id=`${req.id}`) Delete Request
 
 mixin other(user)
   li.d-flex.align-items-center.flex-wrap
@@ -18,10 +27,9 @@ mixin other(user)
     .flex-grow-1.ms-3
       h6= user.username
     .d-flex.align-items-center.mt-2.mt-md-0
-      a.me-3.btn.btn-primary.rounded(href='#')
+      a.btnAddFriend.me-3.btn.btn-primary.rounded(href='#' data-receiver-id=`${user.id}`)
         i.ri-user-add-line.me-1
         | Add Friend
-      a.btn.btn-secondary.rounded(href='#' data-extra-toggle='delete' data-closest-elem='.item') Remove
 
 block content 
   #content-page.content-page
@@ -41,29 +49,37 @@ block content
         .col-sm-12
           .tab-content
             #friend.tab-pane.fade(role='tabpanel')
+              .card-header.d-flex.justify-content-between
+                .header-title
+                  h4.card-title Friends
               .card-body.p-0
                   .row
                     if(friends.length > 0)
                       each friend in friends
-                        .col-md-6.col-lg-6.mb-3
-                          .iq-friendlist-block
-                            .d-flex.align-items-center.justify-content-between
-                              .d-flex.align-items-center
-                                a(href=`/${friend.sender.id}`)
-                                  img.img-fluid.avatar-130(src=`../img/users/${friend.sender.avatar}` alt='profile-img')
-                                .friend-info.ms-3
-                                  h5= friend.sender.username
-                              .card-header-toolbar.d-flex.align-items-center
-                                .dropdown
-                                  span#dropdownMenuButton01.dropdown-toggle.btn.btn-secondary.me-2(data-bs-toggle='dropdown' aria-expanded='true' role='button')
-                                    i.ri-check-line.me-1.text-white
-                                    |  Friend
-                                  .dropdown-menu.dropdown-menu-right(aria-labelledby='dropdownMenuButton01')
-                                    a.dropdown-item(href='#') Get Notification
-                                    a.dropdown-item(href='#') Close Friend
-                                    a.dropdown-item(href='#') Unfollow
-                                    a.dropdown-item(href='#') Unfriend
-                                    a.dropdown-item(href='#') Block
+                        if(friend.sender.id !== user.id)
+                          .col-md-6.col-lg-6.mb-3
+                            .iq-friendlist-block
+                              .d-flex.align-items-center.justify-content-between
+                                .d-flex.align-items-center
+                                  a(href=`/${friend.sender.key}`)
+                                    img.img-fluid.avatar-130(src=`../img/users/${friend.sender.avatar}` alt='profile-img')
+                                  .friend-info.ms-3
+                                    h5= friend.sender.username
+                                .card-header-toolbar.d-flex.align-items-center
+                                  a.me-3.btn.btn-secondary.rounded.unfriend(href='#' data-sender=`${friend.sender.id}` data-receiver=`${friend.receiver.id}`) Unfriend
+                        else 
+                          if(friend.sender.id !== user.id)
+                          .col-md-6.col-lg-6.mb-3
+                            .iq-friendlist-block
+                              .d-flex.align-items-center.justify-content-between
+                                .d-flex.align-items-center
+                                  a(href=`/${friend.receiver.key}`)
+                                    img.img-fluid.avatar-130(src=`../img/users/${friend.receiver.avatar}` alt='profile-img')
+                                  .friend-info.ms-3
+                                    h5= friend.receiver.username
+                                .card-header-toolbar.d-flex.align-items-center
+                                  a.me-3.btn.btn-secondary.rounded.unfriend(href='#' data-sender=`${friend.sender.id}` data-receiver=`${friend.receiver.id}`) Unfriend
+
                     else 
                       .text-center
                         p Not yet friends                
@@ -77,17 +93,21 @@ block content
                     if(friendRequest.length > 0)
                       each req in friendRequest
                         +request(req)
-                    li.d-flex.align-items-center.justify-content-between.flex-wrap
-                      .user-img.img-fluid.flex-shrink-0
-                        img.rounded-circle.avatar-40(src='../assets/images/user/05.jpg' alt='story-img')
-                      .flex-grow-1.ms-3
-                        h6 Jaques Amole
-                        p.mb-0 40 friends
-                      .d-flex.align-items-center.mt-2.mt-md-0
-                        .confirm-click-btn
-                          a.me-3.btn.btn-primary.rounded.confirm-btn(href='#') Confirm
-                          a.me-3.btn.btn-primary.rounded.request-btn(href='../app/profile.html' style='display: none;') View All
-                        a.btn.btn-secondary.rounded(href='#' data-extra-toggle='delete' data-closest-elem='.item') Delete Request
+                    else 
+                      .text-center
+                        p Not yet friend request
+              .card
+                .card-header.d-flex.justify-content-between
+                  .header-title
+                    h4.card-title  Requested
+                .card-body
+                  ul.request-list.list-inline.m-0.p-0
+                    if(requested.length > 0)
+                      each req in requested
+                        +requested(req)
+                    else 
+                      .text-center
+                        p Not yet    
             #other.tab-pane.fade.show.active(role='tabpanel')
               .card
                 .card-header.d-flex.justify-content-between
@@ -98,15 +118,7 @@ block content
                     if(nonFriend.length > 0)
                       each user in nonFriend 
                         +other(user)
-                    li.d-flex.align-items-center.flex-wrap
-                      .user-img.img-fluid.flex-shrink-0
-                        img.rounded-circle.avatar-40(src='../assets/images/user/15.jpg' alt='story-img')
-                      .flex-grow-1.ms-3
-                        h6 Jen Youfelct
-                        p.mb-0 4 friends
-                      .d-flex.align-items-center.mt-2.mt-md-0
-                        a.me-3.btn.btn-primary.rounded(href='#')
-                          i.ri-user-add-line.me-1
-                          | Add Friend
-                        a.btn.btn-secondary.rounded(href='#' data-extra-toggle='delete' data-closest-elem='.item') Remove
-                
+                    else 
+                      .text-center
+                        p Not yet
+                    
