@@ -81,6 +81,29 @@ exports.getMyFriendShips = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getFriends = catchAsync(async (req, res, next) => {
+  const friendShips = await FriendShip.find({
+    $or: [{ sender: req.user.id }, { receiver: req.user.id }],
+  });
+
+  const friends = [];
+  friendShips.forEach((el) => {
+    if (el.sender.id !== req.user.id) {
+      friends.push(el.sender);
+    } else {
+      friends.push(el.receiver);
+    }
+  });
+
+  // console.log(friends);
+
+  res.status(200).json({
+    status: 'success',
+    results: friends.length,
+    data: friends,
+  });
+});
+
 // admin
 exports.createFriendShip = catchAsync(async (req, res, next) => {
   const { sender, receiver } = req.body;

@@ -19,6 +19,8 @@ module.exports = async function (method, url, to, data, message) {
         return response.data.data;
       }
     }
+
+    return 0;
   } catch (error) {
     showAlert('error', error.response.data.message);
     console.log(error);

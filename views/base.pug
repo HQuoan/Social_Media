@@ -34,10 +34,13 @@ html
       // FOOTER
       include _footer
 
+      #user_id(data-user-id =`${user !== undefined ? user.id: undefined}`)
+
     //- // Backend Bundle JavaScript
     script(src='../assets/js/libs.min.js')
     script(src='../assets/js/charts/weather-chart.js')
     script(src='../assets/js/app.js')
+    script(src='/socket.io/socket.io.js')
     script(src='../assets/js/bundle.js')
 
 

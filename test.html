@@ -1,158 +1,76 @@
-<div class="col-sm-12">
-  <div class="card card-block card-stretch card-height">
-    <div class="card-body">
-      <div class="user-post-data">
-        <div class="d-flex justify-content-between">
-          <div class="me-3">
-            <img class="rounded-circle img-fluid avatar-60" src="./img/users/${post.user.avatar}" alt="">
-          </div>
-          <div class="w-100">
-            <div class="d-flex justify-content-between">
-              <div>
-                <h5 class="mb-0 d-inline-block">${post.user.username}</h5>
-                <span class="ms-1 mb-0 d-inline-block">Add New Post</span>
-                <p class="mb-0 text-primary">${post.moment}</p>
-              </div>
-              <div class="card-post-toolbar">
-                <div class="dropdown">
-                  <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                    role="button">
-                    <i class="ri-more-fill"></i>
-                  </span>
-                  <div class="dropdown-menu m-0 p-0">
-                    <a class="dropdown-item p-3" href="#">
-                      <div class="d-flex align-items-top">
-                        <i class="ri-pencil-line h4"></i>
-                        <div class="ms-2">
-                          <h6>Edit Post</h6>
-                          <p class="mb-0">Update your post and saved items</p>
-                        </div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item p-3" href="#" data-post-id="${post._id}" class="btnDelPost">
-                      <div class="d-flex align-items-top">
-                        <i class="ri-delete-bin-7-line h4"></i>
-                        <div class="ms-2">
-                          <h6>Delete</h6>
-                          <p class="mb-0">Remove this Post on Timeline</p>
-                        </div>
-                      </div>
-                    </a>
-                    <a class="dropdown-item p-3" href="#">
-                      <div class="d-flex align-items-top">
-                        <i class="ri-save-line h4"></i>
-                        <div class="ms-2">
-                          <h6>Save Post</h6>
-                          <p class="mb-0">Add this to your saved items</p>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="mt-3">
-        <p>${post.content}</p>
-      </div>
-      <div class="user-post">
-        ${imageBox}
-      </div>
-      <div class="comment-area mt-3">
-        <div class="d-flex justify-content-between align-items-center flex-wrap">
-          <div class="like-block position-relative d-flex align-items-center">
-            <div class="d-flex align-items-center">
-              <div class="like-data">
-                <div class="dropdown">
-                  <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                    role="button">
-                    <img class="emoji-active-item img-fluid" src="../assets/images/icon/null.jpg" alt=""
-                      data-post-id="${post.id}">
-                  </span>
-                  <div class="dropdown-menu py-2">
-                    <a class="ms-2 me-2" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Like">
-                      <img class="emoji-item img-fluid" src="../assets/images/icon/like.png" alt="" data-emoji="like">
-                    </a>
-                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Love">
-                      <img class="emoji-item img-fluid" src="../assets/images/icon/love.png" alt="" data-emoji="love">
-                    </a>
-                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="HaHa">
-                      <img class="emoji-item img-fluid" src="../assets/images/icon/haha.png" alt="" data-emoji="haha">
-                    </a>
-                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Think">
-                      <img class="emoji-item img-fluid" src="../assets/images/icon/think.png" alt="" data-emoji="think">
-                    </a>
-                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Sade">
-                      <img class="emoji-item img-fluid" src="../assets/images/icon/sade.png" alt="" data-emoji="sade">
-                    </a>
-                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Lovely">
-                      <img class="emoji-item img-fluid" src="../assets/images/icon/lovely.png" alt=""
-                        data-emoji="lovely">
-                    </a>
-                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel">
-                      <img class="emoji-item img-fluid" src="../assets/images/icon/null.jpg" alt="" data-emoji="null">
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div class="total-like-block ms-2 me-3">
-                <div class="dropdown">
-                  <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                    role="button">
-                    ${post.countEmojis} Likes
-                  </span>
-                  <div class="dropdown-menu">
-                    ${emojiBox}
-                    <a class="dropdown-item" href="#">Max Emum
-                      <img class="f-right img-fluid" src="../assets/images/icon/like.png" alt="">
-                    </a>
-                    <a class="dropdown-item" href="#">Hap E. Birthday
-                      <img class="f-right img-fluid" src="../assets/images/icon/love.png" alt="">
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="total-comment-block">
-              <div class="dropdown">
-                <span class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                  role="button">
-                  ${post.countComments} Comment
-                </span>
-                <div class="dropdown-menu">
-                  ${shortComment}
-                  <a class="dropdown-item" href="#">Other</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="share-block d-flex align-items-center feather-icon mt-2 mt-md-0">
-            <a href="javascript:void();" data-bs-toggle="offcanvas" data-bs-target="#share-btn"
-              aria-controls="share-btn">
-              <i class="ri-share-line"></i>
-              <span class="ms-1">99 Share</span>
-            </a>
-          </div>
-        </div>
-        <hr>
-        <div class="wrap-comment">
-          <div class="comment-box">
-          </div>
-          ${btnSeeMore}
-          <form class="comment-form comment-text d-flex align-items-center mt-3">
-            <textarea class="comment-txt form-control rounded-pill" name="comment" rows="1"
-              placeholder="Enter Your Comment..."></textarea>
-            <input name="post" value="${post.id}" type="hidden">
-            <div class="comment-attagement d-flex">
-              <button class="btn btnSubmitComment hover-blue" type="submit">
-                <i class="fa fa-paper-plane"></i>
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>bootstrap-show-modal</title>
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+    integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
+  <link rel="stylesheet" href="./public/assets/css/bootstrap/bootstrap.css">
+  <!-- <link rel="stylesheet" href="./public/assets/css/libs.min.css"> -->
+
+</head>
+
+<body>
+  <section class="container py-5">
+    <h1>bootstrap-show-toast</h1>
+    <p>
+      A Bootstrap plugin, to create toasts (also called notifications) dynamically in JavaScript.
+    </p>
+    <h2>Examples</h2>
+    <p>
+      <button type="button" id="button-show-simple" class="btn btn-primary">Show a simple toast</button>
+    </p>
+    <p>
+      <button type="button" id="button-show-info" class="btn btn-info">Show a complex toast with header and buttons
+      </button>
+    </p>
+    <p>
+      <button type="button" id="button-show-danger" class="btn btn-danger">Show a danger-toast</button>
+    </p>
+    <p>
+      <button type="button" id="button-show-sticky" class="btn btn-secondary">Show a sticky toast with infinite
+        duration</button>
+    </p>
+
+  </section>
+  <script src="./public/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
+  <!-- <link rel="stylesheet" href="./public/assets/js/libs.min.js"> -->
+  <script type="module">
+    // import "./public/assets/js/toast/bootstrap-show-toast.js"
+    import { toast } from "./public/assets/js/toast/bootstrap-show-toast.js";
+
+    document.getElementById("button-show-simple").addEventListener("click", function () {
+      toast.showToast({ body: "Hello Toast!" })
+    })
+    document.getElementById("button-show-info").addEventListener("click", function () {
+      const toast = bootstrap.showToast({
+        header: "Information",
+        headerSmall: "just now",
+        body: "<p>This notification has a headline and more text than the previous one.</p><div><button class='btn btn-primary me-1 btn-sm'>Click me</button><button class='btn btn-secondary btn-sm' data-bs-dismiss='toast'>Close</button></div>",
+        delay: 20000
+      })
+      toast.element.querySelector(".btn-primary").addEventListener("click", () => {
+        bootstrap.showToast({
+          body: "Thank you for clicking", direction: "append",
+          toastClass: "text-bg-success", closeButtonClass: "btn-close-white"
+        })
+      })
+    })
+    document.getElementById("button-show-danger").addEventListener("click", function () {
+      bootstrap.showToast({
+        header: "Alert",
+        body: "Red Alert!",
+        toastClass: "bg-danger"
+      })
+    })
+    document.getElementById("button-show-sticky").addEventListener("click", function () {
+      bootstrap.showToast({
+        body: "This notification will stay", toastClass: "text-bg-secondary", closeButtonClass: "btn-close-white", delay: Infinity
+      })
+    })
+  </script>
+</body>
+
+</html>

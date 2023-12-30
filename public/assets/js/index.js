@@ -1,5 +1,6 @@
 /* eslint-disable */
 import '@babel/polyfill';
+import { createSocket } from './socket.js';
 import { login, logout, signup, forgot, reset } from './login.js';
 import { updateUser } from './user.js';
 import { createPost, deletePost, loadPost, loadPostScroll } from './post.js';
@@ -27,14 +28,9 @@ const btnLogout = document.querySelector('.btnLogout');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
 const postDataForm = document.querySelector('.form-post');
-// sử dụng cho các form CÓ ảnh
-// const getFormData2 = function (form) {
-//   const btnSubmit = form.querySelector('.btnSubmit');
-//   btnSubmit.innerHTML = `<i class="fas fa-sync-alt fa-spin"></i> Waiting`;
 
-//   const formData = new FormData(form);
-//   return formData;
-// };
+// socket
+createSocket(io);
 
 // sử dụng cho các form KHÔNG có ảnh
 const getFormData = function (form) {

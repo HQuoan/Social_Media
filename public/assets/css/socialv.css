@@ -17215,6 +17215,9 @@ ul.request-list > li:last-child {
 .iq-profile-avatar.status-away:before {
   background-color: #ffba68;
 }
+.iq-profile-avatar.status-offline:before {
+  background-color: #ff9b8a;
+}
 .cover-container {
   position: relative;
 }

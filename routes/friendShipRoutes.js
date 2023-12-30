@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.use(authController.protect);
 
+router.get('/friends', friendShipController.getFriends);
+
 router
   .route('/me')
   .get(friendShipController.getMyFriendShips)
