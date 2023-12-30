@@ -12,7 +12,7 @@ router
 
 router
   .route('/')
-  .get(emojiController.getEmoji)
+  .get(emojiController.getAllEmojis)
   .post(
     authController.restrictTo('admin'),
     emojiController.setPostUserIds,
@@ -21,7 +21,7 @@ router
 
 router
   .route('/:id')
-  .get(emojiController.getAllEmojis)
+  .get(emojiController.getEmoji)
   .patch(authController.restrictTo('admin'), emojiController.updateEmoji)
   .delete(authController.restrictTo('admin'), emojiController.deleteEmoji);
 
