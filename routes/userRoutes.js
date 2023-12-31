@@ -2,6 +2,7 @@ const express = require('express');
 const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
 const postRouter = require('./postRoutes');
+const roomRouter = require('./roomRoutes');
 
 const router = express.Router();
 
@@ -27,6 +28,7 @@ router.delete('/deleteMe', userController.deleteMe);
 router.use(authController.restrictTo('admin'));
 
 router.use('/:userId/posts', postRouter);
+router.use('/:memberId/rooms', roomRouter);
 
 router
   .route('/')

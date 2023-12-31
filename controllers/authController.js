@@ -65,6 +65,8 @@ exports.login = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, req, res);
 });
 
+const temporaryStorage = [];
+
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) Getting token and check of it's there
   let token;
@@ -107,8 +109,45 @@ exports.protect = catchAsync(async (req, res, next) => {
   // GRANT ACCESS TO PROTECTED ROUTE
   req.user = currentUser; // để biết userid của người đã login
   res.locals.user = currentUser; // lưu để sử dụng render trong view khi cần
+
+  const { id } = currentUser;
+  // Thời gian hoạt động gần nhất của user
+  const existingUserIndex = temporaryStorage.findIndex(
+    (item) => item.userId === id,
+  );
+  if (existingUserIndex !== -1) {
+    temporaryStorage[existingUserIndex].latestActivity = Date.now();
+  } else {
+    temporaryStorage.push({ userId: id, latestActivity: Date.now() });
+  }
+
   next();
 });
+
+const updateDatabase = async () => {
+  if (temporaryStorage.length > 0) {
+    const updateOperations = temporaryStorage.map((user) => ({
+      updateOne: {
+        filter: { _id: user.userId },
+        update: { latestActivity: user.latestActivity },
+      },
+    }));
+
+    try {
+      // Sử dụng bulkWrite để thực hiện các thao tác cập nhật
+      await User.bulkWrite(updateOperations);
+
+      console.log('All users updated successfully');
+    } catch (error) {
+      console.error(`Error updating users in the database: ${error.message}`);
+    }
+
+    // Sau khi cập nhật xong, có thể xóa biến tạm thời
+    temporaryStorage.length = 0;
+  }
+};
+
+setInterval(updateDatabase, 1 * 60 * 1000);
 
 // Only for rendered pages, no errors!
 exports.isLoggedIn = async (req, res, next) => {

@@ -10,6 +10,7 @@ import {
   deleteRequest,
 } from './friendShip.js';
 import { createEmoji } from './emoji.js';
+import { getMyRooms, getRoomWithChat } from './room.js';
 
 import {
   createComment,
@@ -260,6 +261,13 @@ divContainer.addEventListener('click', (event) => {
   const target = event.target;
   const parent = target.parentElement;
 
+  // console.log(target);
+  /// room and chat
+  if (target.closest('.room-item')) {
+    const roomItem = target.closest('.room-item');
+    getRoomWithChat(roomItem);
+  }
+
   // emoji
   if (target.classList.contains('emoji-item')) {
     event.preventDefault();
@@ -431,3 +439,12 @@ const deleteCommentFunc = async (divComment, commentId) => {
     divComment.remove();
   }
 };
+
+/// Messenger
+
+const messengerPage = document.getElementById('message-page');
+if (messengerPage) {
+  const roomsDiv = document.getElementById('conversations');
+
+  getMyRooms(roomsDiv);
+}

@@ -30,12 +30,12 @@ exports.createRoom = catchAsync(async (req, res, next) => {
 });
 
 exports.getMyRooms = catchAsync(async (req, res, next) => {
-  const room = await Room.find({ members: { $in: [req.user.id] } });
+  const rooms = await Room.find({ members: { $in: [req.user.id] } });
 
   res.status(200).json({
     status: 'success',
-    results: room.length,
-    data: room,
+    results: rooms.length,
+    data: rooms,
   });
 });
 

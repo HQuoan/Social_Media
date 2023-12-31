@@ -1,6 +1,7 @@
 const FriendShip = require('../models/friendShipModel');
 const Post = require('../models/postModel');
 const User = require('../models/userModel');
+const Room = require('../models/roomModel');
 const catchAsync = require('../utils/catchAsync');
 // const APIFeatures = require('./../utils/apiFeatures');
 const AppError = require('../utils/appError');
@@ -147,7 +148,10 @@ exports.getProfile = catchAsync(async (req, res, next) => {
 });
 
 exports.messenger = catchAsync(async (req, res, next) => {
+  const rooms = await Room.find({ members: { $in: [req.user.id] } });
+
   res.status(200).render('chat', {
     title: 'Messenger',
+    rooms,
   });
 });

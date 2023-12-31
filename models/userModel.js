@@ -69,6 +69,10 @@ const userSchema = new mongoose.Schema(
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
+    latestActivity: {
+      type: Date,
+      default: Date.now,
+    },
     key: {
       type: String,
       slug: ['firstName', 'lastName'],

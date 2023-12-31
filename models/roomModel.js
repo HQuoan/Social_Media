@@ -32,14 +32,14 @@ roomSchema.virtual('messages', {
   localField: '_id',
 });
 
-// roomSchema.pre(/^find/, function (next) {
-//   this.populate({
-//     path: 'members',
-//     select: 'firstName lastName avatar key',
-//   });
+roomSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'members',
+    select: 'firstName lastName avatar key',
+  });
 
-//   next();
-// });
+  next();
+});
 
 const Room = mongoose.model('Room', roomSchema);
 

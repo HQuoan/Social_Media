@@ -41,6 +41,7 @@ exports.getAll = (Model, popOptions) =>
     let filter = {};
     if (req.params.userId) filter = { user: req.params.userId };
     if (req.params.postId) filter = { post: req.params.postId };
+    if (req.params.memberId) filter = { members: { $in: [req.user.id] } };
 
     const features = new APIFeatures(Model.find(filter), req.query)
       .filter()

@@ -35,11 +35,13 @@ html
       include _footer
 
       #user_id(data-user-id =`${user !== undefined ? user.id: undefined}`)
+      #user_avatar(data-user-avatar =`${user !== undefined ? user.avatar: undefined}`)
 
     //- // Backend Bundle JavaScript
     script(src='../assets/js/libs.min.js')
     script(src='../assets/js/charts/weather-chart.js')
     script(src='../assets/js/app.js')
+    script(src='../assets/vendor/moment.min.js')
     script(src='/socket.io/socket.io.js')
     script(src='../assets/js/bundle.js')
 

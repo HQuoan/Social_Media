@@ -1,11 +1,7 @@
 /* eslint-disable */
 import template from './templateURL.js';
 
-const getFriends = async () => {
-  const url = `/api/v1/friendships/friends`;
-  const friends = await template('GET', url, '', {}, '');
-  return friends;
-};
+let friends = {};
 
 const viewOnlineUsers = (users) => {
   const wrapOnlineUser = document.getElementById('list-online');
@@ -28,11 +24,13 @@ const viewOnlineUsers = (users) => {
       html += `
       <div class="d-flex align-items-center mb-4">
         <div class="iq-profile-avatar status-offline">
-          <img class="rounded-circle avatar-50" src="./img/users/${user.avatar}" alt="">
+          <img class="rounded-circle avatar-50" src="./img/users/${
+            user.avatar
+          }" alt="">
         </div>
         <div class="ms-3">
           <h6 class="mb-0">${user.username}</h6>
-          <p class="mb-0">Offline</p>
+          <p class="mb-0">${moment(user.latestActivity).fromNow()}</p>
         </div>
       </div>
       `;
@@ -42,13 +40,23 @@ const viewOnlineUsers = (users) => {
   wrapOnlineUser.innerHTML = html;
 };
 
+const getFriends = async () => {
+  const url = `/api/v1/friendships/friends`;
+  return await template('GET', url, '', {}, '');
+};
+
+const getUser = (userId) => {
+  return friends.find((user) => user.id === userId);
+};
+
 export const createSocket = async (io) => {
   const userId = document.getElementById('user_id').dataset.userId;
+  const userAvatar = document.getElementById('user_avatar').dataset.userAvatar;
 
   if (userId !== 'undefined') {
     const socket = io();
 
-    const friends = await getFriends();
+    friends = await getFriends();
     // console.log(friends);
 
     socket.emit('addUser', userId);
@@ -66,9 +74,107 @@ export const createSocket = async (io) => {
           list.push(friend);
         }
       });
-
+      // console.log(list);
       viewOnlineUsers(list);
       // console.log(' loc: ', friends);
     });
+
+    socket.on('getMessage', (data) => {
+      const audio = new Audio('../audio/ting-ting.mp3');
+
+      // Phát âm thanh
+      audio.play();
+
+      const { sender, text } = data;
+      appendMessageReceiver(getUser(sender), text);
+    });
+
+    ////////////////// xử lý các sk , emit
+
+    const messagePage = document.getElementById('message-page');
+    if (messagePage) {
+      messagePage.addEventListener('click', (e) => {
+        const target = e.target;
+
+        const messageInput = document.getElementById('messageInput');
+        const sendMessageBtn = document.getElementById('sendMessageBtn');
+
+        if (messageInput && sendMessageBtn) {
+          messageInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              sendMessageBtn.click();
+            }
+          });
+        }
+
+        // console.log(target);
+
+        if (target.closest('.sendMessage')) {
+          const x = target.closest('.sendMessage');
+          // const messageContent = document.querySelector('.message-content');
+          const text = messageInput.value;
+          // console.log(text);
+
+          if (text !== '') {
+            const sender = x.dataset.sender;
+            const receiver = x.dataset.receiver;
+            const data = {
+              sender,
+              receiver,
+              text,
+            };
+            socket.emit('sendMessage', data);
+
+            appendMessageSender(userAvatar, text);
+            messageInput.value = '';
+          }
+        }
+      });
+    }
   }
+};
+
+const appendMessageReceiver = (user, text) => {
+  const chatBox = document.getElementById('chat-box');
+  const html = `
+  <div class="chat chat-left">
+        <div class="chat-user">
+          <a class="avatar m-0">
+            <img src="../img/users/${
+              user.avatar
+            }" alt="avatar" class="avatar-35">
+          </a>
+          <span class="chat-time mt-1">${moment(Date.now()).format('LT')}</span>
+        </div>
+        <div class="chat-detail">
+          <div class="chat-message">
+            <p>${text}</p>
+          </div>
+        </div>
+      </div>
+  `;
+
+  chatBox.insertAdjacentHTML('beforeend', html);
+};
+
+const appendMessageSender = (userAvatar, text) => {
+  const chatBox = document.getElementById('chat-box');
+  const html = `
+  <div class="chat d-flex other-user">
+  <div class="chat-user">
+    <a class="avatar m-0">
+      <img src="../img/users/${userAvatar}" alt="avatar" class="avatar-35">
+    </a>
+    <span class="chat-time mt-1">${moment(Date.now()).format('LT')}</span>
+  </div>
+  <div class="chat-detail">
+    <div class="chat-message">
+      <p>${text}</p>
+    </div>
+  </div>
+</div>
+  `;
+
+  chatBox.insertAdjacentHTML('beforeend', html);
 };

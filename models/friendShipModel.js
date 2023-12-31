@@ -26,10 +26,10 @@ const friendShipSchema = new mongoose.Schema(
 friendShipSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'sender',
-    select: 'firstName lastName  avatar',
+    select: 'firstName lastName  avatar latestActivity',
   }).populate({
     path: 'receiver',
-    select: 'firstName lastName  avatar',
+    select: 'firstName lastName  avatar latestActivity',
   });
 
   next();

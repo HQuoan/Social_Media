@@ -26,12 +26,17 @@ exports.socket = (io) => {
     });
 
     //send and get message
-    socket.on('sendMessage', ({ senderId, receiverId, text }) => {
-      const user = getUser(receiverId);
-      io.to(user.socketId).emit('getMessage', {
-        senderId,
-        text,
-      });
+    socket.on('sendMessage', (data) => {
+      const { sender, receiver, text } = data;
+      console.log('cos tin nhan');
+      console.log(data);
+      const user = getUser(receiver);
+      if (user) {
+        io.to(user.socketId).emit('getMessage', {
+          sender,
+          text,
+        });
+      }
     });
 
     //when disconnect
