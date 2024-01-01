@@ -23,8 +23,9 @@ const roomItem = (roomId, user) => {
  `;
 };
 
-const messageItem = (user, messages) => {
+const messageItem = (user, room) => {
   const userId = document.getElementById('user_id').dataset.userId;
+  const { messages } = room;
 
   const chatContent =
     messages.length > 0
@@ -131,7 +132,7 @@ const messageItem = (user, messages) => {
           </a>
         </div>
         <input id="messageInput" type="text" class="message-content form-control me-3" placeholder="Type your message">
-        <button id="sendMessageBtn" type="button" data-receiver="${user.id}" data-sender="${userId}" class="sendMessage btn btn-primary d-flex align-items-center px-2">
+        <button id="sendMessageBtn" type="button" data-receiver="${user.id}" data-sender="${userId}" data-room="${room.id}" class="sendMessage btn btn-primary d-flex align-items-center px-2">
           <i class="far fa-paper-plane" aria-hidden="true"></i>
           <span class="d-none d-lg-block ms-1">Send</span>
         </button>
@@ -166,7 +167,7 @@ const appendMessages = (div, room) => {
     x = room.members[0].id === userId ? room.members[1] : room.members[0];
   }
 
-  div.innerHTML = messageItem(x, room.messages);
+  div.innerHTML = messageItem(x, room);
 };
 
 export const getMyRooms = async (div) => {

@@ -5,7 +5,7 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
 exports.createMessageClient = catchAsync(async (req, res, next) => {
-  const room = await Room.find({ room: req.body.room });
+  const room = await Room.findById(req.body.room);
 
   if (!room) {
     return next(new AppError('Room not found'));

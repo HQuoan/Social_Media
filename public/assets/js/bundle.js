@@ -12062,28 +12062,48 @@ var getFriends = /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }();
+var sendMessageDB = /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(data) {
+    var url;
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          url = "/api/v1/messages/me";
+          console.log('data: ', data);
+          _context2.next = 4;
+          return (0, _templateURL.default)('POST', url, '', data, '');
+        case 4:
+        case "end":
+          return _context2.stop();
+      }
+    }, _callee2);
+  }));
+  return function sendMessageDB(_x) {
+    return _ref2.apply(this, arguments);
+  };
+}();
 var getUser = function getUser(userId) {
   return friends.find(function (user) {
     return user.id === userId;
   });
 };
 var createSocket = exports.createSocket = /*#__PURE__*/function () {
-  var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(io) {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(io) {
     var userId, userAvatar, socket, messagePage;
-    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-      while (1) switch (_context2.prev = _context2.next) {
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
         case 0:
           userId = document.getElementById('user_id').dataset.userId;
           userAvatar = document.getElementById('user_avatar').dataset.userAvatar;
           if (!(userId !== 'undefined')) {
-            _context2.next = 12;
+            _context3.next = 12;
             break;
           }
           socket = io();
-          _context2.next = 6;
+          _context3.next = 6;
           return getFriends();
         case 6:
-          friends = _context2.sent;
+          friends = _context3.sent;
           // console.log(friends);
 
           socket.emit('addUser', userId);
@@ -12143,6 +12163,7 @@ var createSocket = exports.createSocket = /*#__PURE__*/function () {
                 if (text !== '') {
                   var sender = x.dataset.sender;
                   var receiver = x.dataset.receiver;
+                  var roomId = x.dataset.room;
                   var data = {
                     sender: sender,
                     receiver: receiver,
@@ -12151,18 +12172,23 @@ var createSocket = exports.createSocket = /*#__PURE__*/function () {
                   socket.emit('sendMessage', data);
                   appendMessageSender(userAvatar, text);
                   messageInput.value = '';
+                  var dataMessage = {
+                    room: roomId,
+                    content: text
+                  };
+                  sendMessageDB(dataMessage);
                 }
               }
             });
           }
         case 12:
         case "end":
-          return _context2.stop();
+          return _context3.stop();
       }
-    }, _callee2);
+    }, _callee3);
   }));
-  return function createSocket(_x) {
-    return _ref2.apply(this, arguments);
+  return function createSocket(_x2) {
+    return _ref3.apply(this, arguments);
   };
 }();
 var appendMessageReceiver = function appendMessageReceiver(user, text) {
@@ -12678,8 +12704,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var roomItem = function roomItem(roomId, user) {
   return "\n <li>\n    <div class=\"room-item\" data-room-id=\"".concat(roomId, "\">\n      <div class=\"d-flex align-items-center\">\n        <div class=\"avatar me-2\">\n          <img src=\"../img/users/").concat(user.avatar, "\" alt=\"chatuserimage\" class=\"avatar-50\">\n        </div>\n        <div class=\"chat-sidebar-name\">\n          <h6 class=\"mb-0\">").concat(user.username, "</h6>\n          <span>Lorem Ipsum is</span>\n        </div>\n        <div class=\"chat-meta float-right text-center mt-2 me-1\">\n          <div class=\"chat-msg-counter bg-primary text-white\">20</div>\n          <span class=\"text-nowrap\">05 min</span>\n        </div>\n      </div>\n    </div>\n  </li>\n ");
 };
-var messageItem = function messageItem(user, messages) {
+var messageItem = function messageItem(user, room) {
   var userId = document.getElementById('user_id').dataset.userId;
+  var messages = room.messages;
   var chatContent = messages.length > 0 ? "".concat(messages.map(function (message) {
     if (message.user.id === userId) {
       return "\n      <div class=\"chat d-flex other-user\">\n        <div class=\"chat-user\">\n          <a class=\"avatar m-0\">\n            <img src=\"../img/users/".concat(message.user.avatar, "\" alt=\"avatar\" class=\"avatar-35\">\n          </a>\n          <span class=\"chat-time mt-1\">").concat(moment(message.createdAt).format('LT'), "</span>\n        </div>\n        <div class=\"chat-detail\">\n          <div class=\"chat-message\">\n            <p>").concat(message.content, "</p>\n          </div>\n        </div>\n      </div>\n      ");
@@ -12687,7 +12714,7 @@ var messageItem = function messageItem(user, messages) {
       return "\n      <div class=\"chat chat-left\">\n        <div class=\"chat-user\">\n          <a class=\"avatar m-0\">\n            <img src=\"../img/users/".concat(message.user.avatar, "\" alt=\"avatar\" class=\"avatar-35\">\n          </a>\n          <span class=\"chat-time mt-1\">").concat(moment(message.createdAt).format('LT'), "</span>\n        </div>\n        <div class=\"chat-detail\">\n          <div class=\"chat-message\">\n            <p>").concat(message.content, "</p>\n          </div>\n        </div>\n      </div>\n      ");
     }
   }).join('')) : '';
-  return "\n  <div class=\"tab-pane fade active show\" role=\"tabpanel\">\n  <div class=\"chat-head\">\n    <header class=\"d-flex justify-content-between align-items-center bg-white pt-3 pe-3 pb-3\">\n      <div class=\"d-flex align-items-center\">\n        <div class=\"sidebar-toggle\">\n          <i class=\"ri-menu-3-line\"></i>\n        </div>\n        <div class=\"avatar chat-user-profile m-0 me-3\">\n          <img src=\"../img/users/".concat(user.avatar, "\" alt=\"avatar\" class=\"avatar-50\">\n        </div>\n        <h5 class=\"mb-0\">").concat(user.username, "</h5>\n      </div>\n      <div class=\"chat-header-icons d-flex\">\n        <a class=\"chat-icon-phone bg-soft-primary\" href=\"#\">\n          <i class=\"ri-phone-line\"></i>\n        </a>\n        <a class=\"chat-icon-video bg-soft-primary\" href=\"#\">\n          <i class=\"ri-vidicon-line\"></i>\n        </a>\n        <a class=\"chat-icon-delete bg-soft-primary\" href=\"#\">\n          <i class=\"ri-delete-bin-line\"></i>\n        </a>\n        <span class=\"dropdown bg-soft-primary\">\n          <i id=\"dropdownMenuButton02\" class=\"ri-more-2-line cursor-pointer dropdown-toggle nav-hide-arrow cursor-pointer pe-0\" data-bs-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\" role=\"menu\"></i>\n          <span class=\"dropdown-menu dropdown-menu-right\" aria-labelledby=\"dropdownMenuButton02\">\n            <a class=\"dropdown-item\" href=\"#\">\n              <i class=\"ri-pushpin-2-line me-1 h5\"></i>\n              Pin to top\n            </a>\n            <a class=\"dropdown-item\" href=\"#\">\n              <i class=\"ri-delete-bin-6-line me-1 h5\"></i>\n              Delete chat\n            </a>\n            <a class=\"dropdown-item\" href=\"#\">\n              <i class=\"ri-time-line me-1 h5\"></i>\n              Block\n            </a>\n          </span>\n        </span>\n      </div>\n    </header>\n    <div id=\"chat-box\" class=\"chat-content scroller\">\n      ").concat(chatContent, "\n    </div>\n    <div class=\"chat-footer p-3 bg-white\">\n      <div class=\"d-flex align-items-center\" action=\"#\">\n        <div class=\"chat-attagement d-flex\">\n          <a href=\"#\">\n            <i class=\"far fa-smile pe-3\" aria-hidden=\"true\"></i>\n          </a>\n          <a href=\"#\">\n            <i class=\"fa fa-paperclip pe-3\" aria-hidden=\"true\"></i>\n          </a>\n        </div>\n        <input id=\"messageInput\" type=\"text\" class=\"message-content form-control me-3\" placeholder=\"Type your message\">\n        <button id=\"sendMessageBtn\" type=\"button\" data-receiver=\"").concat(user.id, "\" data-sender=\"").concat(userId, "\" class=\"sendMessage btn btn-primary d-flex align-items-center px-2\">\n          <i class=\"far fa-paper-plane\" aria-hidden=\"true\"></i>\n          <span class=\"d-none d-lg-block ms-1\">Send</span>\n        </button>\n      </div>\n    </div>\n  </div>\n</div>\n\n  ");
+  return "\n  <div class=\"tab-pane fade active show\" role=\"tabpanel\">\n  <div class=\"chat-head\">\n    <header class=\"d-flex justify-content-between align-items-center bg-white pt-3 pe-3 pb-3\">\n      <div class=\"d-flex align-items-center\">\n        <div class=\"sidebar-toggle\">\n          <i class=\"ri-menu-3-line\"></i>\n        </div>\n        <div class=\"avatar chat-user-profile m-0 me-3\">\n          <img src=\"../img/users/".concat(user.avatar, "\" alt=\"avatar\" class=\"avatar-50\">\n        </div>\n        <h5 class=\"mb-0\">").concat(user.username, "</h5>\n      </div>\n      <div class=\"chat-header-icons d-flex\">\n        <a class=\"chat-icon-phone bg-soft-primary\" href=\"#\">\n          <i class=\"ri-phone-line\"></i>\n        </a>\n        <a class=\"chat-icon-video bg-soft-primary\" href=\"#\">\n          <i class=\"ri-vidicon-line\"></i>\n        </a>\n        <a class=\"chat-icon-delete bg-soft-primary\" href=\"#\">\n          <i class=\"ri-delete-bin-line\"></i>\n        </a>\n        <span class=\"dropdown bg-soft-primary\">\n          <i id=\"dropdownMenuButton02\" class=\"ri-more-2-line cursor-pointer dropdown-toggle nav-hide-arrow cursor-pointer pe-0\" data-bs-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\" role=\"menu\"></i>\n          <span class=\"dropdown-menu dropdown-menu-right\" aria-labelledby=\"dropdownMenuButton02\">\n            <a class=\"dropdown-item\" href=\"#\">\n              <i class=\"ri-pushpin-2-line me-1 h5\"></i>\n              Pin to top\n            </a>\n            <a class=\"dropdown-item\" href=\"#\">\n              <i class=\"ri-delete-bin-6-line me-1 h5\"></i>\n              Delete chat\n            </a>\n            <a class=\"dropdown-item\" href=\"#\">\n              <i class=\"ri-time-line me-1 h5\"></i>\n              Block\n            </a>\n          </span>\n        </span>\n      </div>\n    </header>\n    <div id=\"chat-box\" class=\"chat-content scroller\">\n      ").concat(chatContent, "\n    </div>\n    <div class=\"chat-footer p-3 bg-white\">\n      <div class=\"d-flex align-items-center\" action=\"#\">\n        <div class=\"chat-attagement d-flex\">\n          <a href=\"#\">\n            <i class=\"far fa-smile pe-3\" aria-hidden=\"true\"></i>\n          </a>\n          <a href=\"#\">\n            <i class=\"fa fa-paperclip pe-3\" aria-hidden=\"true\"></i>\n          </a>\n        </div>\n        <input id=\"messageInput\" type=\"text\" class=\"message-content form-control me-3\" placeholder=\"Type your message\">\n        <button id=\"sendMessageBtn\" type=\"button\" data-receiver=\"").concat(user.id, "\" data-sender=\"").concat(userId, "\" data-room=\"").concat(room.id, "\" class=\"sendMessage btn btn-primary d-flex align-items-center px-2\">\n          <i class=\"far fa-paper-plane\" aria-hidden=\"true\"></i>\n          <span class=\"d-none d-lg-block ms-1\">Send</span>\n        </button>\n      </div>\n    </div>\n  </div>\n</div>\n\n  ");
 };
 var appendRooms = function appendRooms(div, rooms) {
   var userId = document.getElementById('user_id').dataset.userId;
@@ -12706,7 +12733,7 @@ var appendMessages = function appendMessages(div, room) {
   if (room.members.length === 2) {
     x = room.members[0].id === userId ? room.members[1] : room.members[0];
   }
-  div.innerHTML = messageItem(x, room.messages);
+  div.innerHTML = messageItem(x, room);
 };
 var getMyRooms = exports.getMyRooms = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(div) {
@@ -13676,7 +13703,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63062" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56189" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

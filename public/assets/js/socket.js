@@ -45,6 +45,12 @@ const getFriends = async () => {
   return await template('GET', url, '', {}, '');
 };
 
+const sendMessageDB = async (data) => {
+  const url = `/api/v1/messages/me`;
+  console.log('data: ', data);
+  await template('POST', url, '', data, '');
+};
+
 const getUser = (userId) => {
   return friends.find((user) => user.id === userId);
 };
@@ -119,6 +125,8 @@ export const createSocket = async (io) => {
           if (text !== '') {
             const sender = x.dataset.sender;
             const receiver = x.dataset.receiver;
+            const roomId = x.dataset.room;
+
             const data = {
               sender,
               receiver,
@@ -128,6 +136,13 @@ export const createSocket = async (io) => {
 
             appendMessageSender(userAvatar, text);
             messageInput.value = '';
+
+            const dataMessage = {
+              room: roomId,
+              content: text,
+            };
+
+            sendMessageDB(dataMessage);
           }
         }
       });

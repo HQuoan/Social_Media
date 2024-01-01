@@ -1,7 +1,7 @@
 const Room = require('../models/roomModel');
 const factory = require('../controllers/handlerFactory');
 const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
+// const AppError = require('../utils/appError');
 
 exports.createRoom = catchAsync(async (req, res, next) => {
   const { roomName, members } = req.body;
@@ -9,9 +9,10 @@ exports.createRoom = catchAsync(async (req, res, next) => {
   const existingRoom = await Room.findOne({ members: { $all: members } });
 
   if (existingRoom) {
-    return next(
-      new AppError(' Room with the same members already exists.', 400),
-    );
+    res.status(200).json({
+      status: 'success',
+      data: existingRoom,
+    });
   }
 
   const newRoom = new Room({
