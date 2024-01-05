@@ -4,7 +4,8 @@
   "description": "social media + express + socket.io",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
     "debug": "ndb server.js",
     "watch": "parcel watch ./public/assets/js/index.js --out-dir ./public/assets/js --out-file bundle.js --public-url /assets/js/"
   },
