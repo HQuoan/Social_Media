@@ -2,7 +2,6 @@
 import template from './templateURL.js';
 
 export const updateUser = async (data, type) => {
-  console.log(data);
   const url =
     type === 'password'
       ? '/api/v1/users/updateMyPassword'

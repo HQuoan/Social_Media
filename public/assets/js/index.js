@@ -217,7 +217,6 @@ if (btnAcceptFriends) {
     el.addEventListener('click', (e) => {
       e.preventDefault();
       const reqId = el.dataset.requestId;
-      console.log(reqId);
       updateFriendShip(reqId, 'accepted');
       el.innerText = 'Accepted';
     });
@@ -231,7 +230,6 @@ if (btnDeleteRequests) {
     el.addEventListener('click', (e) => {
       e.preventDefault();
       const reqId = el.dataset.requestId;
-      console.log(reqId);
       deleteRequest(reqId);
       el.innerText = 'Deleted';
     });
@@ -263,7 +261,6 @@ rightSidebar.addEventListener('click', (event) => {
   if (target.closest('.list-online-chat-item')) {
     const messagePage = document.getElementById('message-page');
     const x = target.closest('.list-online-chat-item');
-    console.log(target);
     if (messagePage) {
       getChat(x);
     } else {
@@ -337,7 +334,6 @@ divContainer.addEventListener('click', (event) => {
     // console.log(target.dataset.parentCommentId);
 
     const block = target.closest('.block-add-form-create-comment');
-    console.log('1: ' + block);
 
     const postId = target.dataset.postId;
     const parentCommentId = target.dataset.parentCommentId;
@@ -411,7 +407,6 @@ const addFormCreateComment = (block, postId, parentCommentId) => {
 const addFormUpdateComment = (divComment, commentId) => {
   const comment = divComment.querySelector('.comment-content');
   const text = comment.innerText;
-  console.log(comment);
   const block = divComment.querySelector('.block-add-form-create-comment');
 
   const formHTML = `

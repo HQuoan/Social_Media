@@ -190,7 +190,6 @@ export const getChat = async (div) => {
 
   const url = `/api/v1/rooms/me/`;
   const room = await template('POST', url, '', data, '');
-  console.log(room);
 
   const divChat = document.getElementById('chat');
   appendMessages(divChat, room);

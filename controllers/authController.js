@@ -137,7 +137,7 @@ const updateDatabase = async () => {
       // Sử dụng bulkWrite để thực hiện các thao tác cập nhật
       await User.bulkWrite(updateOperations);
 
-      console.log('All users updated successfully');
+      // console.log('All users updated successfully');
     } catch (error) {
       console.error(`Error updating users in the database: ${error.message}`);
     }

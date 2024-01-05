@@ -12068,11 +12068,10 @@ var sendMessageDB = /*#__PURE__*/function () {
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
-          url = "/api/v1/messages/me";
-          console.log('data: ', data);
-          _context2.next = 4;
+          url = "/api/v1/messages/me"; // console.log('data: ', data);
+          _context2.next = 3;
           return (0, _templateURL.default)('POST', url, '', data, '');
-        case 4:
+        case 3:
         case "end":
           return _context2.stop();
       }
@@ -12323,12 +12322,11 @@ var updateUser = exports.updateUser = /*#__PURE__*/function () {
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          console.log(data);
           url = type === 'password' ? '/api/v1/users/updateMyPassword' : '/api/v1/users/updateMe';
           to = type === 'password' ? '' : '/profile-edit';
-          _context.next = 5;
+          _context.next = 4;
           return (0, _templateURL.default)('PATCH', url, to, data, "".concat(type.toUpperCase(), " updated successfully!"));
-        case 5:
+        case 4:
         case "end":
           return _context.stop();
       }
@@ -12398,25 +12396,24 @@ var deletePost = exports.deletePost = /*#__PURE__*/function () {
           });
         case 3:
           response = _context.sent;
-          console.log(response);
           if (response.status === 204) {
             (0, _alerts.showAlert)('success', 'Delete success');
             setTimeout(function () {
               location.assign('/profile');
             }, 1000);
           }
-          _context.next = 12;
+          _context.next = 11;
           break;
-        case 8:
-          _context.prev = 8;
+        case 7:
+          _context.prev = 7;
           _context.t0 = _context["catch"](0);
           (0, _alerts.showAlert)('error', _context.t0.response.data.message);
           console.log(_context.t0);
-        case 12:
+        case 11:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 8]]);
+    }, _callee, null, [[0, 7]]);
   }));
   return function deletePost(_x) {
     return _ref.apply(this, arguments);
@@ -12801,10 +12798,9 @@ var getChat = exports.getChat = /*#__PURE__*/function () {
           return (0, _templateURL.default)('POST', url, '', data, '');
         case 6:
           room = _context3.sent;
-          console.log(room);
           divChat = document.getElementById('chat');
           appendMessages(divChat, room);
-        case 10:
+        case 9:
         case "end":
           return _context3.stop();
       }
@@ -13472,7 +13468,6 @@ if (btnAcceptFriends) {
     el.addEventListener('click', function (e) {
       e.preventDefault();
       var reqId = el.dataset.requestId;
-      console.log(reqId);
       (0, _friendShip.updateFriendShip)(reqId, 'accepted');
       el.innerText = 'Accepted';
     });
@@ -13484,7 +13479,6 @@ if (btnDeleteRequests) {
     el.addEventListener('click', function (e) {
       e.preventDefault();
       var reqId = el.dataset.requestId;
-      console.log(reqId);
       (0, _friendShip.deleteRequest)(reqId);
       el.innerText = 'Deleted';
     });
@@ -13511,7 +13505,6 @@ rightSidebar.addEventListener('click', function (event) {
   if (target.closest('.list-online-chat-item')) {
     var messagePage = document.getElementById('message-page');
     var x = target.closest('.list-online-chat-item');
-    console.log(target);
     if (messagePage) {
       (0, _room.getChat)(x);
     } else {
@@ -13579,7 +13572,6 @@ divContainer.addEventListener('click', function (event) {
     // console.log(target.dataset.parentCommentId);
 
     var block = target.closest('.block-add-form-create-comment');
-    console.log('1: ' + block);
     var postId = target.dataset.postId;
     var parentCommentId = target.dataset.parentCommentId;
     addFormCreateComment(block, postId, parentCommentId);
@@ -13652,7 +13644,6 @@ var addFormCreateComment = function addFormCreateComment(block, postId, parentCo
 var addFormUpdateComment = function addFormUpdateComment(divComment, commentId) {
   var comment = divComment.querySelector('.comment-content');
   var text = comment.innerText;
-  console.log(comment);
   var block = divComment.querySelector('.block-add-form-create-comment');
   var formHTML = "\n      <form class=\"reply-comment-form comment-text d-flex align-items-center mt-3\">\n          <textarea class=\"comment-txt form-control rounded-pill\" name=\"comment\" rows=\"1\" placeholder=\"\">".concat(text, "</textarea>\n          <div class=\"comment-attachment d-flex\">\n              <button type=\"submit\" class=\"btn\"><i class=\"fa fa-paper-plane\"></i></button>\n              <button class=\"btn btnCancel\"><i class=\"fa fa-paper-plane\">Cancel</i></button>\n          </div>\n      </form>\n  ");
   block.insertAdjacentHTML('beforeend', formHTML);
@@ -13748,7 +13739,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55286" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55365" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

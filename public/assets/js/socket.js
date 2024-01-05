@@ -49,7 +49,7 @@ const getFriends = async () => {
 
 const sendMessageDB = async (data) => {
   const url = `/api/v1/messages/me`;
-  console.log('data: ', data);
+  // console.log('data: ', data);
   await template('POST', url, '', data, '');
 };
 

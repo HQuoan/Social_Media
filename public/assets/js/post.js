@@ -15,8 +15,6 @@ export const deletePost = async (id) => {
       url: `/api/v1/posts/me/${id}`,
     });
 
-    console.log(response);
-
     if (response.status === 204) {
       showAlert('success', 'Delete success');
       setTimeout(() => {
