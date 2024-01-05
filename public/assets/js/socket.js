@@ -10,7 +10,7 @@ const viewOnlineUsers = (users) => {
   users.forEach((user) => {
     if (user.isOnline) {
       html += `
-      <div class="d-flex align-items-center mb-4">
+      <div class="d-flex align-items-center mb-4 list-online-chat-item" data-friend="${user.id}">
         <div class="iq-profile-avatar status-online">
           <img class="rounded-circle avatar-50" src="./img/users/${user.avatar}" alt="">
         </div>
@@ -22,7 +22,9 @@ const viewOnlineUsers = (users) => {
       `;
     } else {
       html += `
-      <div class="d-flex align-items-center mb-4">
+      <div class="d-flex align-items-center mb-4 list-online-chat-item" data-friend="${
+        user.id
+      }">
         <div class="iq-profile-avatar status-offline">
           <img class="rounded-circle avatar-50" src="./img/users/${
             user.avatar
@@ -97,9 +99,9 @@ export const createSocket = async (io) => {
 
     ////////////////// xử lý các sk , emit
 
-    const messagePage = document.getElementById('message-page');
-    if (messagePage) {
-      messagePage.addEventListener('click', (e) => {
+    const wrapper = document.querySelector('.wrapper');
+    if (wrapper) {
+      wrapper.addEventListener('click', (e) => {
         const target = e.target;
 
         const messageInput = document.getElementById('messageInput');

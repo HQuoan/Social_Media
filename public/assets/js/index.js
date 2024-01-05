@@ -10,7 +10,7 @@ import {
   deleteRequest,
 } from './friendShip.js';
 import { createEmoji } from './emoji.js';
-import { getMyRooms, getRoomWithChat } from './room.js';
+import { getMyRooms, getRoomWithChat, getChat } from './room.js';
 
 import {
   createComment,
@@ -255,13 +255,31 @@ if (btnUnfriends) {
   });
 }
 
+const rightSidebar = document.getElementById('right-sidebar');
+
+rightSidebar.addEventListener('click', (event) => {
+  const target = event.target;
+
+  if (target.closest('.list-online-chat-item')) {
+    const messagePage = document.getElementById('message-page');
+    const x = target.closest('.list-online-chat-item');
+    console.log(target);
+    if (messagePage) {
+      getChat(x);
+    } else {
+      getChat(x);
+      const canvas = document.getElementById('canvas');
+      canvas.click();
+    }
+  }
+});
+
 const isFirstClickMap = new Map();
 
 divContainer.addEventListener('click', (event) => {
   const target = event.target;
   const parent = target.parentElement;
 
-  // console.log(target);
   /// room and chat
   if (target.closest('.room-item')) {
     const roomItem = target.closest('.room-item');

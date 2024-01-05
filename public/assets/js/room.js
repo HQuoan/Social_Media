@@ -4,7 +4,7 @@ import template from './templateURL.js';
 const roomItem = (roomId, user) => {
   return `
  <li>
-    <div class="room-item" data-room-id="${roomId}">
+    <div class="room-item mb-3" data-room-id="${roomId}">
       <div class="d-flex align-items-center">
         <div class="avatar me-2">
           <img src="../img/users/${user.avatar}" alt="chatuserimage" class="avatar-50">
@@ -27,54 +27,44 @@ const messageItem = (user, room) => {
   const userId = document.getElementById('user_id').dataset.userId;
   const { messages } = room;
 
+  let previousDate = null;
+
   const chatContent =
     messages.length > 0
-      ? `${messages
+      ? messages
           .map((message) => {
-            if (message.user.id === userId) {
-              return `
-      <div class="chat d-flex other-user">
-        <div class="chat-user">
-          <a class="avatar m-0">
-            <img src="../img/users/${
-              message.user.avatar
-            }" alt="avatar" class="avatar-35">
-          </a>
-          <span class="chat-time mt-1">${moment(message.createdAt).format(
-            'LT',
-          )}</span>
-        </div>
-        <div class="chat-detail">
-          <div class="chat-message">
-            <p>${message.content}</p>
-          </div>
-        </div>
-      </div>
-      `;
-            } else {
-              return `
-      <div class="chat chat-left">
-        <div class="chat-user">
-          <a class="avatar m-0">
-            <img src="../img/users/${
-              message.user.avatar
-            }" alt="avatar" class="avatar-35">
-          </a>
-          <span class="chat-time mt-1">${moment(message.createdAt).format(
-            'LT',
-          )}</span>
-        </div>
-        <div class="chat-detail">
-          <div class="chat-message">
-            <p>${message.content}</p>
-          </div>
-        </div>
-      </div>
-      `;
-            }
+            const isCurrentUser = message.user.id === userId;
+            const messageDate = moment(message.createdAt);
+            const showFullDate =
+              !previousDate || !messageDate.isSame(previousDate, 'day');
+
+            previousDate = messageDate;
+
+            return `
+            <p>${showFullDate ? messageDate.format('llll') : ''}</p>
+              <div class="chat ${
+                isCurrentUser ? 'd-flex other-user' : 'chat-left'
+              }">
+                <div class="chat-user">
+                  <a class="avatar m-0">
+                    <img src="../img/users/${
+                      message.user.avatar
+                    }" alt="avatar" class="avatar-35 rounded">
+                  </a>
+                  <span class="chat-time mt-1">
+                    ${messageDate.format('LT')}
+                  </span>
+                </div>
+                <div class="chat-detail">
+                  <div class="chat-message">
+                    <p>${message.content}</p>
+                  </div>
+                </div>
+              </div>
+            `;
           })
-          .join('')}`
-      : '';
+          .join('')
+      : 'Start conversation';
 
   return `
   <div class="tab-pane fade active show" role="tabpanel">
@@ -85,7 +75,7 @@ const messageItem = (user, room) => {
           <i class="ri-menu-3-line"></i>
         </div>
         <div class="avatar chat-user-profile m-0 me-3">
-          <img src="../img/users/${user.avatar}" alt="avatar" class="avatar-50">
+          <img src="../img/users/${user.avatar}" alt="avatar" class="avatar-50 rounded">
         </div>
         <h5 class="mb-0">${user.username}</h5>
       </div>
@@ -185,6 +175,22 @@ export const getRoomWithChat = async (divRoom) => {
   const url = `/api/v1/rooms/me/${roomId}`;
   const room = await template('GET', url, '', {}, '');
   // console.log(room);
+
+  const divChat = document.getElementById('chat');
+  appendMessages(divChat, room);
+};
+
+export const getChat = async (div) => {
+  const userId = document.getElementById('user_id').dataset.userId;
+  const friendId = div.dataset.friend;
+
+  const data = {
+    members: [userId, friendId],
+  };
+
+  const url = `/api/v1/rooms/me/`;
+  const room = await template('POST', url, '', data, '');
+  console.log(room);
 
   const divChat = document.getElementById('chat');
   appendMessages(divChat, room);

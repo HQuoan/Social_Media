@@ -27,12 +27,17 @@ html
       // CONTENT
       block content
         h1 This is a placeholder heading
-
+      
+      
       // LEFT SIDEBAR
       include _right-sidebar
 
+
       // FOOTER
       include _footer
+      
+      // OFFCANVAS_MESSAGE
+      include _offcanvas-message
 
       #user_id(data-user-id =`${user !== undefined ? user.id: undefined}`)
       #user_avatar(data-user-avatar =`${user !== undefined ? user.avatar: undefined}`)

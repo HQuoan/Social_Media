@@ -1,0 +1,66 @@
+#offcanvasExample.offcanvas.offcanvas-size-50.offcanvas-start(tabindex='-1' aria-labelledby='offcanvasExampleLabel')
+  .offcanvas-header
+    h5#offcanvasExampleLabel.offcanvas-title Messenger
+    button.btn-close.text-reset(type='button' data-bs-dismiss='offcanvas' aria-label='Close')
+  .offcanvas-body
+    .col-lg-12.chat-data.p-0.chat-data-right
+      #chat.tab-content
+        .tab-pane.fade.active.show(role='tabpanel')
+          .chat-head
+            header.d-flex.justify-content-between.align-items-center.bg-white.pt-3.pe-3.pb-3
+              .d-flex.align-items-center
+                .sidebar-toggle
+                  i.ri-menu-3-line
+                .avatar.chat-user-profile.m-0.me-3
+                  img.avatar-50(src='../assets/images/user/05.jpg' alt='avatar')
+                  span.avatar-status
+                    i.ri-checkbox-blank-circle-fill.text-success
+                h5.mb-0 Team Discussions
+              .chat-header-icons.d-flex
+                a.chat-icon-phone.bg-soft-primary(href='#')
+                  i.ri-phone-line
+                a.chat-icon-video.bg-soft-primary(href='#')
+                  i.ri-vidicon-line
+                a.chat-icon-delete.bg-soft-primary(href='#')
+                  i.ri-delete-bin-line
+                span.dropdown.bg-soft-primary
+                  i#dropdownMenuButton02.ri-more-2-line.cursor-pointer.dropdown-toggle.nav-hide-arrow.cursor-pointer.pe-0(data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false' role='menu')
+                  span.dropdown-menu.dropdown-menu-right(aria-labelledby='dropdownMenuButton02')
+                    a.dropdown-item(href='#')
+                      i.ri-pushpin-2-line.me-1.h5
+                      | Pin to top
+                    a.dropdown-item(href='#')
+                      i.ri-delete-bin-6-line.me-1.h5
+                      | Delete chat
+                    a.dropdown-item(href='#')
+                      i.ri-time-line.me-1.h5
+                      | Block
+          .chat-content.scroller
+            .chat.d-flex.other-user
+              .chat-user
+                a.avatar.m-0
+                  img.avatar-35(src='../assets/images/user/1.jpg' alt='avatar')
+                span.chat-time.mt-1 6:45
+              .chat-detail
+                .chat-message
+                  p How can we help? We&apos;re here for you! &#x1F604;
+            .chat.chat-left
+              .chat-user
+                a.avatar.m-0
+                  img.avatar-35(src='../assets/images/user/05.jpg' alt='avatar')
+                span.chat-time.mt-1 6:48
+              .chat-detail
+                .chat-message
+                  p Hey John, I am looking for the best admin template.
+                  p Could you please help me to find it out? &#x1F914;
+          .chat-footer.p-3.bg-white
+            form.d-flex.align-items-center(action='#')
+              .chat-attagement.d-flex
+                a(href='#')
+                  i.far.fa-smile.pe-3(aria-hidden='true')
+                a(href='#')
+                  i.fa.fa-paperclip.pe-3(aria-hidden='true')
+              input.form-control.me-3(type='text' placeholder='Type your message')
+              button.btn.btn-primary.d-flex.align-items-center.px-2(type='submit')
+                i.far.fa-paper-plane(aria-hidden='true')
+                span.d-none.d-lg-block.ms-1 Send

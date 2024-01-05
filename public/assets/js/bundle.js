@@ -12034,9 +12034,9 @@ var viewOnlineUsers = function viewOnlineUsers(users) {
   var html = '';
   users.forEach(function (user) {
     if (user.isOnline) {
-      html += "\n      <div class=\"d-flex align-items-center mb-4\">\n        <div class=\"iq-profile-avatar status-online\">\n          <img class=\"rounded-circle avatar-50\" src=\"./img/users/".concat(user.avatar, "\" alt=\"\">\n        </div>\n        <div class=\"ms-3\">\n          <h6 class=\"mb-0\">").concat(user.username, "</h6>\n          <p class=\"mb-0\">Online</p>\n        </div>\n      </div>\n      ");
+      html += "\n      <div class=\"d-flex align-items-center mb-4 list-online-chat-item\" data-friend=\"".concat(user.id, "\">\n        <div class=\"iq-profile-avatar status-online\">\n          <img class=\"rounded-circle avatar-50\" src=\"./img/users/").concat(user.avatar, "\" alt=\"\">\n        </div>\n        <div class=\"ms-3\">\n          <h6 class=\"mb-0\">").concat(user.username, "</h6>\n          <p class=\"mb-0\">Online</p>\n        </div>\n      </div>\n      ");
     } else {
-      html += "\n      <div class=\"d-flex align-items-center mb-4\">\n        <div class=\"iq-profile-avatar status-offline\">\n          <img class=\"rounded-circle avatar-50\" src=\"./img/users/".concat(user.avatar, "\" alt=\"\">\n        </div>\n        <div class=\"ms-3\">\n          <h6 class=\"mb-0\">").concat(user.username, "</h6>\n          <p class=\"mb-0\">").concat(moment(user.latestActivity).fromNow(), "</p>\n        </div>\n      </div>\n      ");
+      html += "\n      <div class=\"d-flex align-items-center mb-4 list-online-chat-item\" data-friend=\"".concat(user.id, "\">\n        <div class=\"iq-profile-avatar status-offline\">\n          <img class=\"rounded-circle avatar-50\" src=\"./img/users/").concat(user.avatar, "\" alt=\"\">\n        </div>\n        <div class=\"ms-3\">\n          <h6 class=\"mb-0\">").concat(user.username, "</h6>\n          <p class=\"mb-0\">").concat(moment(user.latestActivity).fromNow(), "</p>\n        </div>\n      </div>\n      ");
     }
   });
   wrapOnlineUser.innerHTML = html;
@@ -12089,7 +12089,7 @@ var getUser = function getUser(userId) {
 };
 var createSocket = exports.createSocket = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(io) {
-    var userId, userAvatar, socket, messagePage;
+    var userId, userAvatar, socket, wrapper;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
@@ -12137,9 +12137,9 @@ var createSocket = exports.createSocket = /*#__PURE__*/function () {
           });
 
           ////////////////// xử lý các sk , emit
-          messagePage = document.getElementById('message-page');
-          if (messagePage) {
-            messagePage.addEventListener('click', function (e) {
+          wrapper = document.querySelector('.wrapper');
+          if (wrapper) {
+            wrapper.addEventListener('click', function (e) {
               var target = e.target;
               var messageInput = document.getElementById('messageInput');
               var sendMessageBtn = document.getElementById('sendMessageBtn');
@@ -12694,7 +12694,7 @@ var createEmoji = exports.createEmoji = /*#__PURE__*/function () {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getRoomWithChat = exports.getMyRooms = void 0;
+exports.getRoomWithChat = exports.getMyRooms = exports.getChat = void 0;
 var _templateURL = _interopRequireDefault(require("./templateURL.js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -12702,19 +12702,20 @@ function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyri
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; } /* eslint-disable */
 var roomItem = function roomItem(roomId, user) {
-  return "\n <li>\n    <div class=\"room-item\" data-room-id=\"".concat(roomId, "\">\n      <div class=\"d-flex align-items-center\">\n        <div class=\"avatar me-2\">\n          <img src=\"../img/users/").concat(user.avatar, "\" alt=\"chatuserimage\" class=\"avatar-50\">\n        </div>\n        <div class=\"chat-sidebar-name\">\n          <h6 class=\"mb-0\">").concat(user.username, "</h6>\n          <span>Lorem Ipsum is</span>\n        </div>\n        <div class=\"chat-meta float-right text-center mt-2 me-1\">\n          <div class=\"chat-msg-counter bg-primary text-white\">20</div>\n          <span class=\"text-nowrap\">05 min</span>\n        </div>\n      </div>\n    </div>\n  </li>\n ");
+  return "\n <li>\n    <div class=\"room-item mb-3\" data-room-id=\"".concat(roomId, "\">\n      <div class=\"d-flex align-items-center\">\n        <div class=\"avatar me-2\">\n          <img src=\"../img/users/").concat(user.avatar, "\" alt=\"chatuserimage\" class=\"avatar-50\">\n        </div>\n        <div class=\"chat-sidebar-name\">\n          <h6 class=\"mb-0\">").concat(user.username, "</h6>\n          <span>Lorem Ipsum is</span>\n        </div>\n        <div class=\"chat-meta float-right text-center mt-2 me-1\">\n          <div class=\"chat-msg-counter bg-primary text-white\">20</div>\n          <span class=\"text-nowrap\">05 min</span>\n        </div>\n      </div>\n    </div>\n  </li>\n ");
 };
 var messageItem = function messageItem(user, room) {
   var userId = document.getElementById('user_id').dataset.userId;
   var messages = room.messages;
-  var chatContent = messages.length > 0 ? "".concat(messages.map(function (message) {
-    if (message.user.id === userId) {
-      return "\n      <div class=\"chat d-flex other-user\">\n        <div class=\"chat-user\">\n          <a class=\"avatar m-0\">\n            <img src=\"../img/users/".concat(message.user.avatar, "\" alt=\"avatar\" class=\"avatar-35\">\n          </a>\n          <span class=\"chat-time mt-1\">").concat(moment(message.createdAt).format('LT'), "</span>\n        </div>\n        <div class=\"chat-detail\">\n          <div class=\"chat-message\">\n            <p>").concat(message.content, "</p>\n          </div>\n        </div>\n      </div>\n      ");
-    } else {
-      return "\n      <div class=\"chat chat-left\">\n        <div class=\"chat-user\">\n          <a class=\"avatar m-0\">\n            <img src=\"../img/users/".concat(message.user.avatar, "\" alt=\"avatar\" class=\"avatar-35\">\n          </a>\n          <span class=\"chat-time mt-1\">").concat(moment(message.createdAt).format('LT'), "</span>\n        </div>\n        <div class=\"chat-detail\">\n          <div class=\"chat-message\">\n            <p>").concat(message.content, "</p>\n          </div>\n        </div>\n      </div>\n      ");
-    }
-  }).join('')) : '';
-  return "\n  <div class=\"tab-pane fade active show\" role=\"tabpanel\">\n  <div class=\"chat-head\">\n    <header class=\"d-flex justify-content-between align-items-center bg-white pt-3 pe-3 pb-3\">\n      <div class=\"d-flex align-items-center\">\n        <div class=\"sidebar-toggle\">\n          <i class=\"ri-menu-3-line\"></i>\n        </div>\n        <div class=\"avatar chat-user-profile m-0 me-3\">\n          <img src=\"../img/users/".concat(user.avatar, "\" alt=\"avatar\" class=\"avatar-50\">\n        </div>\n        <h5 class=\"mb-0\">").concat(user.username, "</h5>\n      </div>\n      <div class=\"chat-header-icons d-flex\">\n        <a class=\"chat-icon-phone bg-soft-primary\" href=\"#\">\n          <i class=\"ri-phone-line\"></i>\n        </a>\n        <a class=\"chat-icon-video bg-soft-primary\" href=\"#\">\n          <i class=\"ri-vidicon-line\"></i>\n        </a>\n        <a class=\"chat-icon-delete bg-soft-primary\" href=\"#\">\n          <i class=\"ri-delete-bin-line\"></i>\n        </a>\n        <span class=\"dropdown bg-soft-primary\">\n          <i id=\"dropdownMenuButton02\" class=\"ri-more-2-line cursor-pointer dropdown-toggle nav-hide-arrow cursor-pointer pe-0\" data-bs-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\" role=\"menu\"></i>\n          <span class=\"dropdown-menu dropdown-menu-right\" aria-labelledby=\"dropdownMenuButton02\">\n            <a class=\"dropdown-item\" href=\"#\">\n              <i class=\"ri-pushpin-2-line me-1 h5\"></i>\n              Pin to top\n            </a>\n            <a class=\"dropdown-item\" href=\"#\">\n              <i class=\"ri-delete-bin-6-line me-1 h5\"></i>\n              Delete chat\n            </a>\n            <a class=\"dropdown-item\" href=\"#\">\n              <i class=\"ri-time-line me-1 h5\"></i>\n              Block\n            </a>\n          </span>\n        </span>\n      </div>\n    </header>\n    <div id=\"chat-box\" class=\"chat-content scroller\">\n      ").concat(chatContent, "\n    </div>\n    <div class=\"chat-footer p-3 bg-white\">\n      <div class=\"d-flex align-items-center\" action=\"#\">\n        <div class=\"chat-attagement d-flex\">\n          <a href=\"#\">\n            <i class=\"far fa-smile pe-3\" aria-hidden=\"true\"></i>\n          </a>\n          <a href=\"#\">\n            <i class=\"fa fa-paperclip pe-3\" aria-hidden=\"true\"></i>\n          </a>\n        </div>\n        <input id=\"messageInput\" type=\"text\" class=\"message-content form-control me-3\" placeholder=\"Type your message\">\n        <button id=\"sendMessageBtn\" type=\"button\" data-receiver=\"").concat(user.id, "\" data-sender=\"").concat(userId, "\" data-room=\"").concat(room.id, "\" class=\"sendMessage btn btn-primary d-flex align-items-center px-2\">\n          <i class=\"far fa-paper-plane\" aria-hidden=\"true\"></i>\n          <span class=\"d-none d-lg-block ms-1\">Send</span>\n        </button>\n      </div>\n    </div>\n  </div>\n</div>\n\n  ");
+  var previousDate = null;
+  var chatContent = messages.length > 0 ? messages.map(function (message) {
+    var isCurrentUser = message.user.id === userId;
+    var messageDate = moment(message.createdAt);
+    var showFullDate = !previousDate || !messageDate.isSame(previousDate, 'day');
+    previousDate = messageDate;
+    return "\n            <p>".concat(showFullDate ? messageDate.format('llll') : '', "</p>\n              <div class=\"chat ").concat(isCurrentUser ? 'd-flex other-user' : 'chat-left', "\">\n                <div class=\"chat-user\">\n                  <a class=\"avatar m-0\">\n                    <img src=\"../img/users/").concat(message.user.avatar, "\" alt=\"avatar\" class=\"avatar-35 rounded\">\n                  </a>\n                  <span class=\"chat-time mt-1\">\n                    ").concat(messageDate.format('LT'), "\n                  </span>\n                </div>\n                <div class=\"chat-detail\">\n                  <div class=\"chat-message\">\n                    <p>").concat(message.content, "</p>\n                  </div>\n                </div>\n              </div>\n            ");
+  }).join('') : 'Start conversation';
+  return "\n  <div class=\"tab-pane fade active show\" role=\"tabpanel\">\n  <div class=\"chat-head\">\n    <header class=\"d-flex justify-content-between align-items-center bg-white pt-3 pe-3 pb-3\">\n      <div class=\"d-flex align-items-center\">\n        <div class=\"sidebar-toggle\">\n          <i class=\"ri-menu-3-line\"></i>\n        </div>\n        <div class=\"avatar chat-user-profile m-0 me-3\">\n          <img src=\"../img/users/".concat(user.avatar, "\" alt=\"avatar\" class=\"avatar-50 rounded\">\n        </div>\n        <h5 class=\"mb-0\">").concat(user.username, "</h5>\n      </div>\n      <div class=\"chat-header-icons d-flex\">\n        <a class=\"chat-icon-phone bg-soft-primary\" href=\"#\">\n          <i class=\"ri-phone-line\"></i>\n        </a>\n        <a class=\"chat-icon-video bg-soft-primary\" href=\"#\">\n          <i class=\"ri-vidicon-line\"></i>\n        </a>\n        <a class=\"chat-icon-delete bg-soft-primary\" href=\"#\">\n          <i class=\"ri-delete-bin-line\"></i>\n        </a>\n        <span class=\"dropdown bg-soft-primary\">\n          <i id=\"dropdownMenuButton02\" class=\"ri-more-2-line cursor-pointer dropdown-toggle nav-hide-arrow cursor-pointer pe-0\" data-bs-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\" role=\"menu\"></i>\n          <span class=\"dropdown-menu dropdown-menu-right\" aria-labelledby=\"dropdownMenuButton02\">\n            <a class=\"dropdown-item\" href=\"#\">\n              <i class=\"ri-pushpin-2-line me-1 h5\"></i>\n              Pin to top\n            </a>\n            <a class=\"dropdown-item\" href=\"#\">\n              <i class=\"ri-delete-bin-6-line me-1 h5\"></i>\n              Delete chat\n            </a>\n            <a class=\"dropdown-item\" href=\"#\">\n              <i class=\"ri-time-line me-1 h5\"></i>\n              Block\n            </a>\n          </span>\n        </span>\n      </div>\n    </header>\n    <div id=\"chat-box\" class=\"chat-content scroller\">\n      ").concat(chatContent, "\n    </div>\n    <div class=\"chat-footer p-3 bg-white\">\n      <div class=\"d-flex align-items-center\" action=\"#\">\n        <div class=\"chat-attagement d-flex\">\n          <a href=\"#\">\n            <i class=\"far fa-smile pe-3\" aria-hidden=\"true\"></i>\n          </a>\n          <a href=\"#\">\n            <i class=\"fa fa-paperclip pe-3\" aria-hidden=\"true\"></i>\n          </a>\n        </div>\n        <input id=\"messageInput\" type=\"text\" class=\"message-content form-control me-3\" placeholder=\"Type your message\">\n        <button id=\"sendMessageBtn\" type=\"button\" data-receiver=\"").concat(user.id, "\" data-sender=\"").concat(userId, "\" data-room=\"").concat(room.id, "\" class=\"sendMessage btn btn-primary d-flex align-items-center px-2\">\n          <i class=\"far fa-paper-plane\" aria-hidden=\"true\"></i>\n          <span class=\"d-none d-lg-block ms-1\">Send</span>\n        </button>\n      </div>\n    </div>\n  </div>\n</div>\n\n  ");
 };
 var appendRooms = function appendRooms(div, rooms) {
   var userId = document.getElementById('user_id').dataset.userId;
@@ -12782,6 +12783,35 @@ var getRoomWithChat = exports.getRoomWithChat = /*#__PURE__*/function () {
   }));
   return function getRoomWithChat(_x2) {
     return _ref2.apply(this, arguments);
+  };
+}();
+var getChat = exports.getChat = /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(div) {
+    var userId, friendId, data, url, room, divChat;
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          userId = document.getElementById('user_id').dataset.userId;
+          friendId = div.dataset.friend;
+          data = {
+            members: [userId, friendId]
+          };
+          url = "/api/v1/rooms/me/";
+          _context3.next = 6;
+          return (0, _templateURL.default)('POST', url, '', data, '');
+        case 6:
+          room = _context3.sent;
+          console.log(room);
+          divChat = document.getElementById('chat');
+          appendMessages(divChat, room);
+        case 10:
+        case "end":
+          return _context3.stop();
+      }
+    }, _callee3);
+  }));
+  return function getChat(_x3) {
+    return _ref3.apply(this, arguments);
   };
 }();
 },{"./templateURL.js":"templateURL.js"}],"commentItem.js":[function(require,module,exports) {
@@ -13475,12 +13505,27 @@ if (btnUnfriends) {
     });
   });
 }
+var rightSidebar = document.getElementById('right-sidebar');
+rightSidebar.addEventListener('click', function (event) {
+  var target = event.target;
+  if (target.closest('.list-online-chat-item')) {
+    var messagePage = document.getElementById('message-page');
+    var x = target.closest('.list-online-chat-item');
+    console.log(target);
+    if (messagePage) {
+      (0, _room.getChat)(x);
+    } else {
+      (0, _room.getChat)(x);
+      var canvas = document.getElementById('canvas');
+      canvas.click();
+    }
+  }
+});
 var isFirstClickMap = new Map();
 divContainer.addEventListener('click', function (event) {
   var target = event.target;
   var parent = target.parentElement;
 
-  // console.log(target);
   /// room and chat
   if (target.closest('.room-item')) {
     var roomItem = target.closest('.room-item');
@@ -13703,7 +13748,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56189" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55286" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

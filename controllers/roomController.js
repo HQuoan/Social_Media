@@ -6,10 +6,12 @@ const catchAsync = require('../utils/catchAsync');
 exports.createRoom = catchAsync(async (req, res, next) => {
   const { roomName, members } = req.body;
 
-  const existingRoom = await Room.findOne({ members: { $all: members } });
+  const existingRoom = await Room.findOne({
+    members: { $all: members },
+  }).populate({ path: 'messages' });
 
   if (existingRoom) {
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       data: existingRoom,
     });
@@ -23,10 +25,10 @@ exports.createRoom = catchAsync(async (req, res, next) => {
 
   // Save the new room to the database
   const room = await newRoom.save();
-
+  const data = await Room.findById(room.id);
   res.status(200).json({
     status: 'success',
-    data: room,
+    data: data,
   });
 });
 

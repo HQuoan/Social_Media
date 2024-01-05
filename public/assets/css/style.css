@@ -73,3 +73,11 @@
 .f-right {
   float: right;
 }
+
+.offcanvas-size-50 {
+  width: 50%;
+}
+
+.display-none {
+  display: none;
+}
